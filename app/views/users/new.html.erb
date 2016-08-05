@@ -26,6 +26,11 @@
       </div>
 
       <div class="field form-group">
+        <%= f.label :contacts, 'Other Contact Information, besides email' %><br />
+        <%= f.text_field :contacts, class: 'form-control' %>
+      </div>
+
+      <div class="field form-group">
         <%= f.label :password %>
         <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
       </div>

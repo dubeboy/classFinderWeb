@@ -1,14 +1,18 @@
 class User < ActiveRecord::Base
 
-
   attr_accessor :password
   before_save :encrypt_password
 
   validates_confirmation_of :password
   validates_presence_of :password, :on => :create
-  validates_presence_of :email
-  validates_presence_of :name
+  validates_presence_of :email, :name, :contacts
   validates_uniqueness_of :email
+  has_many :items
+
+  has_attached_file :cover, styles: { medium: "1141x290>", thumb: "100x100>" }, default_url: "/images/default_cover.png"
+  has_attached_file :profile_img, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/profile.png"
+  validates_attachment_content_type :cover, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
+  validates_attachment_content_type :profile_img, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
 
   def self.authenticate(email, password)
     user = find_by_email(email)
@@ -17,7 +21,6 @@ class User < ActiveRecord::Base
     else
       nil
     end
-
   end
 
   def encrypt_password

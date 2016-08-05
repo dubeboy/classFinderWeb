@@ -1,3 +1,4 @@
+
 <div class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -9,26 +10,18 @@
       <%= link_to "My Store", root_path, class: "navbar-brand text-bold" %>
     </div>
     <div class="navbar-collapse collapse navbar-inverse-collapse">
-      <form class="navbar-form navbar-left">
-        <div class="form-group">
-          <input type="text" class="form-control col-md-8" placeholder="Search For Stuff">
-        </div>
-      </form>
+
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to 'Shop Around',   items_path %></li>
-        <li><a href="javascript:void(0)">Category</a></li>
-        <li><a href="javascript:void(0)">Lost and Found</a></li>
-
+        <li><%= link_to 'Sell Stuff',   new_item_path %></li>
+        <li><%= link_to 'Search',   search_index_path %></li>
         <% if current_user  %>
-            <li><%= link_to 'Sell Stuff',   new_item_path %></li>
+
             <li class="dropdown">
               <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %>
                 <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><%= link_to 'Profile', "#" %></li>
-
-                <li><a href="javascript:void(0)">Another action</a></li>
-                <li><a href="javascript:void(0)">Something else here</a></li>
+                <li><%= link_to 'Profile', user_path(current_user) %></li>
                 <li class="divider"></li>
                 <li><%= link_to "Log out", log_out_path %></li>
               </ul>

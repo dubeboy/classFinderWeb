@@ -1,5 +1,6 @@
 class CategoryController < ApplicationController
   def index
+    @categories = Category.all
   end
 
   def show
@@ -12,7 +13,7 @@ class CategoryController < ApplicationController
   def create
     @category = Category.new(category_params)
     if @category.save
-      flash[:success] = "Successfully category created"
+      flash[:success] = "Successfully created category "
       redirect_to root_path
     else
       flash[:danger] = "Could not create category"

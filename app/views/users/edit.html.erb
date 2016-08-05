@@ -1,0 +1,46 @@
+<div class="col-md-4 col-md-offset-4 well bs-component">
+  <%= form_for @user do |f|%>
+
+      <% if @user.errors.any? %>
+          <div class="error_messages">
+            <h4 class="text-danger">Form is invalid</h4>
+            <ul>
+              <% for message in @user.errors.full_messages %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+
+      <div class="field form-group">
+        <%= f.label :name %><br />
+        <%= f.text_field :name, autofocus: true, class: 'form-control' %>
+      </div>
+
+      <div class="field form-group">
+        <%= f.label :about %><br />
+        <%= f.text_area :about, class: 'form-control' %>
+      </div>
+
+      <div class="field form-group">
+        <%= f.label :contacts, 'Contact Information' %><br />
+        <%= f.phone_field :contacts, class: 'form-control' %>
+      </div>
+
+      <div class="field form-group">
+        <%= f.label :cover, "Profile Cover" %><br />
+        <%= f.file_field :cover, class: 'form-control' %>
+      </div>
+
+      <div class="field form-group">
+        <%= f.label :profile_image %>
+        <%= f.file_field :profile_img, class: 'form-control' %>
+      </div>
+
+
+
+      <div class="actions">
+        <%= f.submit class: 'btn btn-danger btn-raised' %>
+      </div>
+  <% end %>
+  </div>

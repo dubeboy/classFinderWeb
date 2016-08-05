@@ -1,0 +1,65 @@
+<div class="">
+  <div class="header">
+    <%= check_if_nil @user.cover, '/default_cover.png', 'profile-cover' %>
+
+    <div class="">
+      <%= check_if_nil @user.profile_img, '/profile.png', 'profile-img'  %>
+    </div>
+</div>
+
+  <h4>Contact details</h4>
+  <div class="contacts-panel">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class ="user-name text-bold">
+          Name : <%= @user.name %>
+        </div>
+        <%= @user.email %> <br>
+        Phone: <%= @user.contacts %>
+        <%= link_to 'Edit profile', edit_user_path(@user), class: 'btn btn-sm btn-flat ' if current_user == @user %>
+      </div>
+    </div>
+  </div>
+</div>
+<% if @user.about  %>
+<h4>About</h4>
+<div class="">
+  <div class="panel panel-default">
+    <div class="panel-body">
+
+
+      <p><%= @user.about %></p>
+
+      </div>
+    </div>
+  </div>
+<% end %>
+
+
+
+<div>
+
+  <h4>Items sold by : <%= @user.name.capitalize%></h4>  <p><%= link_to 'Sell Your Stuff Yeah?', new_item_path %></p>
+<% @user.items.each do |i| %>
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-body">
+
+          <h4><%= i.name %></h4>
+          <p><span class="label label-info"><%= i.category.name if i.category %></span> </p>
+          <!-- <img src="..." class="img-responsive" alt="Responsive image"> -->
+
+          <%= image_tag i.pictures[0].image, class: 'img-responsive' unless i.pictures[0].nil?  %>
+          <p><%= i.description %></p>
+          <p class="text-success">Price: R <%= i.price.round(2) %></p>
+          <div>  <i class="material-icons">thumb_up</i>
+            <%= link_to 'View Item', item_path(i), class:'pull-right' %>
+          </div>
+
+        </div>
+      </div>
+    </div>
+<% end %>
+<div>
+</div>
+</div>

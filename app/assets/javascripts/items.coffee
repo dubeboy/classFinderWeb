@@ -4,7 +4,7 @@
 
 jQuery(document).ready ($) ->
   $('#myCarousel').carousel interval: 5000
-  $('#carousel-text').html $('#slide-content-0').html()
+#  $('#carousel-text').html $('#slide-content-0').html()
   #Handles the carousel thumbnails
   $('[id^=carousel-selector-]').click ->
     `var id`

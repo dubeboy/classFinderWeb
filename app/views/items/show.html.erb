@@ -1,16 +1,12 @@
-
-
-                <!-- Slider -->
+                    <!-- Slider -->
                     <div class="col-xs-12" id="slider">
                         <!-- Top part of the slider -->
-
                             <div class="col-sm-8" id="carousel-bounding-box">
                                 <div class="carousel slide" id="myCarousel">
                                     <!-- Carousel items -->
                                     <div class="carousel-inner">
-                                      <% counter = 0%>
+                                      <% counter = 0 %>
                                       <% @item.pictures.each do |p| %>
-
                                         <div class= "<%= image_slider_helper(counter) %>  " data-slide-number= <%= counter %> >
                                         <%= image_tag p.image, class: 'img-responsive ' %>
                                             <% counter += 1%>
@@ -23,28 +19,34 @@
                                     <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
                                         <span class="glyphicon glyphicon-chevron-right"></span>
                                     </a>
-                                    </div>
+                                </div>
                             </div>
-
-                            <div class="col-sm-4" id="carousel-text"></div>
-
-                            <div id="slide-content" style="display: none;">
-                                <div id="slide-content-0">
-                                  <div class="panel panel-default">
-                                    <div class="panel-body">
-                                      <h4> <%= @item.name %> </h4>
-                                      <p><%= @item.description %></p>
-                                      <p class="text-success">Price: R <%= @item.price.round(2) %></p>
-                                      <div>  <i class="material-icons">thumb_up</i>
-                                        </div>
-                                    </div>
+                          <div class="col-md-4">
+                              <div class="panel panel-default">
+                                <div class="panel-body">
+                                  <h4 class="text-bold"> Item Description</h4>
+                                  <h4><%= @item.name %></h4>
+                                  <p><span class="label label-info"><%= @item.category.name if @item.category %></span> </p>
+                                  <p><%= @item.description %></p>
+                                  <p class="text-success">Price: R <%= @item.price.round(2) %></p>
+                                  <i class="material-icons">thumb_up</i>
+                                  <p>Views: <%= @item.views %></p>
                                   </div>
-
                                 </div>
 
+                              <div class="panel panel-default">
+                                <div class="panel-body">
+                                  <h4 class="text-bold">Seller Info</h4>
+                                  <div class="">
+                                    <%= link_to(check_if_nil(@item.user.profile_img, '/profile.png', 'user-avatar'), user_path(@item.user)) %>
+                                  </div>
+                                  <p><%= @item.user.email %></p>
+                                  <p><%= @item.user.contacts %></p>
+                                </div>
+                              </div>
 
-                            </div>
-                        </div>
+                          </div>
+                    </div>
 
 
 
@@ -58,7 +60,5 @@
                             </li>
                             <% k += 1%>
                             <% end %>
-
-
                         </ul>
                 </div>
