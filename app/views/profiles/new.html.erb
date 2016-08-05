@@ -1,0 +1,35 @@
+
+<div class=" col-md-8 col-md-offset-2">
+<p>CREATE YOUR PUBLIC IMAGE</p>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <%= form_for @profile , html: {multipart: true} do |f| %>
+        <div  class="field form-group" >
+          <%= f.label :handle %>
+          <%= f.text_field :handle, class: 'form-control' %>
+        </div>
+        <div  class="field form-group" >
+          <%= f.label :twitter %>
+          <%= f.text_field :twitter, class: 'form-control' %>
+        </div>
+        <div  class="field form-group" >
+          <%= f.label :facebook %>
+          <%= f.text_field :facebook, class: 'form-control' %>
+        </div>
+        <div  class="field form-group" >
+          <%= f.label :instergram %>
+          <%= f.text_field :instergram, class: 'form-control' %>
+        </div>
+          Upload Cover Image
+          <%= f.file_field :cover, accept: 'image/*', class: "btn btn-raised" %>
+
+          Upload Profile Picture
+          <%= f.file_field :profile_img, accept: 'image/*', class: "btn btn-raised" %>
+
+        <%= f.submit "#{@profile.user.nil? ? 'Create Profile ' : 'Edit Profile'}", class: 'btn btn-raised' %>
+    <% end %>
+
+  </div>
+</div>
+</div>

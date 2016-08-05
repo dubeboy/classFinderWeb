@@ -1,0 +1,44 @@
+
+<h3>SIGN UP</h3>
+<div class="col-md-4 well bs-component">
+
+  <%= form_for @user do |f|%>
+
+      <% if @user.errors.any? %>
+          <div class="error_messages">
+            <h2>Form is invalid</h2>
+            <ul>
+              <% for message in @user.errors.full_messages %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+
+      <div class="field form-group">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+      </div>
+
+      <div class="field form-group">
+        <%= f.label :name, "User name" %><br />
+        <%= f.text_field :name, class: 'form-control' %>
+      </div>
+
+      <div class="field form-group">
+        <%= f.label :password %>
+        <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+      </div>
+
+      <div class="field form-group">
+        <%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Sign up" , class: 'btn btn-primary btn-raised' %>
+      </div>
+  <% end %>
+  <%= link_to "Log in",  new_session_path %>
+</div>
+

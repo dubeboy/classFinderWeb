@@ -1,0 +1,37 @@
+<div class="col-md-6 col-md-offset-3">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <h4>Add A New Item</h4>
+      <%= form_for @item, html: {multipart: true} do |f| %>
+          <p class="form-group">
+            <%= f.label :name %><br />
+            <%= f.text_field :name, class: 'form-control' %>
+          </p>
+
+          <p class="form-group">
+            <label for="item_category_id">Type Of Item</label> <br />
+            <%= f.select :category_id , Category.all.collect {|c| [c.name, c.id] }, {include_blank: true, class: 'form-contro' } %>
+          </p>
+
+          <p class="form-group">
+            <%= f.label :description %><br />
+            <%= f.text_area :description, class: 'form-control' %>
+          </p>
+
+
+
+          <p class="form-g">
+            <%= f.label :avatars, "Item Images" %><br />
+            <%= file_field_tag "images[]", type: :file, multiple: true %>
+          </p>
+
+          <%= f.label :price %>
+          <div class="input-group">
+            <span class="input-group-addon">R</span>
+            <%= f.number_field :price, min: 0, step: 'any',  class: 'form-control' %>
+          </div>
+          <%= f.submit "Add New Item", class: 'btn btn-flat' %>
+      <% end %>
+    </div>
+  </div>
+</div>
