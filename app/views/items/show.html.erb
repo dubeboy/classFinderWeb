@@ -4,11 +4,11 @@
                             <div class="col-sm-8" id="carousel-bounding-box">
                                 <div class="carousel slide" id="myCarousel">
                                     <!-- Carousel items -->
-                                    <div class="carousel-inner">
+                                    <div class="carousel-inner" style="margin-bottom: 20px">
                                       <% counter = 0 %>
                                       <% @item.pictures.each do |p| %>
                                         <div class= "<%= image_slider_helper(counter) %>  " data-slide-number= <%= counter %> >
-                                        <%= image_tag p.image, class: 'img-responsive ' %>
+                                        <%= image_tag p.image, class: 'img-responsive ', style: 'height: 447px; ' %>
                                             <% counter += 1%>
                                         </div>
                                         <% end %>

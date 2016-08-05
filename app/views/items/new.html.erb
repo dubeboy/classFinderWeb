@@ -14,7 +14,7 @@
 
           <p class="form-group">
             <label for="item_category_id">Type Of Item</label> <br />
-            <%= f.select :category_id , Category.all.collect {|c| [c.name, c.id] }, {include_blank: true, class: 'form-contro' } %>
+            <%= f.select :category_id , Category.all.collect {|c| [c.name, c.id] }, { class: 'form-contro' } %>
           </p>
 
           <p class="form-group">
@@ -31,7 +31,7 @@
 
           <%= f.label :price %>
           <div class="input-group">
-            <span class="input-group-addon">R</span>
+            <span class="input-group-addon text-bold">R</span>
             <%= f.number_field :price, min: 0, step: 'any',  class: 'form-control' %>
           </div>
           <%= f.submit "Add New Item", class: 'btn btn-flat' %>

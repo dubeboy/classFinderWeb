@@ -1,0 +1,16 @@
+<div class="col-md-3">
+  <div class="card">
+    <%= image_tag item.pictures[0].image, class: 'img-responsive card-img-top' unless item.pictures[0].nil?  %>
+    <div class="card-block">
+      <h4 class="card-title"><%= item.name %> <span class="label label-info"><%= item.category.name if item.category %></span></h4>
+      <p class="card-text"><%= item.description %></p>
+    </div>
+    <div class="card-block">
+      <%= link_to [:like, item], method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
+          <i class="material-icons">thumb_up</i>
+      <% end %><span class="likes-count" data-id="<%= item.id %>"> <%= item.tot_likes %> </span> Likes
+      <%= link_to 'View Item', item_path(item), class:'my-button' %>
+
+    </div>
+  </div>
+</div>

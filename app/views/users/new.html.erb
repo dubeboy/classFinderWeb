@@ -1,5 +1,5 @@
 
-<h3>SIGN UP</h3>
+<h3>SIGN UP OR <%= link_to "LOG IN",  new_session_path %></h3>
 <div class="col-md-4 well bs-component">
 
   <%= form_for @user do |f|%>
@@ -26,8 +26,9 @@
       </div>
 
       <div class="field form-group">
-        <%= f.label :contacts, 'Other Contact Information, besides email' %><br />
-        <%= f.text_field :contacts, class: 'form-control' %>
+        <%= f.label :contacts, 'Phone' %><br />
+        <small >not required if you think people will stalk you ;).</small>
+        <%= f.phone_field :contacts, class: 'form-control' %>
       </div>
 
       <div class="field form-group">
@@ -44,6 +45,6 @@
         <%= f.submit "Sign up" , class: 'btn btn-primary btn-raised' %>
       </div>
   <% end %>
-  <%= link_to "Log in",  new_session_path %>
+  <%= link_to "LOG IN",  new_session_path %>
 </div>
 

@@ -1,40 +1,4 @@
-<div class="col-md-12">
-  <div class="col-md-2">
-    <div class="panel panel-default">
-      <div class="panel-body sidebar-nav">
-        <h4>Promoted Ads</h4>
-        <ul class="nav nav-list ">
-          <% @cat.each do |c| %>
-            <li ><%= link_to c.name %></li>
-          <% end %>
-        </ul>
-        </div>
-      </div>
+ <div class="">
+   <%# could render anther page but for now we can just.... %>
+   <%= render(partial: "shared/item", collection: @items) || "There's no Item to be displayed"  %>
   </div>
-  <div class="">
-    <% @items.each do |i| %>
-        <div class="col-md-3">
-          <div class="panel panel-default">
-            <div class="panel-body">
-
-              <h4><%= i.name %></h4>
-              <p><span class="label label-info"><%= i.category.name if i.category %></span> </p>
-              <!-- <img src="..." class="img-responsive" alt="Responsive image"> -->
-
-              <%= image_tag i.pictures[0].image, class: 'img-responsive' unless i.pictures[0].nil?  %>
-              <p><%= i.description %></p>
-              <p class="text-success">Price: R <%= i.price.round(2) %></p>
-              <div>
-                <%# button_to "Create", { action: "create" }, remote: true, form: { "data-type" => "json" } %>
-                <%= button_to [:like, i],  remote: true, form: {'data-type' => "json" }  do %>
-                    <i class="material-icons">thumb_up</i>
-                <% end %>
-                <%= link_to 'View Item', item_path(i), class:'pull-right' %>
-              </div>
-
-            </div>
-          </div>
-        </div>
-    <% end %>
-  </div>
-</div>

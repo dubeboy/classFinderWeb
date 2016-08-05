@@ -13,3 +13,10 @@ jQuery(document).ready ($) ->
     $('#myCarousel').carousel id
     return
   return
+
+# Rails creates this event, when the link_to(remote: true)
+# successfully executes
+$(document).on 'ajax:success', 'a.like', (status,data,xhr)->
+# the `data` parameter is the decoded JSON object
+  $(".likes-count[data-id=#{data.id}]").text data.likes
+  return

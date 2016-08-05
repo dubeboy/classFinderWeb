@@ -31,30 +31,21 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
-    views = @item.views + 1
+    @item.views += 1 if @item.user != current_user
     @item.update_attribute(:views, views) if @item.user != current_user #coz the user who created the item knows it duh... same here
   end
 
-  def like #todo not working properly
+  def like #todo not working properly should be bechmarked
      item = Item.find(params[:id])
      like = Like.like(item, current_user) #should return these should be called thru Item model(let this = same here)
 
-     if like
-       lk = item.tot_likes = item.likes.count
-       item.update_attributes(tot_likes: lk ) #same here
-       render status: :created,
-              json: {
-                  success: true,
-                  likes: item.tot_likes,
-                  notice: 'You just liked an Item'
-              }
+     if like && item.update_attributes(tot_likes: item.likes.size )
+       item.reload #todo find a better way to do this please
+       if request.xhr? #will always be true
+          render json: { likes: item.tot_likes, id: params[:id] }
+       end
      else
-
-       render status: :unprocessable_entity,
-              json: {
-                  success: false,
-                    notice: 'Check if you logged in'
-              }
+       redirect_to items_path
      end
   end
 

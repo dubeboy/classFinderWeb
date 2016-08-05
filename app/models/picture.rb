@@ -5,5 +5,5 @@ class Picture < ActiveRecord::Base
                     styles: { medium: "231x176>", thumb: "100x100>" }, default_url: "/images/default_cover.png"
 
   validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
-  validates_presence_of :image
+  validates_attachment_presence :image
 end
