@@ -1,6 +1,6 @@
 <div class="col-md-3">
   <div class="card">
-    <%= image_tag item.pictures[0].image, class: 'img-responsive card-img-top' unless item.pictures[0].nil?  %>
+    <%= image_tag item.pictures[0].image, class: 'card-img-top' unless item.pictures[0].nil?  %>
     <div class="card-block">
       <h4 class="card-title"><%= item.name %> <span class="label label-info"><%= item.category.name if item.category %></span></h4>
       <p class="card-text"><%= item.description %></p>

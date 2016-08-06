@@ -3,8 +3,12 @@ class ItemsController < ApplicationController
   rescue_from ActiveRecord::RecordInvalid, with: :show_errors
 
   def index
-    @items = Item.all
+    @items = Item.all.paginate(page: params[:page], per_page: 16).order('created_at DESC')
     @cat = Category.all
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def new

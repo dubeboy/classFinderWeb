@@ -7,7 +7,7 @@
 # Ignore bundler config.
 /.bundle
 /public/uploads/*
-/.idea
+/.idea/
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
@@ -17,9 +17,10 @@
 !/log/.keep
 /tmp
 .byebug_history
+ /public/system/pictures/
 <<<<<<< HEAD
-/node_modules
-/client/node_modules
+/node_modules/
+/client/node_modules/
 =======
 # React on Rails
 npm-debug.log
@@ -30,3 +31,4 @@ node_modules
 >>>>>>> create-users
 
 /log
+app/assets/webpack/

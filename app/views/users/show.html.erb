@@ -1,9 +1,9 @@
 <div class="">
   <div class="header">
-    <%= check_if_nil @user.cover, '/default_cover.png', 'profile-cover' %>
+    <%= check_if_nil @user.cover.url(:medium), '/default_cover.png', 'profile-cover' %>
 
     <div class="">
-      <%= check_if_nil @user.profile_img, '/profile.jpg', 'profile-img'  %>
+      <%= check_if_nil @user.profile_img.url(:medium), '/profile.jpg', 'profile-img'  %>
     </div>
 </div>
 
