@@ -24,7 +24,7 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-gem 'will_paginate'
+gem 'will_paginate', '~> 3.0.7'
 
 gem 'faker'
 
@@ -48,12 +48,10 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 
-  gem "react_on_rails", "~> 5"
   source 'https://rails-assets.org' do
     gem 'rails-assets-bootstrap'
     gem 'rails-assets-bootstrap-material-design'
   end
-  gem 'devise' , '3.4.1'
   gem 'paperclip', '4.2.0'
 
 

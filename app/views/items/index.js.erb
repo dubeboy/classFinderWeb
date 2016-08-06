@@ -1,7 +1,5 @@
-$('#my-items').append('<%= j render @items %>');
-<% if @items.next_page %>
-$('.pagination').replaceWith('<%= j will_paginate @items %>');
-<% else %>
-$(window).off('scroll');
-$('.pagination').remove();
-<% end %>
+ $('#my-items').append('<%= escape_javascript render(partial: "shared/item", collection: @items) %>');
+ $('.pagination').replaceWith('<%= escape_javascript will_paginate(@items) %>');
+
+<%=  "$(window).off('scroll');" unless @items.next_page %>
+
