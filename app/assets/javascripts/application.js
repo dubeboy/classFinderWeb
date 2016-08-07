@@ -18,6 +18,7 @@
 //= require_tree .
 
 $.material.init();
+$.material.ripples();
 
 
 $(document).ready(function() {
@@ -25,7 +26,7 @@ $(document).ready(function() {
         $(window).scroll(function() {
             var url = $('.pagination .next_page').attr('href');
             if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 60) {
-                $('.pagination').text("Seems like end of page");
+                $('.pagination').text(" ");
                 return $.getScript(url);
             }
         });
