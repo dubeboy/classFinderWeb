@@ -1,4 +1,4 @@
-$('#items').append('<%= j render @items_likes %>');
+$('#my-items').append('<%= j render(partial: 'shared/item', collection: @items_likes) %>');
 <% if @items_likes.next_page %>
 $('.pagination').replaceWith('<%= j will_paginate @items_likes %>');
 $('.pagination').hide();

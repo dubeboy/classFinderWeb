@@ -13,16 +13,18 @@
 
 <div>
   <h2> 6 Most Liked</h2>
-  <div id="items">
+  <div id="my-items" class="col-md-12">
     <%= render(partial: "shared/item", collection: @items_likes) || "There's no Item to be displayed"  %>
-  </div>
+  </div><br>
 
   <div id="with-button">
     <%= will_paginate @items_likes %>
   </div>
 
+
   <% if @items_likes.next_page %>
-      <div id="load_more_items" class="btn btn-primary btn-lg">More Items</div>
+      <div id="load_more_items" class="btn btn-primary btn-lg" style="display: inline-flex;">More Items</div>
   <% end %>
+
 
 </div>
