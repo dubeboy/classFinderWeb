@@ -15,5 +15,7 @@
  *= require bootstrap
  *= require bootstrap-material-design
  */
-
+body {
+    position: relative;
+}
 

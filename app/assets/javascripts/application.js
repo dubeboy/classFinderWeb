@@ -25,7 +25,8 @@ $(document).ready(function() {
 
    var pagination =  $('.pagination');
     pagination.hide();
-    if (!$('#with-button').size() > 0  ) {
+
+    if ($('#infinity-scroll').size() > 0  ) {
         if (pagination.length) {
             $(window).scroll(function () {
                 var url = $('.pagination .next_page').attr('href');
@@ -37,6 +38,8 @@ $(document).ready(function() {
             return $(window).scroll();
         }
     }
+
+
 
     if ($('#with-button').size() > 0  ) {
           loading_items = false;

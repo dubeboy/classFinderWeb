@@ -1,7 +1,16 @@
+
 $('#my-items').append('<%= j render(partial: 'shared/item', collection: @items_likes) %>');
 <% if @items_likes.next_page %>
 $('.pagination').replaceWith('<%= j will_paginate @items_likes %>');
 $('.pagination').hide();
 <% else %>
 $('.pagination, #load_more_items').remove();
+<% end %>
+
+$('#my-items-views').append('<%= j render(partial: 'shared/item', collection: @items_views) %>');
+<% if @items_views.next_page %>
+$('.pagination').replaceWith('<%= j will_paginate @items_views %>');
+$('.pagination').hide();
+<% else %>
+$('.pagination, #load_more_items_views').remove();
 <% end %>
