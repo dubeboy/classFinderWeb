@@ -92,6 +92,9 @@ GEM
       cocaine (~> 0.5.3)
       mime-types
     pkg-config (1.1.7)
+    puma (3.6.0)
+    puma-heroku (1.0.0)
+      puma (~> 3.0)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -178,6 +181,8 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   paperclip (= 4.2.0)
+  puma
+  puma-heroku
   rails
   rails-assets-bootstrap!
   rails-assets-bootstrap-material-design!

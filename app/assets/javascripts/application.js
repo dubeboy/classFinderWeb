@@ -29,19 +29,18 @@ $(document).ready(function() {
     if ($('#infinity-scroll').size() > 0  ) {
         if (pagination.length) {
             $(window).scroll(function () {
-                var url = $('.pagination .next_page').attr('href');
+                var url = $('.pagination >  .next_page' ).attr('href');
                 if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 60) {
                     $('.pagination').text(" Loading ");
                     return $.getScript(url);
                 }
             });
-            return $(window).scroll();
         }
     }
 
 
 
-    if ($('#with-button').size() > 0  ) {
+    if ($('#with_button').size() > 0  ) {
           loading_items = false;
           $('#load_more_items').show().click(function() {
               var $this, more_items_url;

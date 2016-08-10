@@ -13,11 +13,11 @@
 
 <div>
   <h2> 6 Most Liked</h2>
-  <div id="my-items" class="col-md-12">
-    <%= render(partial: "shared/item", collection: @items_likes) || "There's no Item to be displayed"  %>
+  <div id="my_items" class="col-md-12">
+    <%= render(partial: 'shared/item', collection: @items_likes)  %>
   </div><br>
 
-  <div id="with-button">
+  <div id="with_button">
     <%= will_paginate @items_likes %>
   </div>
 
