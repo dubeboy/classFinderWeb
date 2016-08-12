@@ -10,6 +10,10 @@
           <i class="material-icons">thumb_up</i>
       <% end %><span class="likes-count" data-id="<%= item.id %>"> <%= item.tot_likes %> </span> Likes
       <%= link_to 'View Item', item_path(item), class:'my-button' %>
+      <% if item.user == current_user %>
+      <div class="pull-right"><%= link_to 'Delete', item_path(item),
+                                          data: {:confirm => 'Are you sure?'}, :method => :delete %></div>
+      <% end %>
 
     </div>
   </div>

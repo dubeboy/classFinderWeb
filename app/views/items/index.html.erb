@@ -1,7 +1,7 @@
 
    <%# could render anther page but for now we can just.... %>
    <div id="my-items">
-     <%= render(partial: "shared/item", collection: @items) || "There's no Item to be displayed"  %>
+     <%= render(partial: 'shared/item', collection: @items) || "There's no Item to be displayed"  %>
    </div>
 
    <div id="infinity-scroll" style="display: inline-block" ><%= will_paginate %></div>

@@ -16,6 +16,10 @@ class ItemsController < ApplicationController
     @category = Category.all
   end
 
+  def edit
+    @item = Item.find(params[:id])
+  end
+
   def create
     @item = Item.new(item_params)
     @item.user = current_user
@@ -39,6 +43,17 @@ class ItemsController < ApplicationController
     @item.update_attribute(:views, views) if @item.user != current_user #coz the user who created the item knows it duh... same here
   end
 
+  #edit function
+  def edit
+    @item = Item.find(params[id])
+  end
+
+  def destroy
+    @item = Item.find(params[:id])
+    @item.destroy
+    redirect_to user_path(current_user)
+  end
+
   def like #todo not working properly should be bechmarked
      item = Item.find(params[:id])
      like = Like.like(item, current_user) #should return these should be called thru Item model(let this = same here)
@@ -53,7 +68,7 @@ class ItemsController < ApplicationController
      end
   end
 
-
+  #@deprecated
   def likes
     item = Item.find(params[:id])
     render status: :ok,
