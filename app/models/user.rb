@@ -13,17 +13,13 @@ class User < ActiveRecord::Base
   validates_length_of :contacts, :in => 3..12, :allow_blank => true # todo make range better boy
 
   has_attached_file :cover,
-                    :storage => :google_drive,
-                    :google_drive_credentials => "#{Rails.root}/config/google_drive.yml",
-                     styles: { medium: "1141x290>", thumb: "400x400>" }, default_url: "images/default_cover.png",
-                    :google_drive_options => { :path => proc { |style| "#{style}_#{id}_#{photo.original_filename}" } }
+                    :storage => :google_drive, #todo should changes soon to s3
+                     styles: { medium: "1141x290", thumb: "400x400" }, default_url: "images/default_cover.png"
 
 
 
   has_attached_file :profile_img, :storage => :google_drive,
-                    :google_drive_credentials => "#{Rails.root}/config/google_drive.yml",
-                    styles: { medium: "300x300>", thumb: "200x200>" }, default_url: "images/profile.png",
-                    :google_drive_options => { :path => proc { |style| "#{style}_#{id}_#{photo.original_filename}" } }
+                    styles: { medium: "300x300", thumb: "200x200" }, default_url: "images/profile.png"
 
   validates_attachment_content_type :cover, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
   validates_attachment_content_type :profile_img, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
