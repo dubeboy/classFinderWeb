@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -20,8 +19,19 @@ ActiveRecord::Schema.define(version: 20160710235655) do
     t.datetime "updated_at", null: false
   end
 
-# Could not dump table "items" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  create_table "items", force: :cascade do |t|
+    t.decimal  "price"
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.text     "description"
+    t.         "avatars"
+    t.integer  "picture_id"
+    t.integer  "category_id"
+    t.integer  "views",       default: 0
+    t.integer  "tot_likes",   default: 0
+  end
 
   create_table "likes", force: :cascade do |t|
     t.integer  "item_id"
@@ -40,8 +50,25 @@ ActiveRecord::Schema.define(version: 20160710235655) do
     t.integer  "item_id"
   end
 
-# Could not dump table "profiles" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  create_table "profiles", force: :cascade do |t|
+    t.string   "handle"
+    t.string   "name"
+    t.string   "facebook"
+    t.string   "twitter"
+    t.string   "instergram"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.         "references"
+    t.string   "cover_file_name"
+    t.string   "cover_content_type"
+    t.integer  "cover_file_size"
+    t.datetime "cover_updated_at"
+    t.string   "profile_img_file_name"
+    t.string   "profile_img_content_type"
+    t.integer  "profile_img_file_size"
+    t.datetime "profile_img_updated_at"
+    t.integer  "user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                    default: "", null: false
@@ -73,9 +100,8 @@ ActiveRecord::Schema.define(version: 20160710235655) do
     t.datetime "profile_img_updated_at"
     t.text     "about"
     t.string   "contacts"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end
