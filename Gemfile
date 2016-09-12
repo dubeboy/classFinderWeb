@@ -48,6 +48,7 @@ end
 
 # gem 'paperclip', '4.2.0
 gem 'paperclip'
+gem 'aws-sdk', '< 2.0'
 gem 'puma'
 
 group :development do
