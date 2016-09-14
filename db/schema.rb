@@ -58,7 +58,6 @@ ActiveRecord::Schema.define(version: 20160710235655) do
     t.string   "instergram"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
-    t.         "references"
     t.string   "cover_file_name"
     t.string   "cover_content_type"
     t.integer  "cover_file_size"
