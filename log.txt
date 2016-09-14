@@ -1,0 +1,101 @@
+2016-09-14T08:16:03.158870+00:00 app[web.1]: [3] Puma starting in cluster mode...
+2016-09-14T08:16:03.158916+00:00 app[web.1]: [3] * Version 3.6.0 (ruby 2.2.4-p230), codename: Sleepy Sunday Serenity
+2016-09-14T08:16:03.158918+00:00 app[web.1]: [3] * Min threads: 5, max threads: 5
+2016-09-14T08:16:03.158918+00:00 app[web.1]: [3] * Environment: production
+2016-09-14T08:16:03.158919+00:00 app[web.1]: [3] * Process workers: 2
+2016-09-14T08:16:03.158922+00:00 app[web.1]: [3] * Preloading application
+2016-09-14T08:16:04.610841+00:00 app[web.1]: DEPRECATION WARNING: `config.serve_static_files` is deprecated and will be removed in Rails 5.1.
+2016-09-14T08:16:04.610849+00:00 app[web.1]: Please use `config.public_file_server.enabled = true` instead.
+2016-09-14T08:16:04.610850+00:00 app[web.1]:  (called from block in <top (required)> at /app/config/environments/production.rb:25)
+2016-09-14T08:16:05.126404+00:00 app[web.1]: [3] ! Unable to load application: Gem::LoadError: Specified 'postgresql' for database adapter, but the gem is not loaded. Add `gem 'pg'` to your Gemfile (and ensure its version is at the minimum required by ActiveRecord).
+2016-09-14T08:16:05.126530+00:00 app[web.1]: /app/vendor/bundle/ruby/2.2.0/gems/activerecord-5.0.0.1/lib/active_record/connection_adapters/connection_specification.rb:176:in `rescue in spec': Specified 'postgresql' for database adapter, but the gem is not loaded. Add `gem 'pg'` to your Gemfile (and ensure its version is at the minimum required by ActiveRecord). (Gem::LoadError)
+2016-09-14T08:16:05.126547+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/activerecord-5.0.0.1/lib/active_record/connection_adapters/connection_specification.rb:173:in `spec'
+2016-09-14T08:16:05.126562+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/activerecord-5.0.0.1/lib/active_record/connection_handling.rb:53:in `establish_connection'
+2016-09-14T08:16:05.126577+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/activerecord-5.0.0.1/lib/active_record/railtie.rb:125:in `block (2 levels) in <class:Railtie>'
+2016-09-14T08:16:05.126592+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/activesupport-5.0.0.1/lib/active_support/lazy_load_hooks.rb:38:in `instance_eval'
+2016-09-14T08:16:05.126642+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/activesupport-5.0.0.1/lib/active_support/lazy_load_hooks.rb:45:in `block in run_load_hooks'
+2016-09-14T08:16:05.126607+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/activesupport-5.0.0.1/lib/active_support/lazy_load_hooks.rb:38:in `execute_hook'
+2016-09-14T08:16:05.126659+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/activesupport-5.0.0.1/lib/active_support/lazy_load_hooks.rb:44:in `each'
+2016-09-14T08:16:05.126673+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/activesupport-5.0.0.1/lib/active_support/lazy_load_hooks.rb:44:in `run_load_hooks'
+2016-09-14T08:16:05.126687+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/activerecord-5.0.0.1/lib/active_record/base.rb:324:in `<module:ActiveRecord>'
+2016-09-14T08:16:05.126701+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/activerecord-5.0.0.1/lib/active_record/base.rb:24:in `<top (required)>'
+2016-09-14T08:16:05.126716+00:00 app[web.1]: 	from /app/app/models/category.rb:1:in `<top (required)>'
+2016-09-14T08:16:05.126731+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/activesupport-5.0.0.1/lib/active_support/dependencies.rb:293:in `require'
+2016-09-14T08:16:05.126746+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/activesupport-5.0.0.1/lib/active_support/dependencies.rb:293:in `block in require'
+2016-09-14T08:16:05.126761+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/activesupport-5.0.0.1/lib/active_support/dependencies.rb:259:in `load_dependency'
+2016-09-14T08:16:05.126776+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/activesupport-5.0.0.1/lib/active_support/dependencies.rb:293:in `require'
+2016-09-14T08:16:05.126807+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/activesupport-5.0.0.1/lib/active_support/dependencies.rb:37:in `block in load_interlock'
+2016-09-14T08:16:05.126790+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/activesupport-5.0.0.1/lib/active_support/dependencies.rb:380:in `block in require_or_load'
+2016-09-14T08:16:05.126838+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/activesupport-5.0.0.1/lib/active_support/concurrency/share_lock.rb:117:in `exclusive'
+2016-09-14T08:16:05.126823+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/activesupport-5.0.0.1/lib/active_support/dependencies/interlock.rb:12:in `block in loading'
+2016-09-14T08:16:05.126852+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/activesupport-5.0.0.1/lib/active_support/dependencies/interlock.rb:11:in `loading'
+2016-09-14T08:16:05.126868+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/activesupport-5.0.0.1/lib/active_support/dependencies.rb:37:in `load_interlock'
+2016-09-14T08:16:05.126883+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/activesupport-5.0.0.1/lib/active_support/dependencies.rb:358:in `require_or_load'
+2016-09-14T08:16:05.126899+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/activesupport-5.0.0.1/lib/active_support/dependencies.rb:336:in `depend_on'
+2016-09-14T08:16:05.126913+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/activesupport-5.0.0.1/lib/active_support/dependencies.rb:252:in `require_dependency'
+2016-09-14T08:16:05.126928+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/railties-5.0.0.1/lib/rails/engine.rb:476:in `block (2 levels) in eager_load!'
+2016-09-14T08:16:05.126943+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/railties-5.0.0.1/lib/rails/engine.rb:475:in `each'
+2016-09-14T08:16:05.126959+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/railties-5.0.0.1/lib/rails/engine.rb:475:in `block in eager_load!'
+2016-09-14T08:16:05.126974+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/railties-5.0.0.1/lib/rails/engine.rb:473:in `each'
+2016-09-14T08:16:05.126988+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/railties-5.0.0.1/lib/rails/engine.rb:473:in `eager_load!'
+2016-09-14T08:16:05.127018+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/railties-5.0.0.1/lib/rails/application/finisher.rb:59:in `each'
+2016-09-14T08:16:05.127005+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/railties-5.0.0.1/lib/rails/engine.rb:354:in `eager_load!'
+2016-09-14T08:16:05.127031+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/railties-5.0.0.1/lib/rails/application/finisher.rb:59:in `block in <module:Finisher>'
+2016-09-14T08:16:05.127042+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/railties-5.0.0.1/lib/rails/initializable.rb:30:in `instance_exec'
+2016-09-14T08:16:05.127057+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/railties-5.0.0.1/lib/rails/initializable.rb:30:in `run'
+2016-09-14T08:16:05.127069+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/railties-5.0.0.1/lib/rails/initializable.rb:55:in `block in run_initializers'
+2016-09-14T08:16:05.127081+00:00 app[web.1]: 	from /app/vendor/ruby-2.2.4/lib/ruby/2.2.0/tsort.rb:226:in `block in tsort_each'
+2016-09-14T08:16:05.127092+00:00 app[web.1]: 	from /app/vendor/ruby-2.2.4/lib/ruby/2.2.0/tsort.rb:348:in `block (2 levels) in each_strongly_connected_component'
+2016-09-14T08:16:05.127115+00:00 app[web.1]: 	from /app/vendor/ruby-2.2.4/lib/ruby/2.2.0/tsort.rb:347:in `block in each_strongly_connected_component'
+2016-09-14T08:16:05.127103+00:00 app[web.1]: 	from /app/vendor/ruby-2.2.4/lib/ruby/2.2.0/tsort.rb:429:in `each_strongly_connected_component_from'
+2016-09-14T08:16:05.127127+00:00 app[web.1]: 	from /app/vendor/ruby-2.2.4/lib/ruby/2.2.0/tsort.rb:345:in `each'
+2016-09-14T08:16:05.127139+00:00 app[web.1]: 	from /app/vendor/ruby-2.2.4/lib/ruby/2.2.0/tsort.rb:345:in `call'
+2016-09-14T08:16:05.127154+00:00 app[web.1]: 	from /app/vendor/ruby-2.2.4/lib/ruby/2.2.0/tsort.rb:345:in `each_strongly_connected_component'
+2016-09-14T08:16:05.127179+00:00 app[web.1]: 	from /app/vendor/ruby-2.2.4/lib/ruby/2.2.0/tsort.rb:203:in `tsort_each'
+2016-09-14T08:16:05.127191+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/railties-5.0.0.1/lib/rails/initializable.rb:54:in `run_initializers'
+2016-09-14T08:16:05.127168+00:00 app[web.1]: 	from /app/vendor/ruby-2.2.4/lib/ruby/2.2.0/tsort.rb:224:in `tsort_each'
+2016-09-14T08:16:05.127202+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/railties-5.0.0.1/lib/rails/application.rb:352:in `initialize!'
+2016-09-14T08:16:05.127214+00:00 app[web.1]: 	from /app/config/environment.rb:5:in `<top (required)>'
+2016-09-14T08:16:05.127227+00:00 app[web.1]: 	from config.ru:2:in `require'
+2016-09-14T08:16:05.127239+00:00 app[web.1]: 	from config.ru:2:in `block in <main>'
+2016-09-14T08:16:05.127250+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/rack-2.0.1/lib/rack/builder.rb:55:in `instance_eval'
+2016-09-14T08:16:05.127261+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/rack-2.0.1/lib/rack/builder.rb:55:in `initialize'
+2016-09-14T08:16:05.127273+00:00 app[web.1]: 	from config.ru:in `new'
+2016-09-14T08:16:05.127285+00:00 app[web.1]: 	from config.ru:in `<main>'
+2016-09-14T08:16:05.127296+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/rack-2.0.1/lib/rack/builder.rb:49:in `eval'
+2016-09-14T08:16:05.127309+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/rack-2.0.1/lib/rack/builder.rb:49:in `new_from_string'
+2016-09-14T08:16:05.127323+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/rack-2.0.1/lib/rack/builder.rb:40:in `parse_file'
+2016-09-14T08:16:05.127337+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/puma-3.6.0/lib/puma/configuration.rb:315:in `load_rackup'
+2016-09-14T08:16:05.127348+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/puma-3.6.0/lib/puma/configuration.rb:243:in `app'
+2016-09-14T08:16:05.127359+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/puma-3.6.0/lib/puma/runner.rb:127:in `load_and_bind'
+2016-09-14T08:16:05.127370+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/puma-3.6.0/lib/puma/cluster.rb:370:in `run'
+2016-09-14T08:16:05.127382+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/puma-3.6.0/lib/puma/launcher.rb:172:in `run'
+2016-09-14T08:16:05.127393+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/puma-3.6.0/lib/puma/cli.rb:74:in `run'
+2016-09-14T08:16:05.127405+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/gems/puma-3.6.0/bin/puma:10:in `<top (required)>'
+2016-09-14T08:16:05.127417+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/bin/puma:23:in `load'
+2016-09-14T08:16:05.127428+00:00 app[web.1]: 	from /app/vendor/bundle/ruby/2.2.0/bin/puma:23:in `<main>'
+2016-09-14T08:16:05.281880+00:00 heroku[web.1]: State changed from starting to crashed
+2016-09-14T08:16:05.283413+00:00 heroku[web.1]: Process exited with status 1
+2016-09-14T09:05:38.272751+00:00 heroku[api]: Deploy cee4f35 by dubedivine@gmail.com
+2016-09-14T09:05:38.272875+00:00 heroku[api]: Release v6 created by dubedivine@gmail.com
+2016-09-14T09:05:38.510002+00:00 heroku[slug-compiler]: Slug compilation started
+2016-09-14T09:05:38.510007+00:00 heroku[slug-compiler]: Slug compilation finished
+2016-09-14T09:05:38.496354+00:00 heroku[web.1]: State changed from crashed to starting
+2016-09-14T09:05:40.829683+00:00 heroku[web.1]: Starting process with command `bundle exec puma -C config/puma.rb`
+2016-09-14T09:05:43.210264+00:00 app[web.1]: [3] Puma starting in cluster mode...
+2016-09-14T09:05:43.210297+00:00 app[web.1]: [3] * Version 3.6.0 (ruby 2.2.4-p230), codename: Sleepy Sunday Serenity
+2016-09-14T09:05:43.210298+00:00 app[web.1]: [3] * Min threads: 5, max threads: 5
+2016-09-14T09:05:43.210299+00:00 app[web.1]: [3] * Environment: production
+2016-09-14T09:05:43.210299+00:00 app[web.1]: [3] * Process workers: 2
+2016-09-14T09:05:43.210300+00:00 app[web.1]: [3] * Preloading application
+2016-09-14T09:05:44.241216+00:00 app[web.1]: DEPRECATION WARNING: `config.serve_static_files` is deprecated and will be removed in Rails 5.1.
+2016-09-14T09:05:44.241245+00:00 app[web.1]: Please use `config.public_file_server.enabled = true` instead.
+2016-09-14T09:05:44.241246+00:00 app[web.1]:  (called from block in <top (required)> at /app/config/environments/production.rb:25)
+2016-09-14T09:05:44.658999+00:00 app[web.1]: [3] * Listening on tcp://0.0.0.0:47391
+2016-09-14T09:05:44.659178+00:00 app[web.1]: [3] Use Ctrl-C to stop
+2016-09-14T09:05:44.663155+00:00 app[web.1]: [3] - Worker 0 (pid: 6) booted, phase: 0
+2016-09-14T09:05:44.664117+00:00 app[web.1]: [3] - Worker 1 (pid: 10) booted, phase: 0
+2016-09-14T09:05:44.925681+00:00 heroku[web.1]: State changed from starting to up
+2016-09-14T09:10:09.698461+00:00 heroku[router]: at=info method=GET path="/" host=calm-chamber-39830.herokuapp.com request_id=94fe1918-fd04-4fd0-910f-57579b58d49b fwd="196.24.112.13" dyno=web.1 connect=0ms service=88ms status=500 bytes=1669
+2016-09-14T09:10:14.067284+00:00 heroku[router]: at=info method=GET path="/favicon.ico" host=calm-chamber-39830.herokuapp.com request_id=faf5c106-035b-46d3-876e-02dd3b9c7736 fwd="196.24.112.13" dyno=web.1 connect=0ms service=4ms status=200 bytes=143
+2016-09-14T09:20:31.393162+00:00 heroku[router]: at=info method=GET path="/" host=calm-chamber-39830.herokuapp.com request_id=f7ecee1e-dcfd-46c1-ba78-e45995d8b01a fwd="196.24.112.13" dyno=web.1 connect=0ms service=18ms status=500 bytes=1669
