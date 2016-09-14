@@ -39,7 +39,8 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
-    @item.views += 1 if @item.user != current_user
+    views = @item.views
+    views += 1 if @item.user != current_user
     @item.update_attribute(:views, views) if @item.user != current_user #coz the user who created the item knows it duh... same here
   end
 
