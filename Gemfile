@@ -45,7 +45,7 @@ group :development do
   end
   
   # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+  gem 'sqlite3'
 end
 
 # gem 'paperclip', '4.2.0
@@ -56,4 +56,8 @@ gem 'puma'
 group :development do
   gem 'puma-heroku'
 end
+
+group :production do
+  gem 'pg'
+end 
 
