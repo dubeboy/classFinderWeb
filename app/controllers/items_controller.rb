@@ -25,14 +25,15 @@ class ItemsController < ApplicationController
     @item.user = current_user
     @item.category = Category.find(params[:item][:category_id])
     #Category.item = @Item
-    if @item.save
-      if params[:images]
+    if params[:images]
+      if @item.save
        params[:images].each { |image|
          @item.pictures.create(image: image)
        }
       end
       redirect_to @item
     else
+      flash[:warning] = 'Please make sure that the item you trying to upload has a picture as well '
       render 'new'
     end
   end

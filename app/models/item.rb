@@ -9,10 +9,9 @@ class Item < ActiveRecord::Base
 
   has_many :likes
 
-
   def self.search(term) #todo make this search better
     if term
-      where("name LIKE ?", "%#{term}%")
+      where('name LIKE ?', "%#{term}%")
     else
       nil
     end

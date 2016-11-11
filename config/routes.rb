@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
+  get 'accomodation/index'
 
+  get 'about/index'
+
+  get 'auth/:provider/callback', to: 'sessions#create'
+  get 'auth/failure', to: redirect('/')
   get 'search/index'
 
   get "log_out" => "sessions#destroy", :as => "log_out"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160710235655) do
+ActiveRecord::Schema.define(version: 20161106153905) do
 
   create_table "categories", force: :cascade do |t|
     t.integer  "item_id"
@@ -99,6 +99,10 @@ ActiveRecord::Schema.define(version: 20160710235655) do
     t.datetime "profile_img_updated_at"
     t.text     "about"
     t.string   "contacts"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "oauth_token"
+    t.datetime "oauth_expires_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

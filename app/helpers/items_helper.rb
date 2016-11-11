@@ -6,4 +6,8 @@ module ItemsHelper
       'item'
     end
   end
+
+  def fit_string(description)
+       description[0..60]
+  end
 end

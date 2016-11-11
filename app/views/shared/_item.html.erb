@@ -1,20 +1,26 @@
-<div class="col-md-3" style="padding-right: 0; ">
-  <div class="card">
+<div class="col-md-3" >
+  <div class="panel panel-body" style="padding: 0px;">
     <%= image_tag item.pictures[0].image, class: 'card-img-top' unless item.pictures[0].nil?  %>
     <div class="card-block">
-      <h4 class="card-title"><%= item.name %> <span class="label label-info"><%= item.category.name if item.category %></span></h4>
-      <p class="card-text"><%= item.description %></p>
-    </div>
-    <div class="card-block">
+      <h4 class="card-title"> <span class="text-bold"><%= item.name.capitalize %></span> <small>in <span class="label label-info"><%= item.category.name if item.category %></span></small></h4>
+      <p class="card-text"><%= fit_string(item.description) %></p>
+
+
+      <span class="likes-count pull-right" > <span data-id="<%= item.id %>"> <%= item.tot_likes %> </span> Interests</span>
       <%= link_to [:like, item], method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
-          <i class="material-icons">thumb_up</i>
-      <% end %><span class="likes-count" data-id="<%= item.id %>"> <%= item.tot_likes %> </span> Likes
-      <%= link_to 'View Item', item_path(item), class:'my-button' %>
+          <i class="material-icons my-small-icon" style="color: #393E46;">favorite</i>
+      <% end %>
+
       <% if item.user == current_user %>
       <div class="pull-right"><%= link_to 'Delete', item_path(item),
                                           data: {:confirm => 'Are you sure?'}, :method => :delete %></div>
       <% end %>
 
+
+
     </div>
+
+      <%= button_to 'View Item', item_path(item), class: 'btn btn-success my-button', method: :get  %>
   </div>
+
 </div>

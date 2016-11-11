@@ -17,6 +17,7 @@
 #                    .save(validate: false
 #                    ) }
 
-Category.create(name: 'Electronics')
+Category.create(name: 'Accommodation')
 Category.create(name: 'Books')
+Category.create(name: 'Electronics')
 Category.create(name: 'Other')

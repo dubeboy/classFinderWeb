@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   def authenticate_user!
     if current_user.nil?
       flash[:danger] = 'Please log in to complete this action.'
-      redirect_to log_in_path
+      redirect_to '/auth/google_oauth2'
       return false
     else
       return true

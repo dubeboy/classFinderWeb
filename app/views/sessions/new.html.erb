@@ -12,7 +12,7 @@
           <%= label_tag :password %><br />
           <%= password_field_tag :password, class: 'form-control' %>
         </p>
-        <p class="btn btn-raised"><%= submit_tag "Log in" %></p>
+        <%= submit_tag "Log in", class: 'btn btn-raised' %>
     <% end %>
     <%= link_to "Create Account", new_user_path  %>
   </div>

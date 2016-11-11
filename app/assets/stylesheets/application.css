@@ -18,4 +18,13 @@
 body {
     position: relative;
 }
+.alert-error {
+    background: #ff1343;
+}
+.alert {
+    border-radius: 10px;
+}
+.panel-body {
+    padding: 0px;
+}
 
