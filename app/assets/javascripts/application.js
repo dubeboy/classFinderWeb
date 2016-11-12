@@ -59,10 +59,11 @@ $(document).ready(function() {
           });
     }
 
-    // this should show  a button if the contents
-
-    $("#mySearch").click(function () {
-        // code to when that button is pressed
+    $('.grid').masonry({
+        // options
+        itemSelector: '.item',
+         columnWidth: '.item'
     });
+
 
 });

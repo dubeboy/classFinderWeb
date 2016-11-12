@@ -25,14 +25,17 @@
                               <div class="panel panel-default">
                                 <div class="panel-body">
                                   <h4 class="text-bold"> Item Description</h4>
-                                  <h4><%= @item.name %></h4>
+                                  <h4><%=  @item.name %></h4>
                                   <p><span class="label label-info"><%= @item.category.name if @item.category %></span> </p>
-                                  <p><%= @item.description %></p>
-                                  <p class="text-success">Price: R <%= @item.price.round(2) %></p>
-                                  <i class="material-icons">thumb_up</i>
+                                  <%= @item.description %>
+                                  <p class="text-success text-bold">Price: R <%= @item.price.round(2) %></p>
+                                  <span class="likes-count" data-id="<%= @item.id %>" > <%= @item.tot_likes %> </span>
+                                  <%= link_to [:like, @item], method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
+                                      <i class="material-icons my-small-icon" style="color: #ff0722;">favorite</i>
+                                  <% end %>
                                   <p>Views: <%= @item.views %></p>
                                   </div>
-                                </div>
+                           </div>
 
                               <div class="panel panel-default">
                                 <div class="panel-body">

@@ -2,7 +2,9 @@
 <div>
   <h2 class="text-center"> <i class="material-icons">star</i>HOTLIST<i class="material-icons">star</i></h2>
   <div id="my_items" class="" style="padding: 0;">
+    <div class="grid">
     <%= render(partial: 'shared/item', collection: @items_likes)  %>
+      </div>
   </div><br>
 
   <div id="with_button">

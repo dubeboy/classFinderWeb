@@ -1,26 +1,23 @@
-<div class="col-md-3" >
+<div class="col-md-3 item" >
   <div class="panel panel-body" style="padding: 0px;">
     <%= image_tag item.pictures[0].image, class: 'card-img-top' unless item.pictures[0].nil?  %>
     <div class="card-block">
-      <h4 class="card-title"> <span class="text-bold"><%= item.name.capitalize %></span> <small>in <span class="label label-info"><%= item.category.name if item.category %></span></small></h4>
+      <h4 class="card-title"> <span class="text-bold"><%= fit_title(item.name) %></span> <small>in <span class="label label-info"><%= item.category.name if item.category %></span></small></h4>
       <p class="card-text"><%= fit_string(item.description) %></p>
 
-
-      <span class="likes-count pull-right" > <span data-id="<%= item.id %>"> <%= item.tot_likes %> </span> Interests</span>
+      <span class="likes-count" data-id="<%= item.id %>" > <%= item.tot_likes %> </span>
       <%= link_to [:like, item], method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
-          <i class="material-icons my-small-icon" style="color: #393E46;">favorite</i>
+          <i class="material-icons my-small-icon" style="color: #ff0722;">favorite</i>
       <% end %>
 
       <% if item.user == current_user %>
-      <div class="pull-right"><%= link_to 'Delete', item_path(item),
-                                          data: {:confirm => 'Are you sure?'}, :method => :delete %></div>
+          <div class="pull-right">
+            <%= link_to 'Delete', item_path(item),
+                        data: {:confirm => 'Are you sure?'}, :method => :delete %>
+          </div>
       <% end %>
-
-
-
     </div>
-
-      <%= button_to 'View Item', item_path(item), class: 'btn btn-info my-button', method: :get  %>
+    <%= button_to 'View Item', item_path(item), class: 'btn btn-info my-button', method: :get  %>
+    <%# link_to '<button type="button">View Item</button>'.html_safe, item_path(item), class: 'btn btn-info my-button' %>
   </div>
-
 </div>

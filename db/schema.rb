@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20161106153905) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.text     "description"
-    t.         "avatars"
+    t.string   "avatars"
     t.integer  "picture_id"
     t.integer  "category_id"
     t.integer  "views",       default: 0

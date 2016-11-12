@@ -16,6 +16,7 @@ class ItemsController < ApplicationController
     @category = Category.all
   end
 
+  # Damn unreachable code
   def edit
     @item = Item.find(params[:id])
   end
@@ -62,9 +63,9 @@ class ItemsController < ApplicationController
 
      if like && item.update_attributes(tot_likes: item.likes.size )
        item.reload #todo find a better way to do this please
-       if request.xhr? #will always be true
+       # if request.xhr? #will always be true
           render json: { likes: item.tot_likes, id: params[:id] }
-       end
+       # end
      else
        redirect_to items_path
      end
