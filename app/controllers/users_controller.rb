@@ -24,7 +24,6 @@ end
 
 def update
   @user = User.find(params[:id])
-
   if @user.update_attributes(user_params)
     flash[:success] = 'Successfully edited your profile'
      #sign_in @user
@@ -44,7 +43,6 @@ end
   def authorised_user
     puts current_user
     if current_user and current_user == User.find(params[:id])
-      puts 'heebh'
       flash[:danger] = 'you now about to edit your account'
       true
     else

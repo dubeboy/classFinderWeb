@@ -7,7 +7,9 @@ module ItemsHelper
     end
   end
 
+
+  # todo i am not sure if this is efficient enough
   def fit_string(description)
-       description[0..60]
+       description[0..60].capitalize
   end
 end

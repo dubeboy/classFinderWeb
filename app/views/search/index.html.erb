@@ -6,7 +6,8 @@
             <div class=" form-g">
               <%= select_tag "category", options_from_collection_for_select(@cat, "id", "name"), class: 'form-control' %>
               <%= text_field_tag :search, params[:search], class: ' form-control', style: 'width: 500px'%>
-              <%= submit_tag 'Search', name: nil, class: 'btn  btn-success ' %>
+              <%= submit_tag 'Search', name: nil, class: 'btn  btn-success', id: 'mySearch' %>
+              <%= submit_tag '', name: nil, class: 'btn btn-info ', id: 'mySearch' %>
             </div>
 
         <% end %>
@@ -16,6 +17,9 @@
 <div id="my-items">
  <% if @items %>
       <%= render(partial: 'shared/item', collection: @items)  %>
+      <div>
+
+      </div>
       <% else %>
       <h2 class="text-bold text-capitalize text-center my-center"><i class="material-icons md-48">search</i> Search For Stuff...</h2>
   <% end %>
