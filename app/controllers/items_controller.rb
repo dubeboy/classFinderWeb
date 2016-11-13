@@ -57,7 +57,7 @@ class ItemsController < ApplicationController
     redirect_to user_path(current_user)
   end
 
-  def like #todo not working properly should be bechmarked
+  def like #todo not working properly and should be benchmarked
      item = Item.find(params[:id])
      like = Like.like(item, current_user) #should return these should be called thru Item model(let this = same here)
 
