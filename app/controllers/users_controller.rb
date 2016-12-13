@@ -8,9 +8,9 @@ def create
   @user = User.new(user_params)
   if @user.save
      session[:user_id] = @user.id
-    redirect_to root_url, :notice => "Signed up!"
+    redirect_to root_url, notice: 'Signed up!'
   else
-    render "new"
+    render 'new'
   end
 end
 
@@ -29,7 +29,7 @@ def update
      #sign_in @user
     redirect_to @user
   else
-    flash[:error] = "please try again"
+    flash[:error] = 'please try again'
     render 'edit'
   end
 end

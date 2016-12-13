@@ -15,7 +15,7 @@ class ProfilesController < ApplicationController
       @profile.user = current_user
       current_user.profile = @profile
       current_user.save
-      flash[:success] = "Your account has been created succesfully"
+      flash[:success] = 'Your account has been created succesfully'
       redirect_to profiles_path
     else
       render 'new'
