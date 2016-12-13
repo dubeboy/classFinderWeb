@@ -16,11 +16,6 @@ class ItemsController < ApplicationController
     @category = Category.all
   end
 
-  # Damn unreachable code
-  def edit
-    @item = Item.find(params[:id])
-  end
-
   def create
     @item = Item.new(item_params)
     @item.user = current_user

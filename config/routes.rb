@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'accomodation/index'
-
   get 'about/index'
 
   get 'auth/:provider/callback', to: 'sessions#create'
@@ -10,9 +8,11 @@ Rails.application.routes.draw do
   get "log_out" => "sessions#destroy", :as => "log_out"
   get "log_in" => "sessions#new", :as => "log_in"
   get "sign_up" => "users#new", :as => "sign_up"
+  
   resources :users
   resources :sessions
   resources :category
+  resources :accomodation
 
   resources :items do
     member do

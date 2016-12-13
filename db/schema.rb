@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161106153905) do
+ActiveRecord::Schema.define(version: 20161213035605) do
 
   create_table "categories", force: :cascade do |t|
     t.integer  "item_id"
@@ -26,11 +26,14 @@ ActiveRecord::Schema.define(version: 20161106153905) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.text     "description"
-    t.string   "avatars"
+    t.         "avatars"
     t.integer  "picture_id"
     t.integer  "category_id"
     t.integer  "views",       default: 0
     t.integer  "tot_likes",   default: 0
+    t.string   "city"
+    t.string   "institution"
+    t.string   "room_type"
   end
 
   create_table "likes", force: :cascade do |t|
