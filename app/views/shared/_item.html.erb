@@ -1,9 +1,9 @@
-<div class="col-md-3 item" >
+<div class="col-md-4 item" >
   <div class="panel panel-body" style="padding: 0px;">
     <%= image_tag item.pictures[0].image, class: 'card-img-top' unless item.pictures[0].nil?  %>
     <div class="card-block">
       <h4 class="card-title"> <span class="text-bold"><%= fit_title(item.name) %></span> <small>in <span class="label label-info"><%= item.category.name if item.category %></span></small></h4>
-      <p class="card-text"><%= fit_string(item.description) %></p>
+      <p class="card-text text-bold text-success">R <%= item.price.round(2) %></p>
 
       <span class="likes-count" data-id="<%= item.id %>" > <%= item.tot_likes %> </span>
       <%= link_to [:like, item], method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>

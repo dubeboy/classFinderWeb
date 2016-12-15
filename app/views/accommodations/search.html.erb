@@ -1,0 +1,56 @@
+
+
+<div class="text-center">
+  <div class="form-group">
+    <%= form_tag search_accommodations_path, :method => :get, id: 'items_search', class: 'form-inline form-search'  do %>
+        <br>
+        <%# text_field_tag :search, params[:search], placeholder: "Search", class: ' form-control', style: 'width: 50%'%>
+        <div class=" form-con">
+          Location: <%= select_tag 'name', options_for_select(@locations, "Auckland Park"), class: 'form-control' %> &nbsp &nbsp
+          Institution: <%= select_tag 'Institutions', options_for_select(@Inst, "UJ"), class: 'form-control' %> &nbsp &nbsp
+          Room Type: <%= select_tag 'room_type', options_for_select(['Single','Sharing'], "Sharing"), class: 'form-control' %> &nbsp &nbsp <br>
+          Price From R: <%= number_field_tag :price_from, params[:price_from],placeholder: "0", class: "form-control"%>&nbsp
+          Price To R: <%= number_field_tag :price_to, params[:price_to], placeholder: "0", class: "form-control"%> &nbsp
+          <br>
+        </div>
+        <%= submit_tag 'Search', name: nil, class: 'btn  btn-success', id: 'mySearch', style: "height: 35px; width: 585px; background-position: 0% 0%; background-color: rgba(64, 94, 153, 0.2);" %>
+    <% end %>
+  </div>
+</div>
+
+
+  <div id="my-items">
+    <% @acs.each do |item| %>
+        <div class="col-md-3 item" >
+          <div class="panel panel-body" style="padding: 0px;">
+            <%= image_tag item.pictures[0].image, class: 'card-img-top' unless item.pictures[0].nil?  %>
+            <div class="card-block">
+              <h4 class="card-title"> <span class="text-bold text-success"> R <%= item.price.round(2) %></span></h4>
+
+              <!--<span class="likes-count" data-id="<%# item.id %>" > <%# item.tot_likes %> </span>-->
+              <%# link_to [:like, item], method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
+              <i class="material-icons my-small-icon" style="color: #ff0722;">favorite</i>
+              <%# end %>
+              <small><%= item.room_type %></small>
+
+              <% if item.user == current_user %>
+                  <div class="pull-right">
+                    <%= link_to 'Delete', accommodation_path(item),
+                                data: {:confirm => 'Are you sure?'}, :method => :delete %>
+                  </div>
+              <% end %>
+            </div>
+            <%= button_to 'More Info', accommodation_path(item), class: 'btn btn-info my-button', method: :get  %>
+            <%# link_to '<button type="button">View Item</button>'.html_safe, item_path(item), class: 'btn btn-info my-button' %>
+          </div>
+        </div>
+    <% end %>
+
+    <div id="infinity-scroll" style="display: inline-block" ><%= will_paginate @acs %></div>
+
+  <div id="infinity-scroll">
+
+    <%=  will_paginate @items if @items  %>
+  </div>
+</div>
+

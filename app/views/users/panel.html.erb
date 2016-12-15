@@ -1,0 +1,28 @@
+<div>
+
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Location</th>
+          <th>Room Type</th>
+          <th>Price</th>
+          <th>Views</th>
+        </tr>
+        </thead>
+
+
+        <tbody>
+        <% @acs.each do |a| %>
+        <tr>
+          <th scope="row">1</th>
+          <td><%= a.location %></td>
+          <td><%= a.room_type %></td>
+          <td><%= a.price %></td>
+          <td><%= a.views%></td>
+
+        </tr>
+        <% end %>
+        </tbody>
+      </table>
+</div>

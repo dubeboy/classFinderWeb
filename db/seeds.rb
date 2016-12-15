@@ -17,7 +17,24 @@
 #                    .save(validate: false
 #                    ) }
 
-Category.create(name: 'Accommodation')
-Category.create(name: 'Books')
-Category.create(name: 'Electronics')
-Category.create(name: 'Other')
+Category.create(name: 'CellPhone', book_type: "NotBook")
+Category.create(name: 'Laptops', book_type: "NotBook")
+Category.create(name: 'Clothing', book_type: "NotBook")
+Category.create(name: 'PerFumes', book_type: "NotBook")
+Category.create(name: 'Bags And Accessories', book_type: "NotBook")
+
+Category.create(name: 'Science',book_type: "Book")
+Category.create(name: 'Engineering', book_type: "Book")
+Category.create(name: 'Law', book_type: "Book")
+Category.create(name: 'Architecture And Design', book_type: "Book")
+Category.create(name: 'Education', book_type: "Book")
+Category.create(name: 'Humanities', book_type: "Book")
+Category.create(name: 'Medicine', book_type: "Book")
+
+
+Institution.create(name: 'Wits', location: 'Bram')
+Institution.create(name: 'UJ', location: 'Auckland Park')
+Institution.create(name: 'UJ', location: 'DFC')
+Institution.create(name: 'UJ', location: 'Soweto')
+
+#todo for books add book category like MATH PHYSIC ETC

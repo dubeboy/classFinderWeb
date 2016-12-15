@@ -1,0 +1,57 @@
+<div class="col-md-4 col-md-offset-4">
+  <h4 class="text-uppercase">Add A New Item</h4>
+  <div class="panel ">
+    <div class="panel-body">
+
+      <%= form_for @book, html: {multipart: true} do |f| %>
+
+          <p>
+            <%=render 'shared/error_msgs', object: f.object %>
+          </p>
+          <p class="form-group">
+            <%= f.label :title %><br />
+            <%= f.text_field :title, class: 'form-control' %>
+          </p>
+
+          <p class="form-group">
+            <%= f.label :author %>
+            <%= f.text_field :author, class: 'form-control' %>
+          </p>
+
+          <!--<p class="form-group">-->
+            <!--<label for="item_category_id">Where Is the Exchange Possible</label> <br />-->
+            <!--<%# f.check_box @book.institution.all, {:class => "myclass", :style => "mystyle"}, "checked-value", "unchecked-value" %>-->
+          <!--</p>-->
+
+          <p class="form-group">
+            <label for="item_category_id">Book Belongs In Faculty</label> <br />
+            <%= f.select :category_id , Category.where("book_type  = 'Book'").collect {|c| [c.name, c.id]}, { class: 'form-control' } %>
+          </p>
+
+          <p class="form-group">
+            <%= f.label :description %><br />
+            <%= f.text_area :description, class: 'form-control' %>
+          </p>
+
+          <div class="form-group">
+            <%= f.label :price %>
+            <span class="input-group-addon text-bold">Rands</span>
+            <%= f.number_field :price, min: 0, step: 'any',  class: 'form-control' %>
+          </div>
+
+
+
+          <p class="form-g">
+            <%= f.label :avatars, "Book Preview Images" %><br />
+            <small>To upload many images using PC hold ctrl while selecting images</small>
+            <%= file_field_tag "images[]", type: :file, multiple: true %>
+          </p>
+
+
+
+          <hr>
+          <%= f.submit "Add New Item", class: 'btn btn-flat' %>
+      <% end %>
+    </div>
+  </div>
+</div>

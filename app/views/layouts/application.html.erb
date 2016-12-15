@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My University Store</title>
+  <title>Metalojiq::ClassFinder</title>
    <meta charset="utf-8">
    <meta name="viewport"    content="width=device-width, initial-scale=1.0">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
@@ -9,6 +9,7 @@
   <%= csrf_meta_tags %>
   <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+
 
 </head>
 <body>
@@ -25,12 +26,17 @@
       <% end %>
   <% end %>
 </div>
-<div class="container">
+<% #todo bad hack %>
+<% if params[:controller] == 'welcome' %>
+    <%= yield %>
+  <% else %>
+    <div class="container">
+      <div class="row">
+        <%= yield %>
+      </div>
+    </div>
+<% end %>
 
-  <div class="row">
-  <%= yield %>
-  </div>
-</div>
 <script src="https://unpkg.com/masonry-layout@4.1/dist/masonry.pkgd.min.js"></script>
 </body>
 </html>

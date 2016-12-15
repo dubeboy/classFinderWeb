@@ -1,10 +1,16 @@
+#General Items
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show, :likes]
   rescue_from ActiveRecord::RecordInvalid, with: :show_errors
 
   def index
-    @items = Item.all.paginate(page: params[:page], per_page: 16).order(created_at: :desc)
-    @cat = Category.all
+    @cat = Category.all #todo remove
+    #fixme change me latter to make saffer
+    if params[:cat]
+      @items = Item.where("category_id = #{params[:cat]}").paginate(page: params[:page], per_page: 16).order(created_at: :desc)
+    else
+      @items = Item.where("category_id != 1").paginate(page: params[:page], per_page: 16).order(created_at: :desc)
+    end
     respond_to do |format|
       format.html
       format.js
@@ -21,15 +27,14 @@ class ItemsController < ApplicationController
     @item.user = current_user
     @item.category = Category.find(params[:item][:category_id])
     #Category.item = @Item
-    if params[:images]
-      if @item.save
+    if @item.save
+      if params[:images]
        params[:images].each { |image|
          @item.pictures.create(image: image)
        }
       end
       redirect_to @item
     else
-      flash[:warning] = 'Please make sure that the item you trying to upload has a picture as well '
       render 'new'
     end
   end

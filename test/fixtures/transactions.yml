@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  accomodation_id: 1
+  paid: false
+  booking_type: false
+  std_confirm: false
+
+two:
+  user_id: 1
+  accomodation_id: 1
+  paid: false
+  booking_type: false
+  std_confirm: false

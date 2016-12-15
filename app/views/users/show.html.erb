@@ -35,9 +35,51 @@
   </div>
 <% end %>
 <div>
+  <% if @user.verified %>
+      <div class="col-md-12">
+        <div class="col-md-3">
+          <a class="btn btn-block btn-danger" href="?cat=1" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Open Accommodation Ads</a>
+          <a class="btn btn-block btn-danger" href="?cat=2" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Up Coming Viewing Bookings</a>
+          <a class="btn btn-block btn-danger" href="?cat=3" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Waiting Confirmation</a>
+          <a class="btn btn-block btn-danger" href="?cat=4" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Paid</a>
+        </div>
+        <div class="col-md-9 panel">
+          <table class="table table-bordered">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Location</th>
+              <th>Room Type</th>
+              <th>Views</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
 
-  <h4>Items sold by : <%= @user.name.capitalize%></h4>  <p><%= link_to 'Sell Your Stuff Yeah?', new_item_path %></p>
-  <%= render(partial: 'shared/item', collection: @user.items) || 'You have not sold anything' %>
+
+            <tbody>
+          <% if !@acs.nil?%>
+                <% @acs.each do |a| %>
+                <tr>
+                      <th scope="row"><%= link_to 1, accommodation_path(a) %></th>
+                    <td><%= a.location %></td>
+                    <td><%= a.room_type %></td>
+                    <td><%= a.views%></td>
+                      <td><%# link_to [:paid, a], method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
+                          <!--<i class="material-icons my-small-icon" style="color: #ff0722;">favorite</i>-->
+                      <%# end %></td>
+                </tr>
+                <% end %>
+            <% end %>
+
+  </tbody>
+  </table>
+        </div>
+      </div>
+  <% else %>
+      <h4>Items sold by : <%= @user.name.capitalize%></h4>  <p><%= link_to 'Sell Your Stuff Yeah?', new_item_path %></p>
+      <%= render(partial: 'shared/item', collection: @user.items) || 'You have not sold anything' %>
+  <% end %>
+
 
 <div>
 </div>

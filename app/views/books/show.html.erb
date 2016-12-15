@@ -1,0 +1,67 @@
+
+<!-- Slider -->
+<div class="col-xs-12" id="slider">
+  <!-- Top part of the slider -->
+  <div class="col-sm-8" id="carousel-bounding-box">
+    <div class="carousel slide" id="myCarousel">
+      <!-- Carousel books -->
+      <div class="carousel-inner" style="margin-bottom: 20px">
+        <% counter = 0 %>
+        <% @book.pictures.each do |p| %>
+            <div class= "<%= image_slider_helper(counter) %>  " data-slide-number= <%= counter %> >
+              <%= image_tag p.image, class: 'img-responsive ', style: 'height: 447px; width: 100%; ' %>
+              <% counter += 1%>
+            </div>
+        <% end %>
+      </div><!-- Carousel nav -->
+      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+      </a>
+      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+      </a>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h4><%=  @book.name %> by <%=  @book.author %></h4>
+        <p><span class="label label-info"><%= @book.category.name if @book.category %> </span> </p>
+        <%= @book.description %>
+        <p class="text-success text-bold">Price: R <%= @book.price.round(2) %></p>
+        <span class="likes-count" data-id="<%= @book.id %>" > <%= @book.tot_likes %> </span>
+        <%= link_to [:like, @book], method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
+            <i class="material-icons my-small-icon" style="color: #ff0722;">favorite</i>
+        <% end %>
+        <p>Views: <%= @book.views %></p>
+      </div>
+    </div>
+    <!--seller Infomation -->
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h4 class="text-bold">Seller Info</h4>
+        <div class="">
+          <%= link_to(check_if_nil(@book.user.profile_img, '/profile.png', 'user-avatar'), user_path(@book.user)) %>
+        </div>
+        <p><%= @book.user.email %></p>
+        <p><%= @book.user.contacts %></p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<%# todo this is eneficient %>
+
+<div class="row hidden-xs" id="slider-thumbs">
+  <!-- Bottom switcher of slider -->
+  <ul class="hide-bullets">
+    <% k = 0 #is it necessary? %>
+    <%  @book.pictures.each do |p| %>
+        <li class="col-sm-2">
+          <a class="thumbnail" id=<%= "carousel-selector-#{k}"%> > <%= image_tag p.image %> </a>
+        </li>
+        <% k += 1%>
+    <% end %>
+  </ul>
+</div>

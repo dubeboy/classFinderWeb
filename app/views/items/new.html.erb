@@ -9,13 +9,13 @@
             <%=render 'shared/error_msgs', object: f.object %>
           </p>
           <p class="form-group">
-            <%= f.label :name %><br />
+            <%= f.label :name, "Advert Title" %><br />
             <%= f.text_field :name, class: 'form-control' %>
           </p>
 
           <p class="form-group">
-            <label for="item_category_id">Type Of Item</label> <br />
-            <%= f.select :category_id , Category.all.collect {|c| [c.name, c.id] }, { class: 'form-contro' } %>
+            <label for="item_category_id">Item Category</label> <br />
+            <%= f.select :category_id , Category.where("book_type = 'NotBook' ").collect {|c| [c.name, c.id] }, { class: 'form-contro' } %>
           </p>
 
           <p class="form-group">
@@ -26,7 +26,8 @@
 
 
           <p class="form-g">
-            <%= f.label :avatars, "Item Images" %><br />
+            <%= f.label :avatars, "Add Image" %><br />
+            <small>When selecting Images press ctrl to send many images</small>
             <%= file_field_tag "images[]", type: :file, multiple: true %>
           </p>
 

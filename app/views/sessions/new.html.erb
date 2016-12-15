@@ -4,13 +4,14 @@
   <div class="panel-body">
 
     <%= form_tag sessions_path do %>
+
         <p class="form-group">
           <%= label_tag :email %><br />
           <%= text_field_tag :email, params[:email], class: 'form-control' %>
         </p>
         <p class="form-group">
           <%= label_tag :password %><br />
-          <%= password_field_tag :password, class: 'form-control' %>
+          <%= password_field_tag :password, params[:password], class: 'form-control' %>
         </p>
         <%= submit_tag "Log in", class: 'btn btn-raised' %>
     <% end %>

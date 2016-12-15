@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  location: MyString
+  room_type: MyString
+  price: 9.99
+  description: MyText
+  user_id: 1
+  view: 1
+
+two:
+  location: MyString
+  room_type: MyString
+  price: 9.99
+  description: MyText
+  user_id: 1
+  view: 1

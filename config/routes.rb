@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
-  get 'about/index'
 
+
+
+
+  get 'welcome/index'
+  root 'welcome#index'
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: redirect('/')
   get 'search/index'
@@ -8,11 +12,30 @@ Rails.application.routes.draw do
   get "log_out" => "sessions#destroy", :as => "log_out"
   get "log_in" => "sessions#new", :as => "log_in"
   get "sign_up" => "users#new", :as => "sign_up"
-  
-  resources :users
+  get "about" => "about#index", :as => "about"
+  get 'hosts' => "hosts#index", :as => "hosts"
+
+  get "search" => "accommodation#search", :as => "search"
+
+
+  resources :localsession
+  resources :users do
+    member do
+      get 'panel', action: :panel
+    end
+  end
   resources :sessions
-  resources :category
-  resources :accomodation
+  #resources :category  removed it
+  resources :books
+  resources :accommodations do
+    member do
+      post 'secure_room', :action => :secure_room
+      post  'pay', action: :pay
+    end
+    collection do
+      get 'search', :action => :search
+    end
+  end
 
   resources :items do
     member do
@@ -21,11 +44,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'welcome/index'
 
-  get 'hello_world', to: 'hello_world#index'
-
-  root 'welcome#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

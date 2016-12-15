@@ -64,6 +64,4 @@ $(document).ready(function() {
         itemSelector: '.item',
          columnWidth: '.item'
     });
-
-
 });

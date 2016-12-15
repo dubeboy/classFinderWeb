@@ -1,0 +1,123 @@
+<!-- Slider -->
+<div class="col-xs-12" id="slider">
+  <!-- Top part of the slider -->
+  <div class="col-sm-8" id="carousel-bounding-box">
+    <div class="carousel slide" id="myCarousel">
+      <!-- Carousel items -->
+      <div class="carousel-inner" style="margin-bottom: 20px">
+        <% counter = 0 %>
+        <% @ac.pictures.each do |p| %>
+            <div class= "<%= image_slider_helper(counter) %>  " data-slide-number= <%= counter %> >
+              <%= image_tag p.image, class: 'img-responsive ', style: 'height: 447px; width: 100%; ' %>
+              <% counter += 1%>
+            </div>
+        <% end %>
+      </div><!-- Carousel nav -->
+      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+      </a>
+      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+      </a>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h4>Around <%=  @ac.location %></h4>
+        <p><span class="label label-info"><%= "#{@ac.room_type} around #{@ac.location}"  %></span> </p>
+
+        <%= @ac.description %>
+        <p >Price: R <span class="text-success text-bold" ><%= @ac.price.round(2) %></span>p.m</p>
+        <!--<span class="likes-count" data-id="<%# @ac.id %>" > <%# @ac.tot_likes %> </span>-->
+        <%# link_to [:like, @ac], method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
+            <!--<i class="material-icons my-small-icon" style="color: #ff0722;">favorite</i>-->
+        <%# end %>
+        <p>Views: <%= @ac.views %></p>
+      </div>
+      <div class="">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#secure-room">Secure Room</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#view-booking">Book Viewing</button>
+
+      </div>
+    </div>
+
+    <!--seller Infomation -->
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h4 class="text-bold">Seller Info</h4>
+        <div class="">
+          <%= link_to(check_if_nil(@ac.user.profile_img, '/profile.png', 'user-avatar'), user_path(@ac.user)) %>
+        </div>
+        <p><%= @ac.user.email %></p>
+        <p><%= @ac.user.contacts %></p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<%#  todo move this to its own partial %>
+
+<div id="secure-room" class="modal fade" tabindex="-1" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title text-bold text-danger">Are you sure?</h4>
+      </div>
+      <div class="modal-body">
+        <p>In order to be able to secure a room you need to be sure that you will be able to deposit the room within 3 hours.
+          <br>
+
+          <!--fixme NB BANKING DEATAILS HERE -->
+          Press Continue below;
+        </p>
+      </div>
+      <div class="modal-footer">
+        <!--<button type="button" class="btn btn-primary" data-dismiss="modal">Continue<div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 49.6562px; top: 20px; background-color: rgb(0, 150, 136); transform: scale(10.875);"></div></div></button>-->
+        <div id="my-form">
+          <%=  form_for :user, :remote => true,  :url => secure_room_accommodation_path ,:html => { :id => 'secureRoom', 'data-dismiss': "modal" , class: 'btn btn-primary'} do |f| %>
+              <%= f.hidden_field :host_id, value: @ac.user.id %>
+              <%= f.hidden_field :std_id, value: current_user.id if current_user%>
+              <%= f.hidden_field :booking_type, value: 1 %>
+              <%= f.submit 'Yes Secure Room Please!' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="view-booking" class="modal fade" tabindex="-1" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title text-bold text-danger">Here Are The Availbale Times?</h4>
+      </div>
+      <div class="modal-body">
+        <p>Please Select the time that you would be able to view the room
+          <br>
+
+          <!--fixme NB BANKING DEATAILS HERE -->
+          Press <div id="my-form">
+        <%=  form_for :user, :remote => true, :url => secure_room_accommodation_path, :html => { :id => 'secureRoom' } do |f| %>
+            <%= f.hidden_field :host_id, value: @ac.user.id %>
+            <%= f.hidden_field :std_id, value: current_user.id if current_user %>
+            <%= f.hidden_field :booking_type, value: 0 %>
+
+            <%= f.datetime_select :starts_at, prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }, start_year: 2017 %>
+            <%= f.submit 'Continue' %>
+        <% end %> if you can.
+      </div>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Continue<div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 49.6562px; top: 20px; background-color: rgb(0, 150, 136); transform: scale(10.875);"></div></div></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

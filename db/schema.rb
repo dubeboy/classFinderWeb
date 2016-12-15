@@ -10,11 +10,48 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161213035605) do
+ActiveRecord::Schema.define(version: 20161215071506) do
+
+  create_table "accommodations", force: :cascade do |t|
+    t.string   "location"
+    t.string   "room_type"
+    t.decimal  "price"
+    t.text     "description"
+    t.integer  "user_id"
+    t.integer  "view"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "views",       default: 0
+    t.integer  "tot_likes"
+    t.integer  "price_to"
+    t.integer  "price_from"
+    t.string   "institution"
+  end
+
+  create_table "books", force: :cascade do |t|
+    t.string   "title"
+    t.integer  "category_id"
+    t.decimal  "price"
+    t.text     "description"
+    t.string   "author"
+    t.integer  "user_id"
+    t.integer  "institution_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "picture_id"
+  end
 
   create_table "categories", force: :cascade do |t|
     t.integer  "item_id"
     t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "book_type"
+  end
+
+  create_table "institutions", force: :cascade do |t|
+    t.string   "name"
+    t.string   "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -26,14 +63,10 @@ ActiveRecord::Schema.define(version: 20161213035605) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.text     "description"
-    t.         "avatars"
     t.integer  "picture_id"
     t.integer  "category_id"
     t.integer  "views",       default: 0
     t.integer  "tot_likes",   default: 0
-    t.string   "city"
-    t.string   "institution"
-    t.string   "room_type"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -51,6 +84,8 @@ ActiveRecord::Schema.define(version: 20161213035605) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.integer  "item_id"
+    t.integer  "book_id"
+    t.integer  "accommodation_id"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -70,6 +105,17 @@ ActiveRecord::Schema.define(version: 20161213035605) do
     t.integer  "profile_img_file_size"
     t.datetime "profile_img_updated_at"
     t.integer  "user_id"
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "accomodation_id"
+    t.boolean  "paid"
+    t.boolean  "booking_type"
+    t.boolean  "std_confirm"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "host_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -106,6 +152,9 @@ ActiveRecord::Schema.define(version: 20161213035605) do
     t.string   "uid"
     t.string   "oauth_token"
     t.datetime "oauth_expires_at"
+    t.boolean  "host"
+    t.boolean  "verified"
+    t.string   "ip"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

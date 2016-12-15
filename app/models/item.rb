@@ -9,11 +9,25 @@ class Item < ActiveRecord::Base
 
   has_many :likes
 
-  def self.search(term) #todo make this search better
+  #todo bad code
+  def self.search(term, institution='', room_type='')
     if term
-      where('name LIKE ?', "%#{term}%")
+     k = where('name like ? or description like ?', "%#{term}%", "%#{term}%")
+      if !institution.empty?
+         k = where('name like ? or description like ? or institution like ? ', "%#{term}%", "%#{term}%","%#{institution}%" )
+        if !room_type.empty?
+          k = where('name like ? or description like ? or institution like ? or room_type like ?', "%#{term}%", "%#{term}%","%#{institution}%", "%#{room_type}" )
+        end
+      end
+      #todo do u need an institution to view room type?
+      if !room_type.empty? and institution.empty?
+        k = where('name like ? or description like ? or room_type like ? ', "%#{term}%", "%#{term}%","%#{room_type}" )
+      end
+
+      return k
     else
-      nil
+      return nil
     end
   end
+
 end

@@ -7,7 +7,7 @@
               <%= select_tag "category", options_from_collection_for_select(@cat, "id", "name"), class: 'form-control' %>
               <%= text_field_tag :search, params[:search], class: ' form-control', style: 'width: 500px'%>
               <%= submit_tag 'Search', name: nil, class: 'btn  btn-success', id: 'mySearch' %>
-              <%= submit_tag '', name: nil, class: 'btn btn-info ', id: 'mySearch' %>
+              <%# submit_tag '', name: nil, class: 'btn btn-info ', id: 'mySearch' %>
             </div>
 
         <% end %>

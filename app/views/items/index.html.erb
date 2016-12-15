@@ -1,10 +1,21 @@
 
    <%# could render anther page but for now we can just.... %>
+    <div class="col-md-12">
+        <section class="col-md-3" style="background-color: navajowhite">
 
-     <div id="my-items" class="remove-extra-padding">
-       <div class="grid">
-       <%= render(partial: 'shared/item', collection: @items) || "There's no Item to be displayed"  %>
+         <a class="btn btn-block btn-danger" href="?cat=2" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Books</a>
+         <a class="btn btn-block btn-danger" href="?cat=3" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Cellphones</a>
+         <a class="btn btn-block btn-danger" href="?cat=4" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Laptops</a>
+         <a class="btn btn-block btn-danger" href="?cat=5" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Clothing</a>
+         <a class="btn btn-block btn-danger" href="?cat=6" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Perfumes</a>
+         <a class="btn btn-block btn-danger" href="?cat=7" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Accessories</a>
+
+        </section>
+       <div id="my-items" class="remove-extra-padding col-md-9">
+         <div class="grid">
+         <%= render(partial: 'shared/item', collection: @items) || "There's no Item to be displayed"  %>
+       </div>
      </div>
-   </div>
+    </div>
 
    <div id="infinity-scroll" style="display: inline-block" ><%= will_paginate %></div>

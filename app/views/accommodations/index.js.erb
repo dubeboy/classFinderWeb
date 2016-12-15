@@ -1,0 +1,3 @@
+ $('#my-items').append('<%= escape_javascript render(partial: "shared/item", collection: @acs) %>');
+ $('.pagination').replaceWith('<%= escape_javascript will_paginate(@acs) %>');
+

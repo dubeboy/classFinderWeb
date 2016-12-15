@@ -24,7 +24,6 @@
                           <div class="col-md-4">
                               <div class="panel panel-default">
                                 <div class="panel-body">
-                                  <h4 class="text-bold"> Item Description</h4>
                                   <h4><%=  @item.name %></h4>
                                   <p><span class="label label-info"><%= @item.category.name if @item.category %></span> </p>
                                   <%= @item.description %>
@@ -36,7 +35,7 @@
                                   <p>Views: <%= @item.views %></p>
                                   </div>
                            </div>
-
+                              <!--seller Infomation -->
                               <div class="panel panel-default">
                                 <div class="panel-body">
                                   <h4 class="text-bold">Seller Info</h4>
@@ -50,8 +49,6 @@
 
                           </div>
                     </div>
-
-
 
                 <div class="row hidden-xs" id="slider-thumbs">
                         <!-- Bottom switcher of slider -->
