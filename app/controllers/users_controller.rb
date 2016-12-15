@@ -26,17 +26,15 @@ def show
 
   if params['cat']
     trans_by_this_user = Transaction.where("host_id = '#{@user.id}'") #array of this hosts trasctns
-
     unpaid_transactions = trans_by_this_user.collect {|t| t unless t.paid?}
-
     if params['cat'] == '1' #for open accommodations
       @acs = Accommodation.find(unpaid_transactions.collect {|t| t.accomodation_id})
     elsif params['cat'] == 2 #for objects that are upcoming for viewing
       @acs = Accommodation.find(trans_by_this_user.collect {|t|  t if t.booking_type == 0 })
     elsif params['cat'] == 3 #where the student has confirmed
       @acs = Accommodation.find(trans_by_this_user.collect {|t|  t if t.std_confirm? })
-    elsif params['cat'] == 4
-      @acs = Accommodation.find(trans_by_this_user.collect {|t|  t if t.std_confirm? })
+    elsif params['cat'] == 4 #upcoming waiting confirmation
+      @acs = Accommodation.find(trans_by_this_user.collect {|t|  t if t.booking_type == 1 })
     else
       @acs = Accommodation.find(unpaid_transactions.collect {|t| t.accomodation_id})
     end

@@ -64,9 +64,9 @@
                     <td><%= a.location %></td>
                     <td><%= a.room_type %></td>
                     <td><%= a.views%></td>
-                      <td><%# link_to [:paid, a], method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
-                          <!--<i class="material-icons my-small-icon" style="color: #ff0722;">favorite</i>-->
-                      <%# end %></td>
+                      <td><%= link_to [:pay, a], method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
+                          <i class="material-icons my-small-icon" style="color: #ff0722;">done</i><small>done</small>
+                      <% end %></td>
                 </tr>
                 <% end %>
             <% end %>

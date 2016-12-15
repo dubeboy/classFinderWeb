@@ -64,7 +64,8 @@ class AccommodationsController < ApplicationController
 
 
   def pay
-
+    @ac = Accommodation.find(params[:id])
+    # this_users_trasactions = Transaction.
   end
 
   def show
