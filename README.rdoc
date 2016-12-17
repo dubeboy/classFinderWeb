@@ -29,5 +29,6 @@ Please feel free to use a different markup language if you do not plan to run
 
 
 USE RAILS 5 For models
-
+INdex data bases to make faster
+i
 

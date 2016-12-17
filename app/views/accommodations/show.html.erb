@@ -36,9 +36,8 @@
         <p>Views: <%= @ac.views %></p>
       </div>
       <div class="">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#secure-room">Secure Room</button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#secure-room">Secure Room</button>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#view-booking">Book Viewing</button>
-
       </div>
     </div>
 
@@ -77,7 +76,7 @@
       <div class="modal-footer">
         <!--<button type="button" class="btn btn-primary" data-dismiss="modal">Continue<div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 49.6562px; top: 20px; background-color: rgb(0, 150, 136); transform: scale(10.875);"></div></div></button>-->
         <div id="my-form">
-          <%=  form_for :user, :remote => true,  :url => secure_room_accommodation_path ,:html => { :id => 'secureRoom', 'data-dismiss': "modal" , class: 'btn btn-primary'} do |f| %>
+          <%=  form_for :user, :remote => true,  :url => secure_room_accommodation_path ,:html => { :id => 'secureRoom' , class: 'btn btn-primary'} do |f| %>
               <%= f.hidden_field :host_id, value: @ac.user.id %>
               <%= f.hidden_field :std_id, value: current_user.id if current_user%>
               <%= f.hidden_field :booking_type, value: 1 %>
@@ -106,7 +105,7 @@
             <%= f.hidden_field :host_id, value: @ac.user.id %>
             <%= f.hidden_field :std_id, value: current_user.id if current_user %>
             <%= f.hidden_field :booking_type, value: 0 %>
-
+            <% #todo use select time %>
             <%= f.datetime_select :starts_at, prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }, start_year: 2017 %>
             <%= f.submit 'Continue' %>
         <% end %> if you can.

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161215071506) do
+ActiveRecord::Schema.define(version: 20161216223416) do
 
   create_table "accommodations", force: :cascade do |t|
     t.string   "location"
@@ -19,13 +19,15 @@ ActiveRecord::Schema.define(version: 20161215071506) do
     t.text     "description"
     t.integer  "user_id"
     t.integer  "view"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.integer  "views",       default: 0
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "views",          default: 0
     t.integer  "tot_likes"
     t.integer  "price_to"
     t.integer  "price_from"
     t.string   "institution"
+    t.integer  "transaction_id"
+    t.boolean  "is_secured"
   end
 
   create_table "books", force: :cascade do |t|
@@ -116,6 +118,8 @@ ActiveRecord::Schema.define(version: 20161215071506) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.integer  "host_id"
+    t.string   "month"
+    t.string   "time"
   end
 
   create_table "users", force: :cascade do |t|

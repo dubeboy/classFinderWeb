@@ -1,28 +1,43 @@
 <div>
+  <h3> Your Bookings</h3>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Location</th>
+      <th>Room Type</th>
+      <th>Advertiser</th>
+      <th>Price</th>
+      <th>Views</th>
+      <th>Booking Type</th>
+      <th>Actions</th>
 
-      <table class="table table-bordered">
-        <thead>
-        <tr>
-          <th>#</th>
-          <th>Location</th>
-          <th>Room Type</th>
-          <th>Price</th>
-          <th>Views</th>
-        </tr>
-        </thead>
+    </tr>
+    </thead>
 
 
-        <tbody>
-        <% @acs.each do |a| %>
-        <tr>
-          <th scope="row">1</th>
-          <td><%= a.location %></td>
-          <td><%= a.room_type %></td>
-          <td><%= a.price %></td>
-          <td><%= a.views%></td>
+    <tbody>
+    <% k = 0 %>
+    <% @trans_by_this_user.each do |transaction| %>
+        <% a = get_accom(transaction) %>
+            <tr>
+              <% #todo is this required? %>
+              <th scope="row"><%= k += 1 %></th>
+              <td><%= a.location %></td>
+              <td><%= a.room_type %></td>
+              <td><%=link_to a.user.name, accommodation_path(a) %></td>
+              <td><%= a.price %></td>
+              <td><%= a.views %></td>
+              <td><%= transaction.booking_type? ? 'Securing' : 'Viewing' %></td>
+              <td><%= link_to [:student_pay, a, student_id: transaction.user_id, trans_id: transaction.id],  method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
+                    <i class="material-icons my-small-icon" style="color: #ff0722;">   payment</i><%= transaction.std_confirm? ? "Congrats You have paid for this room" : "Notify that you like the room and you have paid for it" %>
+                <% end %> </td>
+              <%= link_to [:student_pay, a, student_id: transaction.user_id, trans_id: transaction.id],  method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
+                  <i class="material-icons my-small-icon" style="color: #ff0722;">   payment</i><%= transaction.std_confirm? ? "Congrats You have paid for this room" : "Notify that you like the room and you have paid for it" %>
+              <% end %>
 
-        </tr>
-        <% end %>
-        </tbody>
-      </table>
+            </tr>
+    <% end %>
+    </tbody>
+  </table>
 </div>

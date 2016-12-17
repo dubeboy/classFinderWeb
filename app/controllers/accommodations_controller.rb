@@ -5,7 +5,7 @@ class AccommodationsController < ApplicationController
   def index     #fixme
     @acs = Accommodation.all.paginate(page: params[:page], per_page: 16).order(created_at: :desc)
     @locations = ['Auckland Park', 'Braam', 'Soweto']
-    @Inst = ['UJ ', 'Wits', 'Other']
+    @Inst = ['UJ', 'Wits', 'Other']
   end
 
   def new
@@ -45,14 +45,22 @@ class AccommodationsController < ApplicationController
     #booking type information 1 is secure and 0 is view
     #todo make sure that a person can not secure a room twice
     k = nil
-    if (booking_type == 1)
-      if Transaction.where("user_id='#{student_id}' and accomodation_id='#{advert_id}'").count == 0
+    if booking_type == "1"
+      if Transaction.where("user_id='#{student_id}' and accomodation_id='#{advert_id}'").where("not booking_type").count == 0
         t = Transaction.new(user_id: student_id, accomodation_id: advert_id, host_id: host_id, booking_type: 1, paid: 0)
+        ad = Accommodation.find(advert_id)
+        ad.is_secured = true
+        ad.save!
         k = t.save!
       end
-    else
-      if Transaction.where("user_id='#{student_id}' and accomodation_id='#{advert_id}'").count == 0
-        t = Transaction.new(user_id: student_id, accomodation_id: advert_id, host_id: host_id, booking_type: 0, paid: 0)
+    elsif booking_type == "0" #booking type = 0 = view accomodation
+      if Transaction.where("user_id='#{student_id}' and accomodation_id='#{advert_id}'").where("booking_type").count == 0
+        p = params['user']
+
+        month = p['starts_at(1i)'] + make_two_digits(p['starts_at(2i)']) + make_two_digits(p['starts_at(4i)'])
+        time = p['starts_at(4i)'] + " " + p['starts_at(5i)']
+
+        t = Transaction.new(user_id: student_id, accomodation_id: advert_id, host_id: host_id, booking_type: 0, paid: 0, time: time, month:month )
         k = t.save!
       end
     end
@@ -62,10 +70,67 @@ class AccommodationsController < ApplicationController
     end
   end
 
+  #please clean up these methods man
+   def pay
+    @ac = nil
+    ac_id = params[:id]
+    student_id = params[:student_id]
+    the_trans = Transaction.find(params[:trans_id])
+    unless the_trans.nil?
+      if the_trans.paid?
+        the_trans.paid = false
+      else
+        the_trans.paid = true
+      end
+      the_trans.save
+    end
+    redirect :back
+  end
 
-  def pay
-    @ac = Accommodation.find(params[:id])
-    # this_users_trasactions = Transaction.
+  def student_pay
+    @ac = nil
+    ac_id = params[:id]
+    student_id = params[:student_id]
+    the_trans = Transaction.find(params[:trans_id])
+    unless the_trans.nil?
+      the_trans.std_confirm = true
+      the_trans.save
+    end
+    redirect :back
+  end
+
+  # this should enable a user to set the paid on or off but this a way of removing a an Item
+  # def toggle_paid
+  #   @ac = nil
+  #   ac_id = params[:id]
+  #   student_id = params[:student_id]
+  #   the_trans = Transaction.find(params[:trans_id])
+  #   unless the_trans.nil?
+  #
+  #     if the_trans.paid?
+  #       the_trans.paid = false
+  #     else
+  #       the_trans.paid = true
+  #     end
+  #     the_trans.save
+  #   end
+  #   redirect :back
+  # end
+
+  def toggle_room_view
+    @ac = nil
+    ac_id = params[:id]
+    student_id = params[:student_id]                            #todo extract  these getting too much
+    the_trans = Transaction.find(params[:trans_id])
+    unless the_trans.nil?
+      if the_trans.std_confirm?
+        the_trans.std_confirm = false
+      else
+        the_trans.std_confirm = true
+      end
+      the_trans.save
+    end
+    redirect :back
   end
 
   def show
@@ -75,9 +140,10 @@ class AccommodationsController < ApplicationController
     @ac.update_attribute(:views, views) if @ac.user != current_user
   end
 
-
   def destroy
     @acs = Accommodation.find(params[:id])
+    t = Transaction.find_by_accomodation_id(acs.id)
+    t.destroy
     @acs.destroy
     redirect_to accommodations_path
   end
@@ -87,5 +153,9 @@ class AccommodationsController < ApplicationController
   def acc_params
     #params.require(:item).permit(:price, :name, :description, {avatars: []})
     params.require(:accommodation).permit!
+  end
+
+  def make_two_digits(digit)
+    digit.length < 2 ? "0#{d}" : digit
   end
 end
