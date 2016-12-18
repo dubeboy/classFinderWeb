@@ -18,6 +18,7 @@
   </div>
 </div>
 
+<%# make this partials %>
 
   <div id="my-items">
     <% @acs.each do |item| %>
@@ -29,10 +30,10 @@
 
               <!--<span class="likes-count" data-id="<%# item.id %>" > <%# item.tot_likes %> </span>-->
               <%# link_to [:like, item], method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
-              <i class="material-icons my-small-icon" style="color: #ff0722;">favorite</i>
+              <!--<i class="material-icons my-small-icon" style="color: #ff0722;">favorite</i>-->
               <%# end %>
-              <small><%= item.room_type %></small>
-
+              <small class="badge"><%= item.room_type %></small>
+              Advertiser:<%= item.user.name %>
               <% if item.user == current_user %>
                   <div class="pull-right">
                     <%= link_to 'Delete', accommodation_path(item),
@@ -53,4 +54,3 @@
     <%=  will_paginate @items if @items  %>
   </div>
 </div>
-

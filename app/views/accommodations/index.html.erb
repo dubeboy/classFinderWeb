@@ -28,10 +28,11 @@
 
           <!--<span class="likes-count" data-id="<%# item.id %>" > <%# item.tot_likes %> </span>-->
           <%# link_to [:like, item], method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
-              <i class="material-icons my-small-icon" style="color: #ff0722;">favorite</i>
+              <!--<i class="material-icons my-small-icon" style="color: #ff0722;">favorite</i>-->
           <%# end %>
-          <small><%= item.room_type %></small>
-
+          <small class="badge badge-success"><%= item.room_type %></small> <br>
+          Around <%= item.location  %> <br>
+          By <%= item.user.name %> <br>
           <% if item.user == current_user %>
               <div class="pull-right">
                 <%= link_to 'Delete', accommodation_path(item),

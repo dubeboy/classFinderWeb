@@ -17,12 +17,13 @@
 #                    .save(validate: false
 #                    ) }
 
-Category.create(name: 'CellPhone', book_type: "NotBook")
-Category.create(name: 'Laptops', book_type: "NotBook")
-Category.create(name: 'Clothing', book_type: "NotBook")
-Category.create(name: 'PerFumes', book_type: "NotBook")
-Category.create(name: 'Bags And Accessories', book_type: "NotBook")
+# Category.create(name: 'CellPhone', book_type: "NotBook")
+# Category.create(name: 'Laptops', book_type: "NotBook")
+# Category.create(name: 'Clothing', book_type: "NotBook")
+# Category.create(name: 'PerFumes', book_type: "NotBook")
+# Category.create(name: 'Bags And Accessories', book_type: "NotBook")
 
+Category.create(name: 'Accomodation',book_type: "NotBook")
 Category.create(name: 'Science',book_type: "Book")
 Category.create(name: 'Engineering', book_type: "Book")
 Category.create(name: 'Law', book_type: "Book")

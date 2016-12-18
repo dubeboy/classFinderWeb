@@ -3,39 +3,46 @@
   <table class="table table-bordered">
     <thead>
     <tr>
-      <th>#</th>
+      <th>Token</th>
       <th>Location</th>
       <th>Room Type</th>
       <th>Advertiser</th>
       <th>Price</th>
       <th>Views</th>
       <th>Booking Type</th>
+      <th>Message</th>
       <th>Actions</th>
+
 
     </tr>
     </thead>
 
 
     <tbody>
-    <% k = 0 %>
     <% @trans_by_this_user.each do |transaction| %>
         <% a = get_accom(transaction) %>
+        <% u = get_user(transaction) %>
             <tr>
               <% #todo is this required? %>
-              <th scope="row"><%= k += 1 %></th>
+              <th scope="row"><%= u.token %></th>
               <td><%= a.location %></td>
               <td><%= a.room_type %></td>
               <td><%=link_to a.user.name, accommodation_path(a) %></td>
               <td><%= a.price %></td>
               <td><%= a.views %></td>
               <td><%= transaction.booking_type? ? 'Securing' : 'Viewing' %></td>
-              <td><%= link_to [:student_pay, a, student_id: transaction.user_id, trans_id: transaction.id],  method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
-                    <i class="material-icons my-small-icon" style="color: #ff0722;">   payment</i><%= transaction.std_confirm? ? "Congrats You have paid for this room" : "Notify that you like the room and you have paid for it" %>
-                <% end %> </td>
-              <%= link_to [:student_pay, a, student_id: transaction.user_id, trans_id: transaction.id],  method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
-                  <i class="material-icons my-small-icon" style="color: #ff0722;">   payment</i><%= transaction.std_confirm? ? "Congrats You have paid for this room" : "Notify that you like the room and you have paid for it" %>
-              <% end %>
+              <td><%= transaction.message %></td>
 
+              <td>
+                <% if transaction.go_ahead? %>
+                <%= link_to [:student_pay, a, student_id: transaction.user_id, trans_id: transaction.id],  method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
+                    <i class="material-icons my-small-icon" style="color: #ff0722;">   payment</i><%= transaction.std_confirm? ? "Congrats You have paid for this room" : "Notify that you like the room and you have paid for it" %>
+                <% end %>
+                    <% else %>
+                    waiting for availability of room
+                <% end %>
+
+              </td>
             </tr>
     <% end %>
     </tbody>

@@ -9,4 +9,13 @@ class Book < ApplicationRecord
   #validaton
   validates_presence_of :title, :price, :description, :author
   validates_presence_of :category , :user
+
+
+  def self.search(term, institution='', room_type='')
+    if term
+      return where('title like ? or description like ?', "%#{term}%", "%#{term}%")
+    else
+      return nil
+    end
+  end
 end

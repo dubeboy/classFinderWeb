@@ -31,8 +31,9 @@ Rails.application.routes.draw do
     member do
       post 'secure_room', :action => :secure_room
       post  'pay', action: :pay
-      post 'student_pay', action: :student_pay
-      delete 'cancel', action: :cancel
+      post 'student_pay', action: :student_pay #todo
+      delete 'cancel', action: :cancel #todo
+      post 'go_ahead', action: :go_ahead
     end
     collection do
       get 'search', :action => :search

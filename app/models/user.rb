@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
 
   attr_accessor :password
   before_save :encrypt_password
+  before_create :generate_token
 
   has_many :items
 
@@ -50,4 +51,13 @@ class User < ActiveRecord::Base
       self.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
     end
   end
+
+  def generate_token
+    self.token = loop do
+      random_token = SecureRandom.urlsafe_base64(nil, false)
+      break random_token unless self.class.exists?(token: random_token)
+    end
+  end
+
+
 end

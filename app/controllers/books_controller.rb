@@ -28,7 +28,7 @@ class BooksController < ApplicationController
       end
       redirect_to @book
     else
-      flash[:warning] = 'Please make sure that the item you trying to upload has a picture as well '
+      flash[:warning] = 'Please make sure that the book you trying to upload has a picture as well '
       render 'new'
     end
   end

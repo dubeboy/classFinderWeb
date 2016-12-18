@@ -27,6 +27,11 @@
         <%= f.phone_field :contacts, class: 'form-control' %>
       </div>
 
+      <% if @user.verified? %>
+          <%= f.label :bank_details %>
+          <%= f.text_area :bank_details, class: 'form-control' %>
+      <% end %>
+
       <div class="field form-group">
         <%= f.label :cover, "Profile Cover" %><br />
         <%= f.file_field :cover, class: 'form-control' %>

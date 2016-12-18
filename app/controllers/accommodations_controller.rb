@@ -1,8 +1,8 @@
 class AccommodationsController < ApplicationController
 
-  before_action :authenticate_user!, except: [:index, :show , :search]
+  before_action :authenticate_user!, except: [:index, :show, :search]
 
-  def index     #fixme
+  def index #fixme
     @acs = Accommodation.all.paginate(page: params[:page], per_page: 16).order(created_at: :desc)
     @locations = ['Auckland Park', 'Braam', 'Soweto']
     @Inst = ['UJ', 'Wits', 'Other']
@@ -32,7 +32,7 @@ class AccommodationsController < ApplicationController
   def search
     @locations = ['Auckland Park', 'Braam', 'Soweto']
     @Inst = ['UJ ', 'Wits', 'Other']
-    @acs = Accommodation.search(term:params[:search], location: params[:location], room_type: params[:room_type], price_from: params[:price_from], price_to: params[:price_to]).paginate(:per_page => 16, :page => params[:page])
+    @acs = Accommodation.search(term: params[:search], location: params[:location], room_type: params[:room_type], price_from: params[:price_from], price_to: params[:price_to]).paginate(:per_page => 16, :page => params[:page])
   end
 
   def secure_room
@@ -46,32 +46,33 @@ class AccommodationsController < ApplicationController
     #todo make sure that a person can not secure a room twice
     k = nil
     if booking_type == "1"
+      #todo check this man
       if Transaction.where("user_id='#{student_id}' and accomodation_id='#{advert_id}'").where("not booking_type").count == 0
         t = Transaction.new(user_id: student_id, accomodation_id: advert_id, host_id: host_id, booking_type: 1, paid: 0)
         ad = Accommodation.find(advert_id)
         ad.is_secured = true
-        ad.save!
+        ad.save! #todo put this in the models some how #before_action?
         k = t.save!
       end
     elsif booking_type == "0" #booking type = 0 = view accomodation
       if Transaction.where("user_id='#{student_id}' and accomodation_id='#{advert_id}'").where("booking_type").count == 0
         p = params['user']
-
+        h
         month = p['starts_at(1i)'] + make_two_digits(p['starts_at(2i)']) + make_two_digits(p['starts_at(4i)'])
         time = p['starts_at(4i)'] + " " + p['starts_at(5i)']
 
-        t = Transaction.new(user_id: student_id, accomodation_id: advert_id, host_id: host_id, booking_type: 0, paid: 0, time: time, month:month )
+        t = Transaction.new(user_id: student_id, accomodation_id: advert_id, host_id: host_id, booking_type: 0, paid: 0, time: time, month: month)
         k = t.save!
       end
     end
     respond_to do |format|
-      msg = { :status => "ok", :k => k, :html => "<b>Updated Or Not</b>" }
-      format.json  { render :json => msg } # don't do msg.to_json
+      msg = {:status => "ok", :k => k, :html => "<b>Updated Or Not</b>"}
+      format.json { render :json => msg } # don't do msg.to_json
     end
   end
 
   #please clean up these methods man
-   def pay
+  def pay
     @ac = nil
     ac_id = params[:id]
     student_id = params[:student_id]
@@ -99,6 +100,27 @@ class AccommodationsController < ApplicationController
     redirect :back
   end
 
+  def go_ahead
+    @ac = nil
+    ac_id = params[:id]
+    student_id = params[:student_id]
+    the_trans = Transaction.find(params[:trans_id])
+    unless the_trans.nil?
+      the_trans.go_ahead = true
+      student = User.find(student_id)
+      host = User.find(ac_id)
+      acc = Accommodation.find(the_trans.accomodation_id)
+
+      the_trans.message = "Dear #{student.name} we at #{host.name} have
+                           confirmed that we have recieved request to secure the
+                           room. You can go
+                           ahead and deposit #{acc.price} using banking details
+                           attached below \n " + host.bank_details + "\n your reference number: #{student.token}"
+      the_trans.save
+    end
+    redirect :back
+  end
+
   # this should enable a user to set the paid on or off but this a way of removing a an Item
   # def toggle_paid
   #   @ac = nil
@@ -120,7 +142,7 @@ class AccommodationsController < ApplicationController
   def toggle_room_view
     @ac = nil
     ac_id = params[:id]
-    student_id = params[:student_id]                            #todo extract  these getting too much
+    student_id = params[:student_id] #todo extract  these getting too much
     the_trans = Transaction.find(params[:trans_id])
     unless the_trans.nil?
       if the_trans.std_confirm?
