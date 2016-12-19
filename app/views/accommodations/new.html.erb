@@ -11,7 +11,7 @@
           <p class="form-group">
             <%= f.label :location, 'Location' %><br />
             <!--<%# f.collection_check_boxes nil, ['33', '33'], :id, :name_with_initial %>-->
-            <%= f.text_field :location, class: 'form-control' %><br />
+            <%= f.select :location,%w(Braam Auckland-Park DFC Soweto),   class: 'form-control' %><br />
           </p>
 
           <p class="form-group">

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161218132258) do
+ActiveRecord::Schema.define(version: 20161218232749) do
 
   create_table "accommodations", force: :cascade do |t|
     t.string   "location"
@@ -28,7 +28,6 @@ ActiveRecord::Schema.define(version: 20161218132258) do
     t.string   "institution"
     t.integer  "transaction_id"
     t.boolean  "is_secured"
-    t.boolean  "go_ahead"
   end
 
   create_table "books", force: :cascade do |t|
@@ -50,6 +49,7 @@ ActiveRecord::Schema.define(version: 20161218132258) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "book_type"
+    t.integer  "book_id"
   end
 
   create_table "feedbacks", force: :cascade do |t|

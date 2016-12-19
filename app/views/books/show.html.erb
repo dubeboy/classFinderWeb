@@ -25,15 +25,15 @@
   <div class="col-md-4">
     <div class="panel panel-default">
       <div class="panel-body">
-        <h4><%=  @book.name %> by <%=  @book.author %></h4>
+        <h4><%=  @book.title %> by <%=  @book.author %></h4>
         <p><span class="label label-info"><%= @book.category.name if @book.category %> </span> </p>
         <%= @book.description %>
         <p class="text-success text-bold">Price: R <%= @book.price.round(2) %></p>
-        <span class="likes-count" data-id="<%= @book.id %>" > <%= @book.tot_likes %> </span>
-        <%= link_to [:like, @book], method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
-            <i class="material-icons my-small-icon" style="color: #ff0722;">favorite</i>
-        <% end %>
-        <p>Views: <%= @book.views %></p>
+        <!--<span class="likes-count" data-id="<%# @book.id %>" > <%# @book.tot_likes %> </span>-->
+        <%# link_to [:like, @book], method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
+            <!--<i class="material-icons my-small-icon" style="color: #ff0722;">favorite</i>-->
+        <%# end %>
+        <!--<p>Views: <%# @book.views %></p>-->
       </div>
     </div>
     <!--seller Infomation -->

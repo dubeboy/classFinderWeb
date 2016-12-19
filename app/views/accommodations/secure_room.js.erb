@@ -1,0 +1,4 @@
+$('#notification').append(' <%= @k.nil? ? content_tag(:div, 'You have already secured the room.' , class: 'container alert alert-warning') : content_tag(:div, 'Your request has been sent', class: 'container alert alert-success') %>');
+//$('#secureSubmit').click(function() {
+//  $("#secureRoom .close").click()
+//});

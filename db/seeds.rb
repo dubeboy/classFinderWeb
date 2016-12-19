@@ -34,8 +34,9 @@ Category.create(name: 'Medicine', book_type: "Book")
 
 
 Institution.create(name: 'Wits', location: 'Bram')
-Institution.create(name: 'UJ', location: 'Auckland Park')
-Institution.create(name: 'UJ', location: 'DFC')
-Institution.create(name: 'UJ', location: 'Soweto')
+Institution.create(name: 'UJ-Auckland Park', location: 'Auckland Park')
+Institution.create(name: 'UJ-DFC', location: 'DFC')
+Institution.create(name: 'UJ-Soweto', location: 'Soweto')
+# Institution.create(name: 'UJ-Bunting', location: 'Auckland Park')  #left this on perpose todo fixme
 
 #todo for books add book category like MATH PHYSIC ETC

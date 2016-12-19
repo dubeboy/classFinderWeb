@@ -12,7 +12,7 @@ class AccommodationsController < ApplicationController
     @ac = Accommodation.new
   end
 
-  #todo only varified users can create accomodations
+  #todo only verified users can create accomodations
   def create
     @ac = Accommodation.new(acc_params)
     @ac.user = current_user
@@ -41,33 +41,32 @@ class AccommodationsController < ApplicationController
     student_id = params['user']['std_id']
     booking_type = params['user']['booking_type']
     advert_id = params['id']
-    #pron to Sql injection todo fixme sql injection
+    #pron to Sql injection
     #booking type information 1 is secure and 0 is view
     #todo make sure that a person can not secure a room twice
-    k = nil
+    @k = nil
     if booking_type == "1"
       #todo check this man
-      if Transaction.where("user_id='#{student_id}' and accomodation_id='#{advert_id}'").where("not booking_type").count == 0
+      if Transaction.where("user_id='#{student_id}' and accomodation_id='#{advert_id}'").where("booking_type = 't' ").count == 0
         t = Transaction.new(user_id: student_id, accomodation_id: advert_id, host_id: host_id, booking_type: 1, paid: 0)
         ad = Accommodation.find(advert_id)
         ad.is_secured = true
         ad.save! #todo put this in the models some how #before_action?
-        k = t.save!
+        @k = t.save!
       end
     elsif booking_type == "0" #booking type = 0 = view accomodation
-      if Transaction.where("user_id='#{student_id}' and accomodation_id='#{advert_id}'").where("booking_type").count == 0
+      if Transaction.where("user_id='#{student_id}' and accomodation_id='#{advert_id}'").where("booking_type = 'f' ").count == 0
         p = params['user']
-        h
         month = p['starts_at(1i)'] + make_two_digits(p['starts_at(2i)']) + make_two_digits(p['starts_at(4i)'])
         time = p['starts_at(4i)'] + " " + p['starts_at(5i)']
 
         t = Transaction.new(user_id: student_id, accomodation_id: advert_id, host_id: host_id, booking_type: 0, paid: 0, time: time, month: month)
-        k = t.save!
+        @k = t.save!
       end
     end
     respond_to do |format|
-      msg = {:status => "ok", :k => k, :html => "<b>Updated Or Not</b>"}
-      format.json { render :json => msg } # don't do msg.to_json
+      # format.html
+      format.js
     end
   end
 
@@ -84,6 +83,10 @@ class AccommodationsController < ApplicationController
         the_trans.paid = true
       end
       the_trans.save
+      format.json
+    end
+    respond_to do |format|
+      format.js
     end
     redirect :back
   end
@@ -96,8 +99,9 @@ class AccommodationsController < ApplicationController
     unless the_trans.nil?
       the_trans.std_confirm = true
       the_trans.save
+      format.json
     end
-    redirect :back
+
   end
 
   def go_ahead
@@ -111,16 +115,17 @@ class AccommodationsController < ApplicationController
       host = User.find(ac_id)
       acc = Accommodation.find(the_trans.accomodation_id)
 
-      the_trans.message = "Dear #{student.name} we at #{host.name} have
+      the_trans.message = "Dear #{student.name.capitalize} we at #{host.name.capitalize} have
                            confirmed that we have recieved request to secure the
                            room. You can go
                            ahead and deposit #{acc.price} using banking details
-                           attached below \n " + host.bank_details + "\n your reference number: #{student.token}"
+                           attached below \n #{host.bank_details} \n your reference number: #{student.token}"
       the_trans.save
     end
-    redirect :back
+    redirect_to :back
   end
 
+  #formula
   # this should enable a user to set the paid on or off but this a way of removing a an Item
   # def toggle_paid
   #   @ac = nil
@@ -178,6 +183,6 @@ class AccommodationsController < ApplicationController
   end
 
   def make_two_digits(digit)
-    digit.length < 2 ? "0#{d}" : digit
+    digit.length < 2 ? "0#{digit}" : digit
   end
 end

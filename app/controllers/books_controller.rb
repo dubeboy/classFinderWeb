@@ -3,7 +3,11 @@ class BooksController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    @books = Book.all.paginate(page: params[:page], per_page: 16).order(created_at: :desc) #find book by ID
+    if params['cat']
+      @books =  Category.find(params['cat']).books.all.paginate(page: params[:page], per_page: 16).order(created_at: :desc)
+    else
+      @books = Book.all.paginate(page: params[:page], per_page: 16).order(created_at: :desc)
+    end
   end
 
   #books/1 todo moght change from 16 to somthing else time and stress to our system

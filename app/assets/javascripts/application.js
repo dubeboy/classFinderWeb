@@ -64,4 +64,13 @@ $(document).ready(function() {
         itemSelector: '.item',
          columnWidth: '.item'
     });
+
+    // #todo refactor cmn code
+    $('#secureSubmit').click(function() {
+        $("#secureRoom .close").click()
+    });
+
+    $('#viewBooking').click(function() {
+        $("#secureRoom .close").click()
+    });
 });

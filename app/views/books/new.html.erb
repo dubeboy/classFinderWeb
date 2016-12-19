@@ -30,7 +30,7 @@
 
           <p class="form-group">
             <label for="item_category_id">Which istititution can we get this Book</label> <br />
-            <%= f.select :institution , Institution.all.collect {|c| [c.name, c.id]}, { class: 'form-control' } %>
+            <%= f.select :institution_id , Institution.all.collect {|c| [c.name, c]}, { class: 'form-control' } %>
           </p>
 
 
