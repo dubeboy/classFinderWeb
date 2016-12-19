@@ -99,9 +99,10 @@ class AccommodationsController < ApplicationController
     unless the_trans.nil?
       the_trans.std_confirm = true
       the_trans.save
-      format.json
     end
-
+    respond_to do |format|
+      format.js
+    end
   end
 
   def go_ahead
@@ -116,7 +117,7 @@ class AccommodationsController < ApplicationController
       acc = Accommodation.find(the_trans.accomodation_id)
 
       the_trans.message = "Dear #{student.name.capitalize} we at #{host.name.capitalize} have
-                           confirmed that we have recieved request to secure the
+                           confirmed that we have recieved your request to secure the
                            room. You can go
                            ahead and deposit #{acc.price} using banking details
                            attached below \n #{host.bank_details} \n your reference number: #{student.token}"

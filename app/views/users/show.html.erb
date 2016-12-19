@@ -77,7 +77,7 @@
                         <% if t.go_ahead? %>
 
                         <%= link_to [:pay, a, student_id: t.user_id, trans_id: t.id],  method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
-                          <i class="material-icons my-small-icon" style="color: #ff0722;">done</i><small>done</small>
+                          <i class="material-icons my-small-icon" style="color: #ff0722;">done</i><small>Confirm Student Payment</small>
                       <% end %></td>
 
                        <% else %>

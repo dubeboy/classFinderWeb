@@ -1,3 +1,6 @@
+<div id="msg">
+
+</div>
 <div>
   <h3> Your Bookings</h3>
   <table class="table table-bordered">
@@ -36,7 +39,7 @@
               <td>
                 <% if transaction.go_ahead? %>
                 <%= link_to [:student_pay, a, student_id: transaction.user_id, trans_id: transaction.id],  method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
-                    <i class="material-icons my-small-icon" style="color: #ff0722;">   payment</i><%= transaction.std_confirm? ? "Congrats You have paid for this room" : "Notify that you like the room and you have paid for it" %>
+                    <i class="material-icons my-small-icon" style="color: #ff0722;">   payment</i><%= transaction.std_confirm? ? "Congrats You have paid for this room" : "Confirm payment to the Host" %>
                 <% end %>
                     <% else %>
                     waiting for host confirmation
