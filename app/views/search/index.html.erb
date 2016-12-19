@@ -37,13 +37,13 @@
                     </div>
                 <% end %>
               </div>
-              <%= button_to 'View Item', book_path(book), class: 'btn btn-info my-button', method: :get  %>
+              <%= button_to 'View Book', book_path(book), class: 'btn btn-info my-button', method: :get  %>
               <%# link_to '<button type="button">View Item</button>'.html_safe, book_path(book), class: 'btn btn-info my-button' %>
             </div>
           </div>
       <% end %>
       <div id="infinity-scroll">
-        <%=  will_paginate @items if @items  %>
+        <%=  will_paginate @books if @books  %>
       </div>
   <% elsif @acs %>
       <% @acs.each do |item| %>
@@ -74,10 +74,12 @@
 
       <% end %>
 
-      <div id="infinity-scroll">
-        <%=  will_paginate @items if @items  %>
-      </div>
 
+      <div id="infinity-scroll">
+        <%=  will_paginate @acs if @acs  %>
+      </div>
+  <% else %>
+      <p>Nothing to show yet</p>
 <% end %>
 </div>
 
