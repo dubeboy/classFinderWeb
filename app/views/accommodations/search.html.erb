@@ -21,6 +21,9 @@
 <%# make this partials %>
 
   <div id="my-items">
+    <% if @acs.empty? %>
+      <p class=" text-center">Sorry there are no acoomodations that match your search</p>
+    <% else  %>
     <% @acs.each do |item| %>
         <div class="col-md-3 item" >
           <div class="panel panel-body" style="padding: 0px;">
@@ -46,11 +49,7 @@
           </div>
         </div>
     <% end %>
+        <% end %>
 
     <div id="infinity-scroll" style="display: inline-block" ><%= will_paginate @acs %></div>
-
-  <div id="infinity-scroll">
-
-    <%=  will_paginate @items if @items  %>
-  </div>
 </div>

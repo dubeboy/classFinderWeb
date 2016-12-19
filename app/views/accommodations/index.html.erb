@@ -18,7 +18,9 @@
     <% end %>
   </div>
 </div>
-
+<% if @acs.empty? %>
+    <p class=" text-center">Sorry there are no accommodation that match your search</p>
+<% else %>
 <% @acs.each do |item| %>
     <div class="col-md-3 item" >
       <div class="panel panel-body" style="padding: 0px;">
@@ -44,6 +46,7 @@
         <%# link_to '<button type="button">View Item</button>'.html_safe, item_path(item), class: 'btn btn-info my-button' %>
       </div>
     </div>
+<% end %>
 <% end %>
 
 <div id="infinity-scroll" style="display: inline-block" ><%= will_paginate @acs %></div>
