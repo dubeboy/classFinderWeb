@@ -16,7 +16,6 @@ class UsersController < ApplicationController
     end
   end
 
-
   def show
     # byebug
     #todo sql  fix the reds
