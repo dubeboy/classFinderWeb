@@ -39,14 +39,39 @@
 </div>
 <div>
   <% if @user.verified %>
-      <div class="col-md-12">
-        <div class="col-md-3">
-          <a class="btn btn-block btn-danger" href="?cat=1" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Wanted Rooms</a>
-          <a class="btn btn-block btn-danger" href="?cat=3" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);">Paid By Students</a>
-          <a class="btn btn-block btn-danger" href="?cat=2" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Room View Requests</a>
-          <a class="btn btn-block btn-danger" href="?cat=4" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Fully Booked</a>
+      <style>
+        .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+          color: #fff;
+          background-color:  #FF5722;
+        }
+      </style>
+      <% k = params['cat'] %>
+
+      <div class="container"><h2>Admin Panel</h2></div>
+      <div id="exTab3" class="contaner">
+        <ul  class="nav nav-pills">
+          <li class="<%= gen_active(k, 1) %>" id="licat1"   href="#1b" data-tggle="tab">
+            <a id="cat1" href="?cat=1">Available Rooms</a>
+          </li>
+          <li class="<%= gen_active(k, 2) %>" id="licat2" href="#2b"  data-tggle="tab">
+            <a id="cat2" href="?cat=2">Paid By Students</a>
+          </li>
+          <li class="<%= gen_active(k, 3 ) %>" id="cat3"  href="#3b" data-tggle="tab">
+            <a href="?cat=3"> Room View Requests</a>
+          </li>
+          <li class="<%= gen_active(k, 4 ) %>" id="cat4" href="#4b" data-ggle="tab">
+            <a href="?cat=4" >Fully Booked</a>
+          </li>
+        </ul>
+
+        <div class="tab-content clearfix">
+          <div class="tab-pane active" id="1b">
+           <h3> <%= explain(k, k) %> </h3>
+          </div>
         </div>
-        <div class="col-md-9 panel">
+      </div>
+
+        <div class=" panel">
           <table class="table table-bordered">
             <thead>
             <tr>
@@ -93,7 +118,6 @@
   </tbody>
   </table>
         </div>
-      </div>
   <% else %>
       <%= link_to "Check Panel", panel_user_path(@user) %>
       <h4>Items sold by : <%= @user.name.capitalize%></h4>  <p><%= link_to 'Sell Your Stuff Yeah?', new_item_path %></p>

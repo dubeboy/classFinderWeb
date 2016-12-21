@@ -21,15 +21,15 @@ $.material.init();
 
 var loading_items;
 
-$(document).ready(function() {
+$(document).ready(function () {
 
-   var pagination =  $('.pagination');
+    var pagination = $('.pagination');
     pagination.hide();
 
-    if ($('#infinity-scroll').size() > 0  ) {
+    if ($('#infinity-scroll').size() > 0) {
         if (pagination.length) {
             $(window).scroll(function () {
-                var url = $('.pagination >  .next_page' ).attr('href');
+                var url = $('.pagination >  .next_page').attr('href');
                 if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 60) {
                     $('.pagination').text(" Loading ");
                     return $.getScript(url);
@@ -39,38 +39,39 @@ $(document).ready(function() {
     }
 
 
-
-    if ($('#with_button').size() > 0  ) {
-          loading_items = false;
-          $('#load_more_items').show().click(function() {
-              var $this, more_items_url;
-              if (!loading_items) {
-                  loading_items = true;
-                  more_items_url = $('.pagination .next_page').attr('href');
-                  $this = $(this);
-                  $this.html('<img src="/assets/ajax-loader.gif" alt="Loading..." title="Loading..." />').addClass('disabled');
-                  $.getScript(more_items_url, function() {
-                      if ($this) {
-                          $this.text('More Items').removeClass('disabled');
-                      }
-                      return loading_items = false;
-                  });
-              }
-          });
+    if ($('#with_button').size() > 0) {
+        loading_items = false;
+        $('#load_more_items').show().click(function () {
+            var $this, more_items_url;
+            if (!loading_items) {
+                loading_items = true;
+                more_items_url = $('.pagination .next_page').attr('href');
+                $this = $(this);
+                $this.html('<img src="/assets/ajax-loader.gif" alt="Loading..." title="Loading..." />').addClass('disabled');
+                $.getScript(more_items_url, function () {
+                    if ($this) {
+                        $this.text('More Items').removeClass('disabled');
+                    }
+                    return loading_items = false;
+                });
+            }
+        });
     }
 
     $('.grid').masonry({
         // options
         itemSelector: '.item',
-         columnWidth: '.item'
+        columnWidth: '.item'
     });
 
     // #todo refactor cmn code
-    $('#secureSubmit').click(function() {
+    $('#secureSubmit').click(function () {
         $("#secureRoom .close").click()
     });
 
-    $('#viewBooking').click(function() {
-        $("#secureRoom .close").click()
+    $('#viewBooking').click(function () {
+        $("#viewBooking .close").click()
     });
+
+
 });

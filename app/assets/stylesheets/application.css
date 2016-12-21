@@ -15,8 +15,16 @@
  *= require bootstrap
  *= require bootstrap-material-design
  */
+
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+    color: #fff;
+    background-color:  #FF5722;
+}
+
+
 body {
-    position: relative;
+    /*position: relative;*/
 }
 .alert-error {
     background: #ff1343;
@@ -31,3 +39,38 @@ body {
 .material-icons.md-100 {
     font-size: 100px;
 }
+
+body {
+    /*padding : 10px ;*/
+}
+
+#exTab1 .tab-content {
+    color : white;
+    background-color: #FF5722;
+    padding : 5px 15px;
+}
+
+#exTab2 h3 {
+    color : white;
+    background-color: #FF5722;
+    padding : 5px 15px;
+}
+
+/* remove border radius for the tab */
+
+#exTab1 .nav-pills > li > a {
+    border-radius: 0;
+}
+
+/* change border radius for the tab , apply corners on top*/
+
+#exTab3 .nav-pills > li > a {
+    border-radius: 4px 4px 0 0 ;
+}
+
+#exTab3 .tab-content {
+    color : white;
+    background-color:  #FF5722;
+    padding : 5px 15px;
+}
+
