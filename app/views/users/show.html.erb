@@ -39,11 +39,14 @@
 </div>
 <div>
   <% if @user.verified?  %>
-      <% k = params['cat'] %>
+      <% k = params['cat'] ||= 0 %>
 
       <div class="container"><h2>Admin Panel</h2></div>
       <div id="exTab3" class="contaner">
         <ul  class="nav nav-pills">
+          <li class="<%= gen_active(k, 0) %>" id="licat1"   href="#1b" data-tggle="tab">
+            <%= link_to 'All', user_path(current_user) %>
+          </li>
           <li class="<%= gen_active(k, 1) %>" id="licat1"   href="#1b" data-tggle="tab">
             <a id="cat1" href="?cat=1">Available Rooms</a>
           </li>
@@ -64,7 +67,11 @@
           </div>
         </div>
       </div>
-      <%= render(partial: 'host_panel') %>
+      <%= render(partial: 'host_panel') if k.to_i > 0  %>
+      <div>
+        <div style="margin-bottom: 10px"></div>
+        <%= render(partial: 'shared/accommodation', collection: @acs) || "There's no accommodation to be displayed" %>
+      </div>
                                                                  <!--Runner information -->
   <% elsif @user.runner? %>
 

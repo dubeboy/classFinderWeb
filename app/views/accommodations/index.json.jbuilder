@@ -1,5 +1,5 @@
 
-json.array! @items do |i|
+json.array! @acs do |i|
      json.id = i.id
      json.city i.city
      json.names i.name

@@ -2,47 +2,7 @@
   <h4 class="text-uppercase">Add Accomodation</h4>
   <div class="panel">
     <div class="panel-body">
-
-      <%= form_for @ac, html: {multipart: true} do |f| %>
-
-          <p>
-            <%=render 'shared/error_msgs', object: f.object %>
-          </p>
-          <p class="form-group">
-            <%= f.label :location, 'Location' %><br />
-            <!--<%# f.collection_check_boxes nil, ['33', '33'], :id, :name_with_initial %>-->
-            <!--todo this should call from a data table-->
-            <%= f.select :location,%w(Braam Auckland-Park DFC Soweto),   class: 'form-control' %><br />
-          </p>
-
-          <p class="form-group">
-            <label for="item_category_id">Select Room Type</label> <br />
-            <%= f.select :room_type , %w(Sharing Single Cottage Apartments), class: 'form-control'  %>
-          </p>
-
-          <p class="form-group">
-            <%= f.label :description %><br />
-            <%= f.text_area :description, class: 'form-control' %>
-          </p>
-
-          
-
-          <p class="form-gro">
-            <%= f.label :avatars, "Item Images" %><br />
-            <small>Click Here to Upload images of the Room, Hold ctrl to select many images</small>
-            <%= file_field_tag "images[]", type: :file, multiple: true %>
-          </p>
-
-
-          <div class="form-group">
-            <%= f.label :price %>
-            <span class="input-group-addon text-bold">R (p.m)</span>
-            <%= f.number_field :price, min: 0, step: 'any',  class: 'form-control' %>
-          </div>
-
-          <hr>
-          <%= f.submit "Advertise Your Accomodation", class: 'btn btn-flat' %>
-      <% end %>
+        <%= render 'form', ac: @ac %>
     </div>
   </div>
 </div>

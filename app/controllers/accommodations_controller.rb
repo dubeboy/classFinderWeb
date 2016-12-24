@@ -1,6 +1,7 @@
 class AccommodationsController < ApplicationController
 
   before_action :authenticate_user!, except: [:index, :show, :search]
+  #use that before_action to set the @user when finding first
 
   def index #fixme
     @acs = Accommodation.all.paginate(page: params[:page], per_page: 16).order(created_at: :desc)
@@ -28,6 +29,36 @@ class AccommodationsController < ApplicationController
       render 'new'
     end
   end
+
+
+
+  def edit
+    @ac = Accommodation.find(params[:id])
+  end
+
+  def update
+    @ac = Accommodation.find(params[:id])
+    @ac.update(acc_params)
+    redirect_to accommodation_path(@ac)
+  end
+
+  def show
+    @ac = Accommodation.find(params[:id])
+    views = @ac.views
+    views += 1 if @ac.user != current_user
+    @ac.update_attribute(:views, views) if @ac.user != current_user
+  end
+
+  def destroy
+    @acs = Accommodation.find(params[:id])
+    t = Transaction.find_unique_row(current_user.id, @acs.id)
+    t.destroy unless t.nil?
+    @acs.destroy
+    redirect_to accommodations_path
+  end
+
+
+  # ========== under the hood dont look if you can`t handle=========
 
   def search
     @locations = ['Auckland Park', 'Braam', 'Soweto']
@@ -71,7 +102,7 @@ class AccommodationsController < ApplicationController
         runner_id = available_runners[rand_i].id #fixme say whaaaaa!!!
         t = Transaction.new(user_id: student_id, accomodation_id: advert_id,
                             runner_id: runner_id, booking_type: 0, paid: 0,
-                            time: time, month: month, std_confirm: false)
+                            time: time, month: month, std_confirm: false, host_id: ad.user.id)
         @k = t.save!
       end
     end
@@ -81,8 +112,6 @@ class AccommodationsController < ApplicationController
       format.js
     end
   end
-
-
 
   #please clean up these methods man
   def pay
@@ -175,20 +204,7 @@ class AccommodationsController < ApplicationController
     redirect :back
   end
 
-  def show
-    @ac = Accommodation.find(params[:id])
-    views = @ac.views
-    views += 1 if @ac.user != current_user
-    @ac.update_attribute(:views, views) if @ac.user != current_user
-  end
 
-  def destroy
-    @acs = Accommodation.find(params[:id])
-    t = Transaction.find_by_accomodation_id(acs.id)
-    t.destroy
-    @acs.destroy
-    redirect_to accommodations_path
-  end
 
 
   private

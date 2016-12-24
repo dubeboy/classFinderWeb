@@ -4,7 +4,9 @@ class User < ActiveRecord::Base
   before_save :encrypt_password
   before_create :generate_token
 
+
   has_many :items
+  has_many :accommodations
   has_and_belongs_to_many :time_slots, dependent: :destroy
 
   validates_confirmation_of :password

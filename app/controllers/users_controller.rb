@@ -53,6 +53,8 @@ class UsersController < ApplicationController
         elsif params['run'] == '3' #where the student has confirmed, paid by students
           @trans = trans_by_this_user.collect { |t| t if t.paid? } #this is all the upcoming one
         end
+      else
+        @acs =  current_user.accommodations
       end
     end
     @trans

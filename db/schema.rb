@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161223233226) do
+ActiveRecord::Schema.define(version: 20161224212939) do
 
   create_table "accommodations", force: :cascade do |t|
     t.string   "location"
@@ -188,6 +188,7 @@ ActiveRecord::Schema.define(version: 20161223233226) do
     t.boolean  "runner"
     t.string   "time_slots"
     t.string   "run_location"
+    t.boolean  "king"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

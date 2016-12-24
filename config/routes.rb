@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
 
 
+  get 'super_user/index'
+
   get 'welcome/index'
   root 'welcome#index'
   get 'auth/:provider/callback', to: 'sessions#create'

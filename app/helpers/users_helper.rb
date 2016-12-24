@@ -16,7 +16,9 @@ module UsersHelper
       num = pip.to_i
       n = k.to_i
 
-      if num == 1 and n == num
+      if num == 0 and n == num
+        return 'active'
+      elsif num == 1 and n == num
         return 'active'
       elsif num == 2 and n == num
         return 'active'
@@ -32,6 +34,8 @@ module UsersHelper
 
   def explain_host(pip, k)
     if gen_active(pip, 1)
+      return 'This is all your accommodations'
+    elsif gen_active(pip, 1)
       return 'These are the rooms that students have booked for viewing'
     elsif gen_active(pip, 2)
       return 'These are student who want to review rooms'

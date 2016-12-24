@@ -56,6 +56,8 @@ class ItemsController < ApplicationController
     @item.destroy
     redirect_to user_path(current_user)
   end
+  
+  #=======under hood stuff, parental guidance required======
 
   def like #todo not working properly and should be benchmarked
      item = Item.find(params[:id])
