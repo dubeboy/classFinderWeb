@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   def new
   end
 
-  # todo create a diffrent path for the system sign in
+  # todo create a different path for the system sign in
   def create
     if params[:email] and params[:password]
 

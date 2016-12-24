@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui/widgets/datepicker
 //= require turbolinks
 //= require bootstrap
 //= require bootstrap-material-design
@@ -65,13 +66,15 @@ $(document).ready(function () {
     });
 
     // #todo refactor cmn code
-    $('#secureSubmit').click(function () {
-        $("#secureRoom .close").click()
-    });
+    // $('#secureSubmit').click(function () {
+    //     $("#secureRoom .close").click()
+    // });
 
-    $('#viewBooking').click(function () {
+    $('#viewBookingBtn').click(function () {
         $("#viewBooking .close").click()
     });
 
+    //date picker for the time dude
+    $('#viewTime').datepicker();
 
 });

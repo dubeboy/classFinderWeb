@@ -7,8 +7,8 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
-    if @user.save
+    @user = User. find_or_initialize_by(email: params[:email])
+    if @user.update_attributes(user_params)
       session[:user_id] = @user.id
       redirect_to root_url, notice: 'Signed up!'
     else
@@ -16,6 +16,7 @@ class UsersController < ApplicationController
     end
   end
 
+  #Dirty
   def show
     # byebug
     #todo sql  fix the reds
@@ -25,11 +26,10 @@ class UsersController < ApplicationController
     # if @user.verified == 1 todo is it okay
     #todo fix the security issue of host van view other host stuff
     #todo benchmark this for performace test
-    if(params['cat'] and (@user == current_user) and @user.verified?)
 
+    if @user == current_user
+      if @user.verified? and params['cat']
         trans_by_this_user = Transaction.where("host_id = '#{@user.id}'").reverse_order #array of this hosts trasctns
-
-
         if params['cat'] == '1' #for open accommodations
           # unpaid_transactions = trans_by_this_user.collect { |t| t unless t.paid? }
           # @acs = Accommodation.find(unpaid_transactions.collect { |t| t.accomodation_id })
@@ -41,11 +41,21 @@ class UsersController < ApplicationController
         elsif params['cat'] == '3' #where the student has confirmed, paid by students
           @trans = trans_by_this_user.collect { |t| t if t.std_confirm? }
         elsif params['cat'] == '4' #upcoming waiting confirmation
-          @trans = trans_by_this_user.collect { |t| t if t.paid}
+          @trans = trans_by_this_user.collect { |t| t if t.paid }
         end
+
+      elsif (@user.runner? and params['run']) #runner actions
+        trans_by_this_user = Transaction.where("runner_id = '#{@user.id}'").reverse_order
+        if params['run'] == '1' #for open accommodations
+          @trans = trans_by_this_user.collect { |t| t unless t.std_confirm? } # this should be selected based on time
+        elsif params['run'] == '2' #for objects that are upcoming for viewing
+          @trans = trans_by_this_user.collect { |t| t if t.std_confirm? } #this is all paid but user id is this one
+        elsif params['run'] == '3' #where the student has confirmed, paid by students
+          @trans = trans_by_this_user.collect { |t| t if t.paid? } #this is all the upcoming one
+        end
+      end
     end
     @trans
-
   end
 
 =begin
@@ -62,6 +72,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    byebug
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
       flash[:success] = 'Successfully edited your profile'
@@ -89,6 +100,5 @@ class UsersController < ApplicationController
       redirect_to root_path
       false
     end
-
   end
 end

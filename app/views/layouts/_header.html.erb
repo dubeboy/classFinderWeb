@@ -13,7 +13,8 @@
       <ul class="nav navbar-nav navbar-right">
         <% if current_user %>
             <% if !current_user.verified? %>
-                <li><%= link_to "My Bookings", panel_user_path(current_user) %></li>
+                <li><%= link_to "My Bookings", panel_user_path(current_user) unless current_user.runner? %></li>
+                <li><%= link_to "My Bookings", user_path(current_user) if current_user.runner? %></li>
                 <li><%= link_to 'Find Open Venue', 'http://classfinderpp.com' %></li>
                 <% else %>
                 <li><%= link_to 'Add Accommodation', new_accommodation_path %></li>

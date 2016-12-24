@@ -10,30 +10,28 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
- *= require_self
  *= require bootstrap
  *= require bootstrap-material-design
+ *= require jquery-ui/datepicker
+ *= require_self
+ *= require_tree .
  */
-
 
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
     color: #fff;
-    background-color:  #FF5722;
+    background-color: #FF5722;
 }
-
 
 body {
     /*position: relative;*/
 }
+
 .alert-error {
     background: #ff1343;
 }
+
 .alert {
     border-radius: 10px;
-}
-.panel-body {
-    padding: 0px;
 }
 
 .material-icons.md-100 {
@@ -45,15 +43,15 @@ body {
 }
 
 #exTab1 .tab-content {
-    color : white;
+    color: white;
     background-color: #FF5722;
-    padding : 5px 15px;
+    padding: 5px 15px;
 }
 
 #exTab2 h3 {
-    color : white;
+    color: white;
     background-color: #FF5722;
-    padding : 5px 15px;
+    padding: 5px 15px;
 }
 
 /* remove border radius for the tab */
@@ -65,12 +63,12 @@ body {
 /* change border radius for the tab , apply corners on top*/
 
 #exTab3 .nav-pills > li > a {
-    border-radius: 4px 4px 0 0 ;
+    border-radius: 4px 4px 0 0;
 }
 
 #exTab3 .tab-content {
-    color : white;
-    background-color:  #FF5722;
-    padding : 5px 15px;
+    color: white;
+    background-color: #FF5722;
+    padding: 5px 15px;
 }
 

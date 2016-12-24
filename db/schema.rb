@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161218232749) do
+ActiveRecord::Schema.define(version: 20161223233226) do
 
   create_table "accommodations", force: :cascade do |t|
     t.string   "location"
@@ -117,6 +117,19 @@ ActiveRecord::Schema.define(version: 20161218232749) do
     t.integer  "user_id"
   end
 
+  create_table "time_slots", force: :cascade do |t|
+    t.string   "time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "time_slots_users", id: false, force: :cascade do |t|
+    t.integer "user_id",      null: false
+    t.integer "time_slot_id", null: false
+    t.index ["time_slot_id", "user_id"], name: "index_time_slots_users_on_time_slot_id_and_user_id"
+    t.index ["user_id", "time_slot_id"], name: "index_time_slots_users_on_user_id_and_time_slot_id"
+  end
+
   create_table "transactions", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "accomodation_id"
@@ -130,6 +143,7 @@ ActiveRecord::Schema.define(version: 20161218232749) do
     t.string   "time"
     t.text     "message"
     t.boolean  "go_ahead"
+    t.integer  "runner_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -171,6 +185,9 @@ ActiveRecord::Schema.define(version: 20161218232749) do
     t.string   "ip"
     t.text     "bank_details"
     t.string   "token"
+    t.boolean  "runner"
+    t.string   "time_slots"
+    t.string   "run_location"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

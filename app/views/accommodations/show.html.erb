@@ -10,9 +10,9 @@
       <div class="carousel-inner" style="margin-bottom: 20px">
         <% counter = 0 %>
         <% @ac.pictures.each do |p| %>
-            <div class= "<%= image_slider_helper(counter) %>  " data-slide-number= <%= counter %> >
+            <div class="<%= image_slider_helper(counter) %>  " data-slide-number=<%= counter %>>
               <%= image_tag p.image, class: 'img-responsive ', style: 'height: 447px; width: 100%; ' %>
-              <% counter += 1%>
+              <% counter += 1 %>
             </div>
         <% end %>
       </div><!-- Carousel nav -->
@@ -27,20 +27,17 @@
   <div class="col-md-4">
     <div class="panel panel-default">
       <div class="panel-body">
-        <h4>Around <%=  @ac.location %></h4>
-        <p><span class="label label-info"><%= "#{@ac.room_type} around #{@ac.location}"  %></span> </p>
+        <h4>Around <%= @ac.location %></h4>
+        <p><span class="label label-info"><%= "#{@ac.room_type} around #{@ac.location}" %></span></p>
 
         <%= @ac.description %>
-        <p >Price: R <span class="text-success text-bold" ><%= @ac.price.round(2) %></span>p.m</p>
-        <!--<span class="likes-count" data-id="<%# @ac.id %>" > <%# @ac.tot_likes %> </span>-->
-        <%# link_to [:like, @ac], method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
-            <!--<i class="material-icons my-small-icon" style="color: #ff0722;">favorite</i>-->
-        <%# end %>
+        <p>Price: R <span class="text-success text-bold"><%= @ac.price.round(2) %></span>p.m</p>
         <p>Views: <%= @ac.views %></p>
       </div>
       <div class="">
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#secureRoom">Secure Room</button>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewBooking">Book Viewing</button>
+        <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#secureRoom">Secure Room</button>-->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewBooking">Book Viewing
+        </button>
       </div>
     </div>
 
@@ -61,33 +58,33 @@
 
 <%#  todo move this to its own partial %>
 
-<div id="secureRoom" class="modal fade" tabindex="-1" style="display: none;">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title text-bold text-danger">Are you sure?</h4>
-      </div>
-      <div class="modal-body">
-        <p>In order to be able to secure a room you need to be sure that you will be able to deposit the room within 3 hours.
-          Due to availability of Room, so hurry bra!.
-          <br>
-        </p>
-      </div>
-      <div class="modal-footer">
-        <!--<button type="button" class="btn btn-primary" data-dismiss="modal">Continue<div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 49.6562px; top: 20px; background-color: rgb(0, 150, 136); transform: scale(10.875);"></div></div></button>-->
-        <div id="my-form">
-          <%=  form_for :user, :remote => true,  :url => secure_room_accommodation_path ,:html => { :id => 'secureRoom', class: 'btn btn-primary'} do |f| %>
-              <%= f.hidden_field :host_id, value: @ac.user.id %>
-              <%= f.hidden_field :std_id, value: current_user.id if current_user%>
-              <%= f.hidden_field :booking_type, value: 1 %>
-              <%= f.submit 'Yes book room now please!', id:'secureSubmit' %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<!--<div id="secureRoom" class="modal fade" tabindex="-1" style="display: none;">-->
+<!--<div class="modal-dialog">-->
+<!--<div class="modal-content">-->
+<!--<div class="modal-header">-->
+<!--<button type="button"  class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
+<!--<h4 class="modal-title text-bold text-danger">Are you sure?</h4>-->
+<!--</div>-->
+<!--<div class="modal-body">-->
+<!--<p>In order to be able to secure a room you need to be sure that you will be able to deposit the room within 3 hours.-->
+<!--Due to availability of Room, so hurry bra!.-->
+<!--<br>-->
+<!--</p>-->
+<!--</div>-->
+<!--<div class="modal-footer">-->
+<!--&lt;!&ndash;<button type="button" class="btn btn-primary" data-dismiss="modal">Continue<div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 49.6562px; top: 20px; background-color: rgb(0, 150, 136); transform: scale(10.875);"></div></div></button>&ndash;&gt;-->
+<!--<div id="my-form">-->
+<!--<%#  form_for :user, :remote => true,  :url => secure_room_accommodation_path ,:html => { :id => 'secureRoom', class: 'btn btn-primary'} do |f| %>-->
+<!--<%# f.hidden_field :host_id, value: @ac.user.id %>-->
+<!--<%# f.hidden_field :std_id, value: current_user.id if current_user%>-->
+<!--<%# f.hidden_field :booking_type, value: 1 %>-->
+<!--<%# f.submit 'Yes book room now please!', id:'secureSubmit' %>-->
+<!--<%# end %>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
 
 <!--MODAL 2-->
 
@@ -102,22 +99,23 @@
         <p>Please Select the time that you would be able to view the room
           <br>
 
-          Press <div id="my-form">
-        <%=  form_for :user, :remote => true, :url => secure_room_accommodation_path, :html => { :id => 'secureRoom' } do |f| %>
-            <%= f.hidden_field :host_id, value: @ac.user.id %>
-            <%= f.hidden_field :std_id, value: current_user.id if current_user %>
-            <%= f.hidden_field :booking_type, value: 0 %>
-            <% #todo use select time %>
-            <%= f.datetime_select :starts_at, prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }, start_year: 2017 %>
-
-      </div>
-        </p>
-      </div>
-      <div class="modal-footer">
-        <%= f.submit 'Continue', class: 'btn btn-success', id:'secureSubmit' %>
-        <% end %>
-      </div>
-    </div>
+          Press
+        <div id="my-form">
+          <%= form_for :user, :remote => true, :url => secure_room_accommodation_path, :html => {:id => 'secureRoom'} do |f| %>
+              <%= f.hidden_field :host_id, value: @ac.user.id %>
+              <%= f.hidden_field :std_id, value: current_user.id if current_user %>
+              <%= f.hidden_field :booking_type, value: 0 %>
+              <% #todo use select time %>
+              <%= f.select :time , %w(8:00-10:00 10:00-12:00 12:00-14:00 14:00-16:00), class: 'form-control'  %>
+              <%= f.text_field :month, id: 'viewTime' %>
+              </div>
+              </p>
+              </div>
+              <div class="modal-footer">
+                <%= f.submit 'Continue', class: 'btn btn-success', id: 'viewBookingBtn' %>
+          <% end %>
+          </div>
+          </div>
   </div>
 </div>
 

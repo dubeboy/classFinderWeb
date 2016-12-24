@@ -7,3 +7,8 @@ INdex data bases to make faster
 homework you pay I help you
 SQl injection
 Html injection
+rm time slots from user
+should factor out the list of location
+please correct the seacrh criteria for a runner guys currently itsearchs for a whole place like braam
+fix information leaking when signing up
+fix that emable a user to sign up using thir email and gmail with either systems

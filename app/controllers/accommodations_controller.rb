@@ -41,34 +41,48 @@ class AccommodationsController < ApplicationController
     student_id = params['user']['std_id']
     booking_type = params['user']['booking_type']
     advert_id = params['id']
+    ad = Accommodation.find(advert_id)
     #pron to Sql injection
     #booking type information 1 is secure and 0 is view
-    #todo make sure that a person can not secure a room twice
+    #todo make sure that a person can not secure a room twice extract common stuff
     @k = nil
     if booking_type == "1"
-      #todo check this man
+      #todo check this man put in model
       if Transaction.where("user_id='#{student_id}' and accomodation_id='#{advert_id}'").where("booking_type = 't' ").count == 0
-        t = Transaction.new(user_id: student_id, accomodation_id: advert_id, host_id: host_id, booking_type: 1, paid: 0)
-        ad = Accommodation.find(advert_id)
+        t = Transaction.new(user_id: student_id, accomodation_id: advert_id,
+                            host_id: host_id, booking_type: 1, paid: 0)
         ad.is_secured = true
         ad.save! #todo put this in the models some how #before_action?
         @k = t.save!
       end
+
     elsif booking_type == "0" #booking type = 0 = view accomodation
+      #find runner and set runner
       if Transaction.where("user_id='#{student_id}' and accomodation_id='#{advert_id}'").where("booking_type = 'f' ").count == 0
         p = params['user']
-        month = p['starts_at(1i)'] + make_two_digits(p['starts_at(2i)']) + make_two_digits(p['starts_at(4i)'])
-        time = p['starts_at(4i)'] + " " + p['starts_at(5i)']
+        time = p['time']  # to 8:00 to 10:00
+        month = p['month']
 
-        t = Transaction.new(user_id: student_id, accomodation_id: advert_id, host_id: host_id, booking_type: 0, paid: 0, time: time, month: month)
+        available_runners = User.all.collect { |r| available(r, time) if(r.runner? and r.run_location == ad.location) } #todo should runner location be defined for a accommodation house only?
+        print '------------------------------------'
+        print available_runners
+        print '------------------------------------'
+        rand_i = rand(0..(available_runners.length-1)) #fixme what!!!!  #todo improve runner assignment
+        runner_id = available_runners[rand_i].id #fixme say whaaaaa!!!
+        t = Transaction.new(user_id: student_id, accomodation_id: advert_id,
+                            runner_id: runner_id, booking_type: 0, paid: 0,
+                            time: time, month: month, std_confirm: false)
         @k = t.save!
       end
     end
+
     respond_to do |format|
       # format.html
       format.js
     end
   end
+
+
 
   #please clean up these methods man
   def pay
@@ -183,7 +197,17 @@ class AccommodationsController < ApplicationController
     params.require(:accommodation).permit!
   end
 
-  def make_two_digits(digit)
-    digit.length < 2 ? "0#{digit}" : digit
+  # def make_two_digits(digit)
+  #   digit.length < 2 ? "0#{digit}" : digit
+  # end
+  #todo does this does what it is supposed to do
+  def available(r, time) #call the time slot table to this runner
+    runner_time = r.time_slots.collect { |rt| rt.time}
+    for rt in runner_time
+      if rt == time
+        return r
+      end
+    end
+     return nil
   end
 end

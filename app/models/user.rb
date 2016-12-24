@@ -5,12 +5,13 @@ class User < ActiveRecord::Base
   before_create :generate_token
 
   has_many :items
+  has_and_belongs_to_many :time_slots, dependent: :destroy
 
   validates_confirmation_of :password
   validates_presence_of :password, :on => :create
   validates_presence_of :email, :name
   validates_uniqueness_of :email
-  validates_length_of :password, :on => :create, :minimum => 4, :too_short => "please enter at least %d characters"
+  validates_length_of :password, :on => :create, :minimum => 4, :too_short => "please enter at least 4 characters"
   validates_length_of :contacts, :in => 3..12, :allow_blank => true # todo make range better boy
 
   has_attached_file :cover,
@@ -32,8 +33,20 @@ class User < ActiveRecord::Base
     end
   end
 
+
+  def self.created_already?(email)
+    print "email"
+    puts email
+    b = find_by_email(email[:email])
+    if b
+      true
+    else
+      false
+    end
+  end
+
   def self.from_omniauth(auth)
-    # if exists?(email:  auth.info.email)
+    # if created_already?(email:  auth.info.email)
     #   provider = auth.provider
     #   uid = auth.uid
     #   name = auth.info.name
@@ -42,7 +55,8 @@ class User < ActiveRecord::Base
     #   oauth_token = auth.credentials.token
     #   oauth_expires_at = Time.at(auth.credentials.expires_at)
     #
-    #   self.update!(provider: provider, uid: uid, name: name, email: email, oauth_expires_at: oauth_expires_at, oauth_token: oauth_token)
+    #   update!(provider: provider, uid: uid, name: name, oauth_expires_at: oauth_expires_at,
+    #           oauth_token: oauth_token)
     # else
       where(provider: auth.provider, uid: auth.uid, email: auth.info.email ).first_or_initialize.tap do |user|
         user.provider = auth.provider

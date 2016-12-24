@@ -38,13 +38,7 @@
 
 </div>
 <div>
-  <% if @user.verified %>
-      <style>
-        .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
-          color: #fff;
-          background-color:  #FF5722;
-        }
-      </style>
+  <% if @user.verified?  %>
       <% k = params['cat'] %>
 
       <div class="container"><h2>Admin Panel</h2></div>
@@ -66,65 +60,36 @@
 
         <div class="tab-content clearfix">
           <div class="tab-pane active" id="1b">
-           <h3> <%= explain(k, k) %> </h3>
+            <h3> <%= explain_host(k, k) %> </h3>
           </div>
         </div>
       </div>
+      <%= render(partial: 'host_panel') %>
+                                                                 <!--Runner information -->
+  <% elsif @user.runner? %>
 
-        <div class=" panel">
-          <table class="table table-bordered">
-            <thead>
-            <tr>
-              <th>#</th>
-              <th>Location</th>
-              <th>Room Type</th>
-              <th>Views</th>
-              <th>Student Email</th>
-              <th>Viewing Time</th>
-              <th>Actions</th>
-            </tr>
-            </thead>
+      <% k = params['run'] %>
+      <div class="container"><h2>Runner Panel</h2></div>
+      <div id="exTab3" class="contaner">
+        <ul  class="nav nav-pills">
+          <li class="<%= gen_active(k, 1) %>" id="licat1"   href="#1b" data-tggle="tab">
+            <a id="cat1" href="?run=1">View Requests</a>
+          </li>
+          <li class="<%= gen_active(k, 2) %>" id="licat2" href="#2b"  data-tggle="tab">
+            <a id="cat2" href="?run=2">Paid By Students</a>
+          </li>
+        </ul>
 
-
-            <tbody>
-          <% if !@trans.nil? %>
-                <% @trans.each do |t| %>
-                <tr>
-                  <% if(a = get_accom(t)) %>
-                      <th scope="row"><%= link_to 1, accommodation_path(a) %></th>
-                    <td><%= a.location %></td>
-                    <td><%= a.room_type %></td>
-                    <td><%= a.views %></td>
-                    <td><%= get_user(t).email %></td>
-                    <td><%= "#{t.month} : #{t.time}" %></td>
-                      <td>
-
-                        <% if t.go_ahead? %>
-
-                        <%= link_to [:pay, a, student_id: t.user_id, trans_id: t.id],  method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
-                          <i class="material-icons my-small-icon" style="color: #ff0722;">done</i><small>Confirm Student Payment</small>
-                      <% end %></td>
-
-                       <% else %>
-                            <%= link_to [:go_ahead, a, student_id: t.user_id, trans_id: t.id],  method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
-                                <i class="material-icons my-small-icon" style="color: #ff0722;">done</i><small>go ahead room is a vailable, </small>
-                            <% end %>
-                        <% end  %>
-                <% end %>
-                </tr>
-                <% end %>
-            <% end %>
-
-  </tbody>
-  </table>
+        <div class="tab-content clearfix">
+          <div class="tab-pane active" id="1b">
+            <h3> <%= explain_runner(k) %> </h3>
+          </div>
         </div>
+      </div>
+      <%= render(partial: 'runner_panel') %>   <%# this could be the same partial %>
   <% else %>
       <%= link_to "Check Panel", panel_user_path(@user) %>
       <h4>Items sold by : <%= @user.name.capitalize%></h4>  <p><%= link_to 'Sell Your Stuff Yeah?', new_item_path %></p>
       <%= render(partial: 'shared/item', collection: @user.items) || 'You have not sold anything' %>
   <% end %>
-
-
-<div>
-</div>
 </div>
