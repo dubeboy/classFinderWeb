@@ -13,7 +13,7 @@
           Price To R: <%= number_field_tag :price_to, params[:price_to], placeholder: "0", class: "form-control"%> &nbsp
           <br>
         </div>
-        <%= submit_tag 'Search', name: nil, class: 'btn  btn-success', id: 'mySearch', style: "height: 35px; width: 585px; background-position: 0% 0%; background-color: rgba(64, 94, 153, 0.2);" %>
+        <%= submit_tag 'Search', name: nil, class: 'btn  btn-success', id: 'mySearch' %>
     <% end %>
   </div>
 </div>
@@ -26,7 +26,7 @@
     <% else  %>
     <% @acs.each do |item| %>
         <div class="col-md-3 item" >
-          <div class="panel panel-body" style="padding: 0px;">
+          <div class="panel panel-body my_div" style="padding: 0px;">
             <%= image_tag item.pictures[0].image, class: 'card-img-top' unless item.pictures[0].nil?  %>
             <div class="card-block">
               <h4 class="card-title"> <span class="text-bold text-success"> R <%= item.price.round(2) %></span></h4>

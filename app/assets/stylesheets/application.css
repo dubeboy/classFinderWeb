@@ -17,6 +17,13 @@
  *= require_tree .
  */
 
+@media screen and (max-width: 992px) {
+    .my_div > img {
+        height: 330px;
+    }
+}
+
+
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
     color: #fff;
     background-color: #FF5722;
@@ -73,7 +80,6 @@ body {
 }
 
 img {
-    height: 50%;
-    width: 100%;
-    -o-object-fit: contain;
+    max-height: 447px;
 }
+
