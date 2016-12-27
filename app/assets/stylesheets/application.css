@@ -72,3 +72,8 @@ body {
     padding: 5px 15px;
 }
 
+img {
+    height: 50%;
+    width: 100%;
+    -o-object-fit: contain;
+}

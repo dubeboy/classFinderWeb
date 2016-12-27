@@ -11,8 +11,10 @@
         <% counter = 0 %>
         <% @ac.pictures.each do |p| %>
             <div class="<%= image_slider_helper(counter) %>  " data-slide-number=<%= counter %>>
-              <%= image_tag p.image, class: 'img-responsive ', style: 'height: 447px; width: 100%; ' %>
-              <% counter += 1 %>
+               <div class="mydiv">
+                 <%= image_tag p.image, class: 'img-responsive' %>
+                 <% counter += 1 %>
+               </div>
             </div>
         <% end %>
       </div><!-- Carousel nav -->
