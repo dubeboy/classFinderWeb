@@ -6,7 +6,11 @@ class AccommodationsController < ApplicationController
   def index #fixme
     @acs = Accommodation.all.paginate(page: params[:page], per_page: 16).order(created_at: :desc)
     @locations = ['Auckland Park', 'Braam', 'Soweto']
-    @Inst = ['UJ', 'Wits', 'Other']
+    @Inst = %w(UJ Wits Other)
+    respond_to do |format|
+      format.json
+      format.html
+    end
   end
 
   def new

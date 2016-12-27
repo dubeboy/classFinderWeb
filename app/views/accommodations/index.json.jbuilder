@@ -1,10 +1,10 @@
 
 json.array! @acs do |i|
      json.id = i.id
-     json.city i.city
-     json.names i.name
-     json.institution i.institution
+     json.location i.location
+     json.room_type i.room_type
      json.price i.price
+     json.description i.description
      json.pictures i.pictures do |p|
         json.image_id p.id
         json.image_name p.image_file_name
