@@ -40,9 +40,10 @@ Institution.create(name: 'UJ-Soweto', location: 'Soweto')
 # Institution.create(name: 'UJ-Bunting', location: 'Auckland Park')  #left this on perpose todo fixme
 
 #Time Slots
-TimeSlot.create(time: "8:00-10:00")
-TimeSlot.create(time: "10:00-12:00")
-TimeSlot.create(time: "12:00-14:00")
-TimeSlot.create(time: "14:00-16:00")
+TimeSlot.create(time: "8:00")
+TimeSlot.create(time: "10:00")
+TimeSlot.create(time: "12:00")
+TimeSlot.create(time: "14:00")
+TimeSlot.create(time: "16:00")
 
 #todo for books add book category like MATH PHYSIC ETC
