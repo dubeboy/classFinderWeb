@@ -17,9 +17,9 @@
  *= require_tree .
  */
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 991px ) and (min-width: 480px) {
     .my_div > img {
-        height: 330px;
+        height: 530px;
     }
 }
 
@@ -43,10 +43,6 @@ body {
 
 .material-icons.md-100 {
     font-size: 100px;
-}
-
-body {
-    /*padding : 10px ;*/
 }
 
 #exTab1 .tab-content {

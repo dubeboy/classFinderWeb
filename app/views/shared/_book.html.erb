@@ -1,0 +1,22 @@
+<div class="col-md-4 item" >
+    <div class="panel panel-body" style="padding: 0px;">
+      <%= image_tag book.pictures[0].image, class: 'card-img-top img-responsive' unless book.pictures[0].nil?  %>
+      <div class="card-block">
+        <h4 class="card-title"> <span class="text-bold"><%= fit_title(book.title) %></span> <small>in <span class="label label-info"><%= book.category.name if book.category %></span></small></h4>
+        <p class="card-text text-bold text-success">R <%= book.price.round(2) %></p>
+
+        <%# link_to [:like, book], method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
+            <!--<i class="material-icons my-small-icon" style="color: #ff0722;">favorite</i>-->
+        <%# end %>
+
+        <% if book.user == current_user %>
+            <div class="pull-right">
+              <%= link_to 'Delete', book_path(book),
+                          data: {:confirm => 'Are you sure?'}, :method => :delete %>
+            </div>
+        <% end %>
+      </div>
+      <%= button_to 'View Item', book_path(book), class: 'btn btn-info my-button', method: :get  %>
+      <%# link_to '<button type="button">View Item</button>'.html_safe, book_path(book), class: 'btn btn-info my-button' %>
+    </div>
+  </div>

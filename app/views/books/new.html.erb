@@ -41,7 +41,7 @@
 
           <div class="form-group">
             <%= f.label :price %>
-            <span class="input-group-addon text-bold">Rands</span>
+            <span class="text-bold">: (Rands)</span>
             <%= f.number_field :price, min: 0, step: 'any',  class: 'form-control' %>
           </div>
 
@@ -56,7 +56,7 @@
 
 
           <hr>
-          <%= f.submit "Add New Item", class: 'btn btn-flat' %>
+          <%= f.submit "Add New Item", class: 'btn btn-flat my-btn' %>
       <% end %>
     </div>
   </div>

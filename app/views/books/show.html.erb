@@ -1,15 +1,15 @@
 
 <!-- Slider -->
-<div class="col-xs-12" id="slider">
+<div class="col-md-12" id="slider">
   <!-- Top part of the slider -->
-  <div class="col-sm-8" id="carousel-bounding-box">
+  <div class="col-md-8" id="carousel-bounding-box">
     <div class="carousel slide" id="myCarousel">
       <!-- Carousel books -->
       <div class="carousel-inner" style="margin-bottom: 20px">
         <% counter = 0 %>
         <% @book.pictures.each do |p| %>
             <div class= "<%= image_slider_helper(counter) %>  " data-slide-number= <%= counter %> >
-              <%= image_tag p.image, class: 'img-responsive ', style: 'height: 447px; width: 100%; ' %>
+              <%= image_tag p.image, class: 'img-responsive' %>
               <% counter += 1%>
             </div>
         <% end %>

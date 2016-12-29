@@ -4,12 +4,12 @@
         <li><%= u.id %> : <%= u.email %>,<%= u.name %> <br>
 
 
-    <%= link_to [:do, 'super_user', user_id: u.id, runner: false ],  method: :post, class: 'btn my-btn', form: {'data-type' => "json" }  do %>
+    <%= link_to [:do, 'super_user', user_id: u.id, runner: false ],  method: :post, class: 'btn my-btn' do %>
                             <%= u.verified? ? "Remove From Admin" : "make Admin" %>
     <% end %>
 
-    <%= link_to [:do, 'super_user', user_id: u.id, runner: true ],  method: :post, class: 'btn my-btn btn-success', form: {'data-type' => "json" }  do %>
-                        <%= u.runner? ? "Remove From list" : "Make Runner" %>
+    <%= link_to [:do, 'super_user', user_id: u.id, runner: true ],  method: :post, class: 'btn my-btn btn-success' do %>
+                        <%= u.runner? ? "Remove From Runner List" : "Make Runner" %>
     <% end %>
     </li>
     </ul>

@@ -1,3 +1,3 @@
- $('#my-items').append('<%= escape_javascript render(partial: "shared/item", collection: @books) %>');
+ $('#my-items').append('<%= escape_javascript render(partial: "shared/book", collection: @books) %>');
  $('.pagination').replaceWith('<%= escape_javascript will_paginate(@books) %>');
 
