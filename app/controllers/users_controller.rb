@@ -26,15 +26,26 @@ class UsersController < ApplicationController
     # if @user.verified == 1 todo is it okay
     #todo fix the security issue of host van view other host stuff
     #todo benchmark this for performace test
+  
 
-    if @user == current_user
-      if @user.verified? and params['cat']
-        trans_by_this_user = Transaction.where("host_id = '#{@user.id}'").reverse_order #array of this hosts trasctns
-        if params['cat'] == '1' #for open accommodations
+  
+    if @user.verified?
+
+      if @user.bank_details.nil? and @user == current_user
+        flash[:warning] = "Please add your bank details."
+      end
+
+      if @user == current_user and params['cat']
+          #we want users to be able to see all that users accommodation todo - should paginate
+           trans_by_this_user = Transaction.where("host_id = '#{@user.id}'").reverse_order #array of this hosts trasctns
+          # unpaid_transactions = trans_by_this_user.collect { |t| t unless t.paid? }
+          # @acs = Accommodation.find(unpaid_transactions.collect { |t| t.accomodation_id })
+        if params['cat'] == '0'
+           @acs =  current_user.accommodations
+        elsif params['cat'] == '1' #for available accommodations
           # unpaid_transactions = trans_by_this_user.collect { |t| t unless t.paid? }
           # @acs = Accommodation.find(unpaid_transactions.collect { |t| t.accomodation_id })
           @trans = trans_by_this_user.collect { |t| t unless t.paid? }
-
         elsif params['cat'] == '2' #for objects that are upcoming for viewing
           #todo check this if its real please or should it (if t.booking_type)
           @trans = trans_by_this_user.collect { |t| t if t.booking_type == 0 }
@@ -53,9 +64,9 @@ class UsersController < ApplicationController
         elsif params['run'] == '3' #where the student has confirmed, paid by students
           @trans = trans_by_this_user.collect { |t| t if t.paid? } #this is all the upcoming one
         end
-      else
-        @acs =  current_user.accommodations
+      
       end
+      @acs =  current_user.accommodations
     end
     @trans
   end
@@ -74,7 +85,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    byebug
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
       flash[:success] = 'Successfully edited your profile'

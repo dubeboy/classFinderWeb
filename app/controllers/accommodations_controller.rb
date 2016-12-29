@@ -47,6 +47,7 @@ class AccommodationsController < ApplicationController
   end
 
   def show
+    
     @ac = Accommodation.find(params[:id])
     views = @ac.views
     views += 1 if @ac.user != current_user
@@ -60,7 +61,6 @@ class AccommodationsController < ApplicationController
     @acs.destroy
     redirect_to accommodations_path
   end
-
 
   # ========== under the hood dont look if you can`t handle=========
 
@@ -80,7 +80,7 @@ class AccommodationsController < ApplicationController
     #pron to Sql injection
     #booking type information 1 is secure and 0 is view
     #todo make sure that a person can not secure a room twice extract common stuff
-    @k = nil
+    @k = false
     if booking_type == "1"
       #todo check this man put in model
       if Transaction.where("user_id='#{student_id}' and accomodation_id='#{advert_id}'").where("booking_type = 't' ").count == 0
@@ -95,19 +95,23 @@ class AccommodationsController < ApplicationController
       #find runner and set runner
       if Transaction.where("user_id='#{student_id}' and accomodation_id='#{advert_id}'").where("booking_type = 'f' ").count == 0
         p = params['user']
-        time = p['time']  # to 8:00 to 10:00
+        time = p['time']  # to 8:00
         month = p['month']
 
-        available_runners = User.all.collect { |r| available(r, time) if(r.runner? and r.run_location == ad.location) } #todo should runner location be defined for a accommodation house only?
-        print '------------------------------------'
-        print available_runners
-        print '------------------------------------'
-        rand_i = rand(0..(available_runners.length-1)) #fixme what!!!!  #todo improve runner assignment
-        runner_id = available_runners[rand_i].id #fixme say whaaaaa!!!
-        t = Transaction.new(user_id: student_id, accomodation_id: advert_id,
-                            runner_id: runner_id, booking_type: 0, paid: 0,
-                            time: time, month: month, std_confirm: false, host_id: ad.user.id)
-        @k = t.save!
+        av_r = User.all.collect { |r| available(r, time) if(r.runner? and r.run_location == ad.location) } #todo should runner location be defined for a accommodation house only?
+        available_runners = av_r.compact
+        if !available_runners.length == 0
+              rand_i = available_runners.length == 1 ? 0 : rand(0..(available_runners.length-1)) #fixme what!!!!  #todo improve runner assignment
+              runner = available_runners[rand_i] #fixme say whaaaaa!!!
+              runner_id = runner.id
+              t = Transaction.new(user_id: student_id, accomodation_id: advert_id,
+                                  runner_id: runner_id, booking_type: 0, paid: 0,
+                                  time: time, month: month, std_confirm: false, host_id: ad.user.id)
+               @k = t.save!
+        else
+              @k = false
+        end 
+        
       end
     end
 
@@ -170,7 +174,7 @@ class AccommodationsController < ApplicationController
                            attached below \n #{host.bank_details} \n your reference number: #{student.token}"
       the_trans.save
     end
-    redirect_to :back
+    redirect_to :back, notice: "Given Go a head to student"
   end
 
   #formula

@@ -1,3 +1,29 @@
-<% @users.each do |u| %>
-    <li><%= u.id %> : <%= u.email %>, <%= u.name %></li>
-<% end  %>
+<% if @users %>
+    <% @users.each do |u| %>
+    <ul>
+        <li><%= u.id %> : <%= u.email %>,<%= u.name %> <br>
+
+
+    <%= link_to [:do, 'super_user', user_id: u.id, runner: false ],  method: :post, class: 'btn my-btn', form: {'data-type' => "json" }  do %>
+                            <%= u.verified? ? "Remove From Admin" : "make Admin" %>
+    <% end %>
+
+    <%= link_to [:do, 'super_user', user_id: u.id, runner: true ],  method: :post, class: 'btn my-btn btn-success', form: {'data-type' => "json" }  do %>
+                        <%= u.runner? ? "Remove From list" : "Make Runner" %>
+    <% end %>
+    </li>
+    </ul>
+    
+    <% end  %>
+    <% else %>
+    <div class="hero">
+    <div class = "panel">
+        <p class="text_warning">Wud busted you!!!!!! Reporting you now.................<p>
+        <p class="text_warning">If you truly dont know how you got here go back to the home page here, but you will still be reported!<%= link_to 'Classfinder', root_path  %><p>
+    <div>
+
+
+
+    </div>
+    
+<% end %>

@@ -1,10 +1,6 @@
 Rails.application.routes.draw do
 
-
-
-
-  get 'super_user/index'
-
+  
   get 'welcome/index'
   root 'welcome#index'
   get 'auth/:provider/callback', to: 'sessions#create'
@@ -16,6 +12,10 @@ Rails.application.routes.draw do
   get "sign_up" => "users#new", :as => "sign_up"
   get "about" => "about#index", :as => "about"
   get 'hosts' => "hosts#index", :as => "hosts"
+
+  get 'super_user/index'
+  post 'do/super_user', action: 'do', controller: 'super_user'
+
 
   get "search" => "accommodation#search", :as => "search"
 

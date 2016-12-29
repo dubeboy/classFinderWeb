@@ -31,10 +31,9 @@
 
     <div class="form-group">
       <%= f.label :price %>
-      <span class="input-group-addon text-bold">R (p.m)</span>
+      <span class=" text-bold ">R (p.m)</span>
       <%= f.number_field :price, min: 0, step: 'any',  class: 'form-control' %>
     </div>
 
-    <hr>
-    <%= f.submit 'Advertise Your Accommodation', class: 'btn btn-flat' %>
+    <%= f.submit 'Advertise Your Accommodation', class: 'btn  my-btn' %>
 <% end %>

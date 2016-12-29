@@ -33,7 +33,7 @@ module UsersHelper
 
 
   def explain_host(pip, k)
-    if gen_active(pip, 1)
+    if gen_active(pip, 0)
       return 'This is all your accommodations'
     elsif gen_active(pip, 1)
       return 'These are the rooms that students have booked for viewing'
@@ -58,4 +58,12 @@ module UsersHelper
       return 'These are student who want to review rooms'
     end
   end
+
+  def options_for_status
+    [
+      ['Braam', 'Auckland-Park', 'DFC', 'Soweto'] ,
+      ['Braam', 'Auckland-Park', 'DFC', 'Soweto']
+    ]
+  end
+
 end
