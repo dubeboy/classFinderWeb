@@ -83,3 +83,11 @@ img {
     background-color: #FF5722;
 }
 
+.btn.nice {
+    padding: 10px 40px;
+    margin-bottom: 0px;
+    width: 100%;
+    margin-left: 0px;
+    border-radius: 0px;
+}
+

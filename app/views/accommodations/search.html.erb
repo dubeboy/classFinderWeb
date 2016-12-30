@@ -35,8 +35,9 @@
               <%# link_to [:like, item], method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
               <!--<i class="material-icons my-small-icon" style="color: #ff0722;">favorite</i>-->
               <%# end %>
-              <small class="badge"><%= item.room_type %></small>
-              Advertiser:<%= item.user.name %>
+              <small class="badge badge-success"><%= item.room_type %></small> <br>
+              Around <%= item.location  %> <br>
+              By <%= item.user.name %> <br>
               <% if item.user == current_user %>
                   <div class="pull-right">
                     <%= link_to 'Delete', accommodation_path(item),
@@ -44,7 +45,7 @@
                   </div>
               <% end %>
             </div>
-            <%= button_to 'More Info', accommodation_path(item), class: 'btn btn-info my-button', method: :get  %>
+            <%= button_to 'More Info', accommodation_path(item), class: 'btn my-btn nice', method: :get  %>
             <%# link_to '<button type="button">View Item</button>'.html_safe, item_path(item), class: 'btn btn-info my-button' %>
           </div>
         </div>
