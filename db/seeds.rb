@@ -33,9 +33,9 @@ Category.create(name: 'Humanities', book_type: "Book")
 Category.create(name: 'Medicine', book_type: "Book")
 
 
-Institution.create(name: 'Wits', location: 'Bram')
+Institution.create(name: 'Wits', location: 'Braamfontein')
 Institution.create(name: 'UJ-Auckland Park', location: 'Auckland Park')
-Institution.create(name: 'UJ-DFC', location: 'DFC')
+Institution.create(name: 'UJ-DFC', location: 'Doornfontein')
 Institution.create(name: 'UJ-Soweto', location: 'Soweto')
 # Institution.create(name: 'UJ-Bunting', location: 'Auckland Park')  #left this on perpose todo fixme
 
@@ -45,5 +45,3 @@ TimeSlot.create(time: "10:00")
 TimeSlot.create(time: "12:00")
 TimeSlot.create(time: "14:00")
 TimeSlot.create(time: "16:00")
-
-#todo for books add book category like MATH PHYSIC ETC

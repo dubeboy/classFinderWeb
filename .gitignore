@@ -33,3 +33,7 @@ node_modules
 /log
 app/assets/webpack/
 public/system/pictures/
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
