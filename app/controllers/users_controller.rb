@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action :authorised_user, only: [:edit, :update]
+  before_action :authenticate_user!, only: [:edit, :update, :panel]
 
   def new
     @user = User.new
@@ -66,7 +66,7 @@ class UsersController < ApplicationController
         end
       
       end
-      @acs =  current_user.accommodations
+      @acs =  current_user.accommodations if @current_user
     end
     @trans
   end

@@ -109,7 +109,9 @@
               Time:
               <%= f.select :time , TimeSlot.all.collect { |slot| slot.time }, class: 'form-control'  %>
               Viewing Day:
-              <%= f.text_field :month, id: 'viewTime' %>
+              <div id="sand-box">
+                <%= f.text_field :month, id: 'viewTime' %>
+              </div>
               </div>
               </p>
               </div>
@@ -120,5 +122,14 @@
           </div>
   </div>
 </div>
+
+<script>
+  $("#viewTime").focus(function() {
+    $('#viewTime').datepicker();
+  })
+  $('#sandbox-container input').datepicker({
+    daysOfWeekDisabled: "1"
+  });
+</script>
 
 

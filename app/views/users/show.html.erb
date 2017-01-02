@@ -36,7 +36,7 @@
 
 </div>
 <div>
- <% if @user.verified? %>
+ <% if @user.verified? and current_user %>
       <% k = params['cat'] ||= 0 %>
 
       <div class="container"><h2>Admin Panel</h2></div>
