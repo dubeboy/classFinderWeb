@@ -1,6 +1,7 @@
-<% data = CSV.read("/home/divine/RubymineProjects/store/lib/tasks/Extraction.csv", { encoding: "UTF-8", headers: true, header_converters: :symbol, converters: :all}) %>
-<% venue_hashes = data.map { |d| d.to_hash } %>
+<h1 class="text-center"> Currently open venues now</h1>
 
+
+<% venue_hashes = open_file %>
 
 <% g = get_open_venues(venue_hashes, nil)[0].uniq {|s| s[:venue]} %>
 <% g.each do |h| %>

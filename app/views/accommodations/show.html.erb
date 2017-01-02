@@ -106,12 +106,10 @@
               <%= f.hidden_field :std_id, value: current_user.id if current_user %>
               <%= f.hidden_field :booking_type, value: 0 %>
               <% #todo use select time %>
-              Time:
+              Select Day:
+              <%= f.text_field :month, id: 'viewTime' %>
+              Select Time:
               <%= f.select :time , TimeSlot.all.collect { |slot| slot.time }, class: 'form-control'  %>
-              Viewing Day:
-              <div id="sand-box">
-                <%= f.text_field :month, id: 'viewTime' %>
-              </div>
               </div>
               </p>
               </div>
@@ -122,14 +120,5 @@
           </div>
   </div>
 </div>
-
-<script>
-  $("#viewTime").focus(function() {
-    $('#viewTime').datepicker();
-  })
-  $('#sandbox-container input').datepicker({
-    daysOfWeekDisabled: "1"
-  });
-</script>
 
 

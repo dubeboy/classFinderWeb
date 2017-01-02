@@ -15,12 +15,14 @@
             <% if !current_user.verified? %>
                 <li><%= link_to "My Bookings", panel_user_path(current_user) unless current_user.runner? %></li>
                 <li><%= link_to "My Bookings", user_path(current_user) if current_user.runner? %></li>
-                <li><%= link_to 'Find Open Venue', 'http://classfinderpp.com' %></li>
+                <li><%= link_to 'Find Open Venue',  venue_finder_index_path %></li>
                 <% else %>
                 <li><%= link_to 'Add Accommodation', new_accommodation_path %></li>
                 <li><%= link_to 'Manage Accommdation', user_path(current_user) %></li>
 
-      <% end %>
+            <% end %>
+            <% else %>
+            <li><%= link_to 'Find Open Venue', venue_finder_index_path %></li>
         <% end %>
 
         <li><%# link_to 'Shop For Stuff',   items_path %></li>

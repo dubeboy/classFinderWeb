@@ -75,7 +75,7 @@ $(document).ready(function () {
     });
 
     //date picker for the time dude
-
+    $('#viewTime').datepicker();
 
 
     $('.carousel').carousel({
