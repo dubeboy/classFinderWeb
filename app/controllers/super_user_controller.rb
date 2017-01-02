@@ -30,8 +30,7 @@ class SuperUserController < ApplicationController
         b = " Made  "
       end
     end
-    console
-   
+
       if u.save!
       flash[:notice] = "You have "+ b + u.name + k
     end
