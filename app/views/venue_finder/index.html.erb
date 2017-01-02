@@ -1,0 +1,15 @@
+<% data = CSV.read("/home/divine/RubymineProjects/store/lib/tasks/Extraction.csv", { encoding: "UTF-8", headers: true, header_converters: :symbol, converters: :all}) %>
+<% venue_hashes = data.map { |d| d.to_hash } %>
+
+
+<% g = get_open_venues(venue_hashes, nil)[0].uniq {|s| s[:venue]} %>
+<% g.each do |h| %>
+    <div class="col-md-3 item" >
+  <div class="panel panel-body my_div" style="padding: 0px; overflow: hidden">
+    <div class="card-block">
+        <%=  h[:venue] %>
+    </div>
+  </div>
+</div>
+<% end %>
+<!--<%# ready(Time.now) %>-->

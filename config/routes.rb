@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
   
+  get 'venue_finder/index'
+
   get 'welcome/index'
   root 'welcome#index'
   get 'auth/:provider/callback', to: 'sessions#create'

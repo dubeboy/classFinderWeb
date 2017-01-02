@@ -5,7 +5,7 @@ class AccommodationsController < ApplicationController
 
   def index #fixme
     @acs = Accommodation.all.paginate(page: params[:page], per_page: 16).order(created_at: :desc)
-    @locations = ['Auckland Park', 'Braam', 'Soweto']
+    @locations = ['Auckland Park', 'Braamfontein', 'Doornfontein',  'Soweto']
     @Inst = %w(UJ Wits Other)
     respond_to do |format|
       format.json
@@ -65,7 +65,7 @@ class AccommodationsController < ApplicationController
   # ========== under the hood dont look if you can`t handle=========
 
   def search
-    @locations = ['Auckland Park', 'Braam', 'Soweto']
+    @locations = ['Auckland Park', 'Braamfontein', 'Doornfontein',  'Soweto']
     @Inst = ['UJ ', 'Wits', 'Other']
     @acs = Accommodation.search(term: params[:search], location: params[:location], room_type: params[:room_type], price_from: params[:price_from], price_to: params[:price_to]).paginate(:per_page => 16, :page => params[:page])
   end
