@@ -36,7 +36,7 @@
       </div>
       <div class="">
         <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#secureRoom">Secure Room</button>-->
-        <button type="button" class="btn my-btn nice" data-toggle="modal" data-target="#viewBooking">Book Viewing
+        <button type="button" class="btn my-btn nice" data-toggle="modal" data-target="#viewBooking">I'm hooked, I wanna go see this room 
         </button>
       </div>
     </div>
@@ -106,10 +106,17 @@
               <%= f.hidden_field :std_id, value: current_user.id if current_user %>
               <%= f.hidden_field :booking_type, value: 0 %>
               <% #todo use select time %>
-              Select Day:
-              <%= f.text_field :month, id: 'viewTime' %>
-              Select Time:
-              <%= f.select :time , TimeSlot.all.collect { |slot| slot.time }, class: 'form-control'  %>
+             
+              <div class="input-group">
+                 Select Day:
+                <span class="input-group-addon"> </span>
+                  <%= f.text_field :month, id: 'viewTime', class: 'form-contr' %>
+                 
+              </div>
+               Select Time:
+                    <%= f.select :time , TimeSlot.all.collect { |slot| slot.time }, class: 'form-control'  %>
+              
+              
               </div>
               </p>
               </div>
