@@ -1,10 +1,14 @@
-<h1 class="text-center"> Currently open venues now</h1>
+<h1 class="text-center"> Currently open venues (UJ-APK) </h1>
 
 
-<% venue_hashes = open_file %>
+<%= form_for :venue_finder, :url => find_venue_path, :html => {:id => 'secureRoom', class: 'form-inline'} do |f| %>
+              Select time you want to see if a venue is free:
+              <%= f.text_field :time, placeholder: "Time, Eg: 8:00", class: ' form-control' %>
+            <%= f.submit 'Find Venue', class: 'btn my-btn' %>
+<% end %>
 
-<% g = get_open_venues(venue_hashes, nil)[0].uniq {|s| s[:venue]} %>
-<% g.each do |h| %>
+<% unless @open_venues.nil? %>
+<% @open_venues.each do |h| %>
     <div class="col-md-3 item" >
   <div class="panel panel-body my_div" style="padding: 0px; overflow: hidden">
     <div class="card-block">
@@ -13,4 +17,14 @@
   </div>
 </div>
 <% end %>
+<%else%>
+     <div class="col-md-3 item offset-md-6" >
+  <div class="panel panel-body my_div" style="padding: 0px; overflow: hidden">
+    <div class="card-block">
+       mhhhhh, it looks like all venues are open now!
+    </div>
+  </div>
+</div>
+<%end%>
+
 <!--<%# ready(Time.now) %>-->

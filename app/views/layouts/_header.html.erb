@@ -6,7 +6,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link_to "Classfinder++", root_path, class: "navbar-brand text-bold" %>
+      <div class="brand"><%= link_to "Classfinder++", root_path, class: "navbar-brand text-bold" %></div>
+      <div class="logo"></div>
     </div>
     <div class="navbar-collapse collapse navbar-inverse-collapse">
 
@@ -22,7 +23,7 @@
 
             <% end %>
             <% else %>
-            <li><%= link_to 'Find Open Venue', venue_finder_index_path %></li>
+            <li><%= link_to 'Find Open Venue', find_open_venue_path %></li>
         <% end %>
 
         <li><%# link_to 'Shop For Stuff',   items_path %></li>

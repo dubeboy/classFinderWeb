@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
-
-  
-  get 'venue_finder/index'
-
+ 
   get 'welcome/index'
   root 'welcome#index'
   get 'auth/:provider/callback', to: 'sessions#create'
@@ -15,9 +12,12 @@ Rails.application.routes.draw do
   get "about" => "about#index", :as => "about"
   get 'hosts' => "hosts#index", :as => "hosts"
 
-  get 'super_user/index'
+  get 'super_user' => 'super_user#index', as: :super_user #might trim this a little
   post 'do/super_user', action: 'do', controller: 'super_user'
 
+  get 'find_open_venue', action: 'index', controller: 'venue_finder'
+  post 'find_open_venue/find_venue' => 'venue_finder#find_venue', as: :find_venue
+  
 
   get "search" => "accommodation#search", :as => "search"
 
