@@ -1,11 +1,18 @@
 <h1 class="text-center"> Currently open venues (UJ-APK) </h1>
 
 
-<%= form_for :venue_finder, :url => find_venue_path, :html => {:id => 'secureRoom', class: 'form-inline'} do |f| %>
-              Select time you want to see if a venue is free:
-              <%= f.text_field :time, placeholder: "Time, Eg: 8:00", class: ' form-control' %>
-            <%= f.submit 'Find Venue', class: 'btn my-btn' %>
+<%# form_for :venue_finder, :url => find_venue_path, :html => {:id => 'secureRoom', class: 'form-inline'} do |f| %>
+              <!--Select time you want to see if a venue is free:-->
+              <%# f.text_field :time, placeholder: "Time, Eg: 8:00", class: ' form-control' %>
+            <%# f.submit 'Find Venue', class: 'btn my-btn' %>
+<%# end %>
+
+<%= form_tag find_open_venue_path, :method => :get, class: 'form-inline form-search'  do %>
+        Select time you want to see if a venue is free:
+        <%= text_field_tag :time, params[:time],  placeholder: "Time, Eg: 8:00", class: ' form-control'%>
+<%= submit_tag 'Find Venue', name: nil, class: 'btn my-btn', id: 'mySearch' %>
 <% end %>
+
 
 <% unless @open_venues.nil? %>
 <% @open_venues.each do |h| %>
