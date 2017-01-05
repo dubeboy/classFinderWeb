@@ -19,7 +19,11 @@ class SessionsController < ApplicationController
 
       user = User.from_omniauth(env["omniauth.auth"])
       session[:user_id] = user.id
-      redirect_to :back
+      begin
+        redirect_to :back
+      rescue ActionController::RedirectBackError
+        redirect_to root_path
+      end
     end
   end
 
