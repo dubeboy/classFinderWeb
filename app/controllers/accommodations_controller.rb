@@ -65,9 +65,12 @@ class AccommodationsController < ApplicationController
   # ========== under the hood dont look if you can`t handle=========
 
   def search
-    @locations = ['Auckland Park', 'Braamfontein', 'Doornfontein',  'Soweto']
+
     @Inst = ['UJ ', 'Wits', 'Other']
-    @acs = Accommodation.search(term: params[:search], location: params[:location], room_type: params[:room_type], price_from: params[:price_from], price_to: params[:price_to]).paginate(:per_page => 16, :page => params[:page])
+    @acs = Accommodation.search(term: params[:search], location: params[:location],
+                                room_type: params[:room_type], price_from: params[:price_from],
+                                price_to: params[:price_to]).paginate(:per_page => 16,
+                                                                      :page => params[:page])
   end
 
   def secure_room
@@ -99,11 +102,23 @@ class AccommodationsController < ApplicationController
         month = p['month']
 
         av_r = User.all.collect { |r| available(r, time) if(r.runner? and r.run_location == ad.location) } #todo should runner location be defined for a accommodation house only?
+        puts '------------------------------------902323'
+        puts av_r.class
+        puts '------------------------------------45454'
+
+
         available_runners = av_r.compact
-        if !available_runners.length == 0
+        puts available_runners
+        puts available_runners.class
+        puts available_runners.length
+        puts '------------------------------------902323'
+        if available_runners.length != 0
+          puts '----------900e-----'
               rand_i = available_runners.length == 1 ? 0 : rand(0..(available_runners.length-1)) #fixme what!!!!  #todo improve runner assignment
               runner = available_runners[rand_i] #fixme say whaaaaa!!!
               runner_id = runner.id
+          puts
+          puts '---------ewe434------'
               t = Transaction.new(user_id: student_id, accomodation_id: advert_id,
                                   runner_id: runner_id, booking_type: 0, paid: 0,
                                   time: time, month: month, std_confirm: false, host_id: ad.user.id)
@@ -226,12 +241,18 @@ class AccommodationsController < ApplicationController
   # end
   #todo does this does what it is supposed to do
   def available(r, time) #call the time slot table to this runner
-    runner_time = r.time_slots.collect { |rt| rt.time}
-    for rt in runner_time
+    runner_times = r.time_slots.all.collect { |rt| rt.time}
+    puts '===========================9'
+    puts runner_times
+    puts time
+    puts '===========================9'
+    runner_times.each { |rt|
+      puts 'rt'
+      puts rt == time
       if rt == time
         return r
       end
-    end
+    }
      return nil
   end
 end

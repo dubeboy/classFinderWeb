@@ -41,8 +41,9 @@
                 </div>
             <% end %>
           </div>
-          <%= f.label :contacts, 'Location where you run at' %><br/>
-          <%= f.select :run_location, ['Braam', 'Auckland-Park', 'DFC', 'Soweto'], :selected => params['run_location'],  :class => 'form-control'  %><br />
+          <%= f.label :run_location, 'Location where you run at' %><br/>
+          <%= f.select :run_location, locations_array, :selected => @user.run_location,  :class => 'form-control'  %><br />
+
       <% end %>
 
       <div class="field form-group">

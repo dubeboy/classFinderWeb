@@ -3,13 +3,12 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   # protect_from_forgery with: :
 
-
   helper_method :current_user
-
 
   private
 
   def current_user
+    #fixme please try  and catch when User.find(session[:user_id]) is nil
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 

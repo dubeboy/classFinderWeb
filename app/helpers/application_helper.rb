@@ -7,4 +7,7 @@ def active (controller)
     return 'active'
   end
 end
+def locations_array
+  ['Auckland Park', 'Braamfontein', 'Doornfontein',  'Soweto']
+end
 end

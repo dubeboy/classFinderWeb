@@ -15,8 +15,14 @@
           Name : <%= @user.name %>
         </div>
         <%= @user.email %> <br>
-        Phone: <%= @user.contacts %>
-        <%= link_to 'Edit profile AND ADD BANK Details', edit_user_path(@user), class: 'btn btn-lg btn-flat my-btn ' if current_user == @user %>
+        Phone: <%= @user.contacts %> <br>
+        <% if @user.runner? %>
+             Running times: <%= @user.time_slots.empty? ? "<h4>[Please add time slot otherwise you will not get customers]</h4>".html_safe : @user.time_slots.all.collect { |t| t.time}  %> <br>
+             Run Locations: <%= @user.run_location %> <br>
+            <%= link_to 'Add time slot and run locations', edit_user_path(@user), class: 'btn btn-lg btn-flat my-btn ' if current_user == @user %>
+          <% else %>
+            <%= link_to 'Edit profile', edit_user_path(@user), class: 'btn btn-lg btn-flat my-btn ' if current_user == @user %>
+      <% end %> <br>
       </div>
     </div>
   </div>
