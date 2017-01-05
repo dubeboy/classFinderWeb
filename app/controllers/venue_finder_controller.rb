@@ -280,7 +280,7 @@ private
         puts '======================================='
         if time_code[2] == ' ' #check if it has more that one element
           puts 'if one get_venue_for_code'
-          b = time_code.split(' ') # split time code into array
+          b = time_code.split(' ') # split time code into array no!!! spliting time code verytime 
           b.each do |j| #j is each time
             puts f == j
             if f == j

@@ -79,7 +79,7 @@ $(document).ready(function () {
 
 
     $('.carousel').carousel({
-        interval: 1000 * 5
+        interval: 1000 * 8.5
     });
 
 });

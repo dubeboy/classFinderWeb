@@ -4,13 +4,13 @@
   <div class="form-group">
     <%= form_tag search_accommodations_path, :method => :get, id: 'items_search', class: 'form-inline form-search'  do %>
         <br>
-        <%= text_field_tag :search, params[:search], placeholder: "Search", class: ' form-control'%>
+        <%# text_field_tag :search, params[:search], placeholder: "Search", class: ' form-control'%>
         <div class=" form-con">
           Location: <%= select_tag 'name', options_for_select(@locations, "Auckland Park"), class: 'form-control' %> &nbsp &nbsp
           Institution: <%= select_tag 'Institutions', options_for_select(@Inst, "UJ"), class: 'form-control' %> &nbsp &nbsp
           Room Type: <%= select_tag 'room_type', options_for_select(['Single','Sharing', 'Apartment', 'Cottage'], "Sharing"), class: 'form-control' %> &nbsp &nbsp <br>
           Price From R: <%= number_field_tag :price_from, params[:price_from],placeholder: "0", class: "form-control"%>&nbsp
-          Price To R: <%= number_field_tag :price_to, params[:price_to], placeholder: "0", class: "form-control"%> &nbsp
+          Price To R: <%= number_field_tag :price_to, params[:price_to], placeholder: "0.0", class: "form-control"%> &nbsp
           <br>
         </div>
         <%= submit_tag '.     Search     .', name: nil, class: 'btn sty-for-lt btn-lg my-btn', id: 'mySearch' %>

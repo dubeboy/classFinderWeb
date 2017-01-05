@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate_user!
     if current_user.nil?
-      flash[:danger] = 'Choose Your method if you are a UJ Student email Please Choose Gmail ;)'
+      flash[:danger] = 'In order to use this feature please sign up.'
       redirect_to '/hosts'
       return false
     else

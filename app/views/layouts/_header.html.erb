@@ -6,38 +6,40 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <div class="brand"><%= link_to "Classfinder++", root_path, class: "navbar-brand text-bold" %></div>
-      <div class="logo"></div>
+      <!--<div class="brand"><%= link_to "Classfinder++", root_path, class: "navbar-brand text-bold" %></div>-->
+      <div class="logo">
+          <%= image_tag('logo.png',  class: "icon") %>
+      </div>
     </div>
     <div class="navbar-collapse collapse navbar-inverse-collapse">
 
       <ul class="nav navbar-nav navbar-right">
         <% if current_user %>
             <% if !current_user.verified? %>
-                <li><%= link_to "My Bookings", panel_user_path(current_user) unless current_user.runner? %></li>
-                <li><%= link_to "My Bookings", user_path(current_user) if current_user.runner? %></li>
-                <li><%= link_to 'Find Open Venue',  find_open_venue_path %></li>
+                <li class="<%= active('users') %>"><%= link_to "My Bookings", panel_user_path(current_user)  unless current_user.runner? %></li>
+                <li class="<%= active('users') %>"><%= link_to "My Bookings", user_path(current_user) if current_user.runner? %></li>
+                <li class="<%= active('venue_finder') %>"><%= link_to 'Find Open Venue',  find_open_venue_path %></li>
                 <% else %>
-                <li><%= link_to 'Add Accommodation', new_accommodation_path %></li>
-                <li><%= link_to 'Manage Accommdation', user_path(current_user) %></li>
+                <li class="<%= active('accommodations') %>"><%= link_to 'Add Accommodation', new_accommodation_path %></li>
+                <li class="<%= active('users') %>"><%= link_to 'Manage Accommdation', user_path(current_user) %></li>
 
             <% end %>
             <% else %>
-            <li> <%= link_to 'Find Open Venue', find_open_venue_path  %></li>
+            <li class="<%= active('venue_finder') %>"> <%= link_to 'Find Open Venue', find_open_venue_path , class: active('user') %></li>
         <% end %>
 
-        <li><%# link_to 'Shop For Stuff',   items_path %></li>
-        <li><%# link_to 'Sell Stuff',   new_item_path %></li>
+        <li class="<%= active('accommodations') %>"><%# link_to 'Shop For Stuff',   items_path %></li>
+        <li class="<%= active('accommodations') %>"><%# link_to 'Sell Stuff',   new_item_path %></li>
 
-        <li><%= link_to 'Find Accommodation', accommodations_path %></li>
+        <li class="<%= active('accommodations') %>"> <%= link_to 'Find Accommodation', accommodations_path %></li>
 
-        <li><%= link_to 'Search All', search_index_path %></li>
-        <li class="dropdown">
+        <li class="<%= active('search') %>"><%= link_to 'Search All', search_index_path %></li>
+        <li class="dropdown <%= active('books') %>">
           <a href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown"> Used Books
             <b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><%= link_to 'Find Books', books_path %></li>
-            <li><%= link_to "Add Books", new_book_path %></li>
+            <li ><%= link_to 'Find Books', books_path %></li>
+            <li ><%= link_to "Add Books", new_book_path %></li>
           </ul>
         </li>
 
@@ -49,15 +51,15 @@
               <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %>
                 <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><%= link_to 'Profile', user_path(current_user) %></li>
+                <li class="<%= active('users') %>"><%= link_to 'Profile', user_path(current_user) %></li>
                 <li class="divider"></li>
-                <li><%= link_to "Log out", log_out_path %></li>
+                <li class="<%= active('users') %>"><%= link_to "Log out", log_out_path %></li>
               </ul>
             </li>
 
         <% else %>
-            <li><%= link_to 'Sign In/Up Google', '/hosts', id: "sign_in" %></li>
-            <li><%= link_to 'About', about_path %></li>
+            <li class="<%= active('hosts') %>"><%= link_to 'Sign Up/In', '/hosts', id: "sign_in" %></li>
+            <li class="<%= active('about') %>"><%= link_to 'About', about_path %></li>
         <% end %>
 
 

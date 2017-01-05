@@ -13,6 +13,7 @@
  *= require bootstrap
  *= require bootstrap-material-design
  *= require jquery-ui/datepicker
+ *= require font-awesome
  *= require_self
  *= require_tree .
  */
@@ -83,6 +84,9 @@ img {
 .my-btn {
     background-color: #FF5722;
 }
+.my-btn-green  {
+    background-color: #00ae00;
+}
 
 .btn.nice {
     padding: 10px 40px;
@@ -90,5 +94,20 @@ img {
     width: 100%;
     margin-left: 0px;
     border-radius: 0px;
+}
+
+.active {
+    background-color: brown;
+}
+.logo {
+    display: block;
+    height: 61px;
+    /*width: 61px;*/
+    float: left;
+    overflow: hidden;
+}
+
+.icon {
+    height: 60px;
 }
 
