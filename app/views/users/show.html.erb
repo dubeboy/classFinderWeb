@@ -1,94 +1,99 @@
+<div id="msg">
+
+</div>
 <div class="">
   <div class="header">
     <%= check_if_nil @user.cover.url, '/default_cover.png', 'profile-cover' %>
 
     <div class="">
-      <%= check_if_nil @user.profile_img.url, '/images/profile.jpg', 'profile-img'  %>
+      <%= check_if_nil @user.profile_img.url, '/images/profile.jpg', 'profile-img' %>
     </div>
-</div>
+  </div>
 
   <h4>Contact details</h4>
   <div class="contacts-panel">
     <div class="panel panel-default">
       <div class="panel-body">
-        <div class ="user-name text-bold">
+        <div class="user-name text-bold">
           Name : <%= @user.name %>
         </div>
         <%= @user.email %> <br>
         Phone: <%= @user.contacts %> <br>
         <% if @user.runner? %>
-             Running times: <%= @user.time_slots.empty? ? "<h4>[Please add time slot otherwise you will not get customers]</h4>".html_safe : @user.time_slots.all.collect { |t| t.time}  %> <br>
-             Run Locations: <%= @user.run_location %> <br>
+            Running
+            times: <%= @user.time_slots.empty? ? "<h4>[Please add time slot otherwise you will not get customers]</h4>".html_safe : @user.time_slots.all.collect { |t| t.time } %>
+            <br>
+            Run Locations: <%= @user.run_location %> <br>
             <%= link_to 'Add time slot and run locations', edit_user_path(@user), class: 'btn btn-lg btn-flat my-btn ' if current_user == @user %>
-          <% else %>
+        <% else %>
             <%= link_to 'Edit profile', edit_user_path(@user), class: 'btn btn-lg btn-flat my-btn ' if current_user == @user %>
-      <% end %> <br>
+        <% end %> <br>
       </div>
     </div>
   </div>
 </div>
-<% if @user.about  %>
-<h4>About</h4>
-<div class="">
-  <div class="panel panel-default">
-    <div class="panel-body">
-      <p><%= @user.about %></p>
+<% if @user.about %>
+    <h4>About</h4>
+    <div class="">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <p><%= @user.about %></p>
+        </div>
       </div>
     </div>
-  </div>
 <% end %>
- 
-<div  id="notice">
+
+<div id="notice">
 
 </div>
 <div>
- <% if @user.verified? and current_user %>
+  <% if @user.verified? and current_user %>
       <% k = params['cat'] ||= 0 %>
 
       <div class="container"><h2>Admin Panel</h2></div>
       <div id="exTab3" class="contaner">
-        <ul  class="nav nav-pills">
-          <li class="<%= gen_active(k, 0) %>" id="licat1"   href="#1b" data-tggle="tab">
-               <a id="cat0" href="?cat=0">All</a>
+        <ul class="nav nav-pills">
+          <li class="<%= gen_active(k, 0) %>" id="licat1" href="#1b" data-tggle="tab">
+            <a id="cat0" href="?cat=0">All</a>
           </li>
-     <% if @user == current_user  %>
-          <li class="<%= gen_active(k, 1) %>" id="licat1"   href="#1b" data-tggle="tab">
-            <a id="cat1" href="?cat=1">Currently Advertised</a>
-          </li>
-          <li class="<%= gen_active(k, 2) %>" id="licat2" href="#2b"  data-tggle="tab">
-            <a id="cat2" href="?cat=2">Paid By Students</a>
-          </li>
-          <li class="<%= gen_active(k, 3 ) %>" id="cat3"  href="#3b" data-tggle="tab">
-            <a href="?cat=3"> Room View Requests</a>
-          </li>
-          <li class="<%= gen_active(k, 4 ) %>" id="cat4" href="#4b" data-ggle="tab">
-            <a href="?cat=4" >Fully Booked</a>
-          </li>
-        </ul>
+          <% if @user == current_user %>
+              <li class="<%= gen_active(k, 1) %>" id="licat1" href="#1b" data-tggle="tab">
+                <a id="cat1" href="?cat=1">Room View Requests</a>
+              </li>
+              <!--<li class="<%# gen_active(k, 2) %>" id="licat2" href="#2b"  data-tggle="tab">-->
+              <!--<a id="cat2" href="?cat=2">Paid By Students</a>-->
+              <!--</li>-->
+              <li class="<%= gen_active(k, 3) %>" id="cat3" href="#3b" data-tggle="tab">
+                <a href="?cat=3"> Room View Requests</a>
+              </li>
+              <li class="<%= gen_active(k, 4) %>" id="cat4" href="#4b" data-ggle="tab">
+                <a href="?cat=4">Fully Booked and Paid For</a>
+              </li>
+              </ul>
 
-        <div class="tab-content clearfix">
-          <div class="tab-pane active" id="1b">
-            <h3> <%= explain_host(k, k) %> </h3>
-          </div>
-        </div>
-      </div>
-      <%= render(partial: 'host_panel') if k.to_i > 0 %>
-      <div>
-      <% if k.to_i == 0 %>
-        <%= render(partial: 'shared/accommodation', collection: @acs) || "There's no accommodation to be displayed" %>
-        <% end %>
-      </div>
-                                                                 <!--Runner information -->
+              <div class="tab-content clearfix">
+                <div class="tab-pane active" id="1b">
+                  <h3> <%= explain_host(k, k) %> </h3>
+                </div>
+              </div>
+              </div>
+              <%= render(partial: 'host_panel') if k.to_i > 0 %>
+              <div>
+                <% if k.to_i == 0 %>
+                    <%= render(partial: 'shared/accommodation', collection: @acs) || "There's no accommodation to be displayed" %>
+                <% end %>
+              </div>
+          <% end %>
   <% elsif @user.runner? %>
 
       <% k = params['run'] %>
       <div class="container"><h2>Runner Panel</h2></div>
       <div id="exTab3" class="contaner">
-        <ul  class="nav nav-pills">
-          <li class="<%= gen_active(k, 1) %>" id="licat1"   href="#1b" data-tggle="tab">
+        <ul class="nav nav-pills">
+          <li class="<%= gen_active(k, 1) %>" id="licat1" href="#1b" data-tggle="tab">
             <a id="cat1" href="?run=1">View Requests</a>
           </li>
-          <li class="<%= gen_active(k, 2) %>" id="licat2" href="#2b"  data-tggle="tab">
+          <li class="<%= gen_active(k, 2) %>" id="licat2" href="#2b" data-tggle="tab">
             <a id="cat2" href="?run=2">Paid By Students</a>
           </li>
         </ul>
@@ -100,11 +105,11 @@
         </div>
       </div>
       <%= render(partial: 'runner_panel') %>   <%# this could be the same partial %>
-      <% end%>
   <% else %>
-  <br>
-      <%= link_to "Check Panel", panel_user_path(@user),  class: "btn btn-sucess btn-lg my-btn" %>
-      <h4>Items sold by : <%= @user.name.capitalize%></h4>  <p><%= link_to 'Sell Your Stuff Yeah?', new_item_path %></p>
+      <br>
+      <%= link_to "Check Panel", panel_user_path(@user), class: "btn btn-sucess btn-lg my-btn" %>
+      <h4>Items sold by : <%= @user.name.capitalize %></h4>
+      <p><%= link_to 'Sell Your Stuff Yeah?', new_item_path %></p>
       <%= render(partial: 'shared/item', collection: @user.items) || 'You have not sold anything' %>
 
   <% end %>

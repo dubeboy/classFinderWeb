@@ -18,7 +18,6 @@
     </tr>
     </thead>
 
-
     <tbody>
     <% @trans_by_this_user.each do |transaction| %>
         <% a = get_accom(transaction) %>
@@ -33,16 +32,17 @@
               <td><%= a.views %></td>
               <td><%= transaction.booking_type? ? 'Securing' : 'Viewing' %></td>
               <td><%= transaction.message %></td>
-
               <td>
-                <% if transaction.go_ahead? %>
-                <%= link_to [:student_pay, a, student_id: transaction.user_id, trans_id: transaction.id],  method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
-                    <i class="material-icons my-small-icon" style="color: #ff0722;">   payment</i><%= transaction.std_confirm? ? "Congrats You have paid for this room" : "Confirm payment to the Host" %>
+                <%# right now we cant wait for payment from host %>
+                <%# if transaction.go_ahead? || u.runner? %>
+                <%= link_to [:student_pay, a, student_id: transaction.user_id, trans_id: transaction.id],
+                            method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
+                    <%= transaction.std_confirm? ?
+                            "Congrats You have paid for this room" : "Confirm payment to the Host" %>
                 <% end %>
-                    <% else %>
-                    waiting for host confirmation
-                <% end %>
-
+                    <%# else %>
+                    <!--waiting for host confirmation-->
+                <%# end %>
               </td>
             </tr>
     <% end %>

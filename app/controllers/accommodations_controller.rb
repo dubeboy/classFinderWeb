@@ -5,8 +5,6 @@ class AccommodationsController < ApplicationController
 
   def index #fixme
     @acs = Accommodation.all.paginate(page: params[:page], per_page: 16).order(created_at: :desc)
-    @locations = ['Auckland Park', 'Braamfontein', 'Doornfontein',  'Soweto']
-    @Inst = %w(UJ Wits)
     respond_to do |format|
       format.json
       format.html
@@ -154,21 +152,20 @@ class AccommodationsController < ApplicationController
     respond_to do |format|
       format.js
     end
-    redirect :back
   end
 
   def student_pay
     @ac = nil
-    ac_id = params[:id]
-    student_id = params[:student_id]
     the_trans = Transaction.find(params[:trans_id])
     unless the_trans.nil?
+      @ac = the_trans
       the_trans.std_confirm = true
       the_trans.save
     end
     respond_to do |format|
       format.js
     end
+    redirect_to :back, notice: 'Notified accommodation host keep up the good work!'
   end
 
   def go_ahead

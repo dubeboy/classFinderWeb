@@ -59,11 +59,11 @@ $(document).ready(function () {
         });
     }
 
-    $('.grid').masonry({
-        // options
-        itemSelector: '.item',
-        columnWidth: '.item'
-    });
+    // $('.grid').masonry({
+    //     // options
+    //     itemSelector: '.item',
+    //     columnWidth: '.item'
+    // });
 
     // #todo refactor cmn code
     // $('#secureSubmit').click(function () {
@@ -81,6 +81,5 @@ $(document).ready(function () {
     $('.carousel').carousel({
         interval: 1000 * 8.5
     });
-
 });
 

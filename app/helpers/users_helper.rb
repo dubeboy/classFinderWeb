@@ -36,9 +36,9 @@ module UsersHelper
     if gen_active(pip, 0)
       return 'This is all your accommodations'
     elsif gen_active(pip, 1)
-      return 'These are the rooms that students have booked for viewing'
+      return 'These are the rooms that students have booked for viewing but the student has not paid yet'
     elsif gen_active(pip, 2)
-      return 'These are student who want to review rooms'
+      return 'These are students who want to review rooms'
     elsif gen_active(pip, 3)
       return 'These are all the students who say they have paid, please confirm by checking against their reference number and then click paid'
     elsif gen_active(pip, 4)
