@@ -13,7 +13,7 @@
 </div>
 <div class="col-md-9" id="my-items">
   <% if @books.empty? %>
-  <p>Nothing Found in this category</p>
+  <p class="text-center">Nothing Found in this category</p>
       <% else %>
        <%= render(partial: 'shared/book', collection: @books) || "There's no books to be displayed" %>
 <% end %>

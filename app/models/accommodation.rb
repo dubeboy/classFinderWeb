@@ -5,12 +5,18 @@ class Accommodation < ApplicationRecord
 
 
 #no sql injection here
-  def self.search(term: '',location: ' ', room_type: '', institution: '', price_from: 0 , price_to: 0)
-        k = where('location like ? or description like ? or room_type like ? or institution like ? ', "%#{location}%", "%#{term}%", "%#{room_type}%", "%#{institution}%")
+  def self.search(location, room_type, price_from: 0 , price_to: 0)
+      k = where('location = ? and room_type = ?', location, room_type)
       if price_from.to_i > 0 and price_to.to_i > 0
-          k = k.where('price >= ? and price <= ?', price_from, price_to)
+        k = k.where('price >= ? and price <= ?', price_from, price_to)
       end
       return k
+  end
+
+  # @overload fro overall search
+  def self.search(term)
+    k = where('description like ?', "%#{term}")
+    return k
   end
 end
 

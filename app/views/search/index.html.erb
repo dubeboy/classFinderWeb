@@ -1,88 +1,40 @@
-
 <%#  todo make these partials %>
 
-  <div class="col-md-12 my-search ">
-    <div class=" text-center">
-      <div class="form-group">
-        <%= form_tag search_index_path, :method => :get, id: 'items_search', class: 'form-inline form-search'  do %>
-            <div class=" form-g">
-               Select category: <%= select_tag "category", options_from_collection_for_select(@cat, "id", "name"), class: 'form-control' %>
-              <%= text_field_tag :search, params[:search], placeholder: 'Search Books and Accommodation',  class: ' form-control', style: 'width: 500px'%>
-              <%= submit_tag 'Search', name: nil, class: 'btn  btn-success', id: 'mySearch' %>
-              <%# submit_tag '', name: nil, class: 'btn btn-info ', id: 'mySearch' %>
-            </div>
-
-        <% end %>
-      </div>
+<div class="col-md-12 my-search ">
+  <div class=" text-center">
+    <div class="form-group">
+      <%= form_tag search_index_path, :method => :get, id: 'items_search', class: 'form-inline form-search' do %>
+          <div class=" form-g">
+            Select
+            category: <%= select_tag "category", options_from_collection_for_select(@cat, 'id', "name" ), class: 'form-control' %>
+            <%= text_field_tag :search, params[:search], placeholder: 'Search Books and Accommodation', class: ' form-control', style: 'width: 500px' %>
+            <%= submit_tag 'Search', name: nil, class: 'btn  my-btn-green', id: 'mySearch' %>
+            <%# submit_tag '', name: nil, class: 'btn btn-info ', id: 'mySearch' %>
+          </div>
+      <% end %>
     </div>
-
-<div id="my-items">
- <% if @books %>
-      <% @books.each do |book| %>
-          <div class="col-md-4 item" >
-            <div class="panel panel-body" style="padding: 0px;">
-              <%= image_tag book.pictures[0].image, class: 'card-img-top' unless book.pictures[0].nil?  %>
-              <div class="card-block">
-                <h4 class="card-title"> <span class="text-bold"><%= fit_title(book.title) %></span> <small>in <span class="label label-info"><%= book.category.name if book.category %></span></small></h4>
-                <p class="card-text text-bold text-success">R <%= book.price.round(2) %></p>
-
-                <%# link_to [:like, book], method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
-                <!--<i class="material-icons my-small-icon" style="color: #ff0722;">favorite</i>-->
-                <%# end %>
-
-                <% if book.user == current_user %>
-                    <div class="pull-right">
-                      <%= link_to 'Delete', book_path(book),
-                                  data: {:confirm => 'Are you sure?'}, :method => :delete %>
-                    </div>
-                <% end %>
-              </div>
-              <%= button_to 'View Book', book_path(book), class: 'btn btn-info my-button', method: :get  %>
-              <%# link_to '<button type="button">View Item</button>'.html_safe, book_path(book), class: 'btn btn-info my-button' %>
-            </div>
-          </div>
-      <% end %>
-      <div id="infinity-scroll">
-        <%=  will_paginate @books if @books  %>
-      </div>
-  <% elsif @acs %>
-      <% @acs.each do |item| %>
-          <div class="col-md-3 item" >
-            <div class="panel panel-body" style="padding: 0px;">
-              <%= image_tag item.pictures[0].image, class: 'card-img-top' unless item.pictures[0].nil?  %>
-              <div class="card-block">
-                <h4 class="card-title"> <span class="text-bold text-success"> R <%= item.price.round(2) %></span></h4>
-
-                <!--<span class="likes-count" data-id="<%# item.id %>" > <%# item.tot_likes %> </span>-->
-                <%# link_to [:like, item], method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
-                <!--<i class="material-icons my-small-icon" style="color: #ff0722;">favorite</i>-->
-                <%# end %>
-                <small class="badge badge-success"><%= item.room_type %></small> <br>
-                Around <%= item.location  %> <br>
-                By <%= item.user.name %> <br>
-                <% if item.user == current_user %>
-                    <div class="pull-right">
-                      <%= link_to 'Delete', accommodation_path(item),
-                                  data: {:confirm => 'Are you sure?'}, :method => :delete %>
-                    </div>
-                <% end %>
-              </div>
-              <%= button_to 'More Info', accommodation_path(item), class: 'btn btn-info my-button', method: :get  %>
-              <%# link_to '<button type="button">View Item</button>'.html_safe, item_path(item), class: 'btn btn-info my-button' %>
-            </div>
-          </div>
-
-      <% end %>
-
-
-      <div id="infinity-scroll">
-        <%=  will_paginate @acs if @acs  %>
-      </div>
-  <% else %>
-      <p>Nothing to show yet</p>
-<% end %>
-</div>
-
-
   </div>
+  <div id="my-items">
+    <% if @books %>
+        <%= render(partial: 'shared/book', collection: @books) || '<h4 class="text-center">There are no books the match your search, we are really sorry :)</h4>'.html_safe %>
+        </div>
+        <div id="infinity-scroll">
+          <%= will_paginate @books if @books %>
+        </div>
+    <% elsif @acs %>
+        <div id="my-items">
+        <%= render(partial: 'shared/accommodation',
+                   collection: @acs) ||
+                '<h4 class="text-center">There are no accommodations the match
+                     your search, please try using the better
+                <a href="/accommodations">accommodations search</a>  <h4>'.html_safe %>
+        </div>
+        <div id="infinity-scroll">
+          <%= will_paginate @acs if @acs %>
+        </div>
+    <% else %>
+        <h3 class="text-center"><i class="fa fa-search " aria-hidden="true"></i> Nothing to show yet</h3>
+    <% end %>
+    </div>
+</div>
 

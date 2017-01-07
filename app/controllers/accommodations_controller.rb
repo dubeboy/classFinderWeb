@@ -65,10 +65,10 @@ class AccommodationsController < ApplicationController
   def search
 
     @Inst = ['UJ ', 'Wits', 'Other']
-    @acs = Accommodation.search(term: params[:search], location: params[:location],
-                                room_type: params[:room_type], price_from: params[:price_from],
-                                price_to: params[:price_to]).paginate(:per_page => 16,
-                                                                      :page => params[:page])
+    #fixme term is out for now man
+    @acs = Accommodation.search(params[:name], params[:room_type],
+                                price_from: params[:price_from],
+                                price_to: params[:price_to]).paginate(:per_page => 16, :page => params[:page])
   end
 
   def secure_room
@@ -209,9 +209,6 @@ class AccommodationsController < ApplicationController
   # end
 
   def toggle_room_view
-    @ac = nil
-    ac_id = params[:id]
-    student_id = params[:student_id] #todo extract  these getting too much
     the_trans = Transaction.find(params[:trans_id])
     unless the_trans.nil?
       if the_trans.std_confirm?

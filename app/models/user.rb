@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   validates_presence_of :email, :name
   validates_uniqueness_of :email
   validates_length_of :password, :on => :create, :minimum => 4, :too_short => "please enter at least 4 characters"
-  validates_length_of :contacts, :in => 3..12, :allow_blank => true # todo make range better boy
+  validates_length_of :contacts, :minimum => 10, maximum:10, :allow_blank => false, too_short: "This should be 10 numbers"
 
   has_attached_file :cover,
                     styles: {medium: "1141x290", thumb: "400x400"}, default_url: "default_cover.png"
