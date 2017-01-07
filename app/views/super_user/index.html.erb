@@ -12,8 +12,8 @@
             <% end %>
 
             <% if u.runner? %>
-
-                This is the runner
+                 Running
+                times: <%= u.time_slots.empty? ? "<h4>[Oops This runner has no running time slots]</h4>".html_safe : u.time_slots.all.collect { |t| t.time } %>
                 <div class=" panel">
                   <table class="table table-bordered">
                     <thead>
@@ -50,7 +50,8 @@
                                   <td><%= a.location %></td>
                                   <td><%= a.room_type %></td>
                                   <td><%= a.views %></td>
-                                  <td><%= a.user.name %></td>
+                                  <td>
+                                    <%= link_to a.user.name , accommodation_path(a) %>
                                   <td><%= "#{t.month} : #{t.time}" %></td>
                                   <td>
                                     <%= link_to [:student_pay, a, student_id: t.user_id, trans_id: t.id], method: :post, class: 'like', id: 'runnerBtn', remote: true, form: {'data-type' => "json"} do %>
