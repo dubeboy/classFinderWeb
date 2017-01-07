@@ -32,7 +32,7 @@ class SuperUserController < ApplicationController
       end
     end
 
-      if u.save!
+      if u.save!(:validate => false)
       flash[:notice] = "You have "+ b + u.name + k
     end
     redirect_to :back
