@@ -2,12 +2,13 @@
   <table class="table table-bordered">
     <thead>
     <tr>
+      <th>Student profile</th>
       <th>Reference ID</th>
-      <th>User info</th>
+      <th>Student info</th>
       <th>Location</th>
       <th>Room Type</th>
       <th>Views</th>
-      <th>Student Email</th>
+      <th>Host Info</th>
       <th>Viewing Time</th>
       <th>Actions</th>
     </tr>
@@ -20,12 +21,20 @@
             <% if (a = get_accom(t)) %>
                 <tr id="<%= t.id %>">
                   <% u = get_user(t) %> <%# i would suspect that if the accom is there then the user is also there %>
-                  <th scope="row"><%= link_to u.token, accommodation_path(a) %></th>
-                  <td><%= u.email %> : <%= u.contacts %> </td>
+                  <td>
+                    <div class="row_image">
+                      <%= check_if_nil u.profile_img.url, '/images/profile.jpg', 'row_image' %>
+                    </div>
+                  </td>
+                  </td>
+                  <th scope="row"><%= link_to u.token, user_path(u) %></th>
+                  <td>
+
+                    <%= u.email %> : <%= u.contacts %> </td>
                   <td><%= a.location %></td>
                   <td><%= a.room_type %></td>
                   <td><%= a.views %></td>
-                  <td><%= get_user(t).email %></td>
+                  <td><%= a.user.name %></td>
                   <td><%= "#{t.month} : #{t.time}" %></td>
                   <td>
                     <%= link_to [:student_pay, a, student_id: t.user_id, trans_id: t.id], method: :post, class: 'like', id: 'runnerBtn',  remote: true, form: {'data-type' => "json"} do %>

@@ -1,29 +1,85 @@
 <% if @users %>
     <% @users.each do |u| %>
-    <ul>
-        <li><%= u.id %> : <%= u.email %>,<%= u.name %> <br>
+        <ul>
+          <li><%= u.id %> : <%= u.email %>,<%= u.name %> <br>
+
+            <%= link_to [:do, 'super_user', user_id: u.id, runner: false], method: :post, class: 'btn my-btn' do %>
+                <%= u.verified? ? "Remove From Admin" : "make Admin" %>
+            <% end %>
+
+            <%= link_to [:do, 'super_user', user_id: u.id, runner: true], method: :post, class: 'btn my-btn btn-success' do %>
+                <%= u.runner? ? "Remove From Runner List" : "Make Runner" %>
+            <% end %>
+
+            <% if u.runner? %>
+
+                This is the runner
+                <div class=" panel">
+                  <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                      <th>profile image</th>
+                      <th>Reference ID</th>
+                      <th>Student info</th>
+                      <th>Location</th>
+                      <th>Room Type</th>
+                      <th>Views</th>
+                      <th>Host</th>
+                      <th>Viewing Time</th>
+                      <th>Actions</th>
+                    </tr>
+                    </thead>
 
 
-    <%= link_to [:do, 'super_user', user_id: u.id, runner: false ],  method: :post, class: 'btn my-btn' do %>
-                            <%= u.verified? ? "Remove From Admin" : "make Admin" %>
+                    <tbody>
+                    <% if !@trans.nil? %>
+                        <% @trans.where('runner_id = ? ', u.id).each do |t| %>
+                            <% if (a = get_accom(t)) %>
+                                <tr id="<%= t.id %>">
+                                  <% u = get_user(t) %> <%# i would suspect that if the accom is there then the user is also there %>
+                                  <td>
+                                    <div class="row_image">
+                                      <%= check_if_nil u.profile_img.url, '/images/profile.jpg', 'row_image' %>
+                                    </div>
+                                  </td>
+                                  </td>
+                                  <th scope="row"><%= link_to u.token, user_path(u) %></th>
+                                  <td>
+
+                                    <%= u.email %> : <%= u.contacts %> </td>
+                                  <td><%= a.location %></td>
+                                  <td><%= a.room_type %></td>
+                                  <td><%= a.views %></td>
+                                  <td><%= a.user.name %></td>
+                                  <td><%= "#{t.month} : #{t.time}" %></td>
+                                  <td>
+                                    <%= link_to [:student_pay, a, student_id: t.user_id, trans_id: t.id], method: :post, class: 'like', id: 'runnerBtn', remote: true, form: {'data-type' => "json"} do %>
+                                        <%= t.std_confirm? ? 'keep up good work' : 'student would like to secure this room right now' %>
+                                    <% end %></td>
+                            <% end %>
+                            </tr>
+                        <% end %>
+                    <% end %>
+
+                    </tbody>
+                  </table>
+                </div>
+            <% end %>
+          </li>
+        </ul>
+
     <% end %>
-
-    <%= link_to [:do, 'super_user', user_id: u.id, runner: true ],  method: :post, class: 'btn my-btn btn-success' do %>
-                        <%= u.runner? ? "Remove From Runner List" : "Make Runner" %>
-    <% end %>
-    </li>
-    </ul>
-    
-    <% end  %>
-    <% else %>
+<% else %>
     <div class="hero">
-    <div class = "panel">
-        <p class="text_warning">Wud busted you!!!!!! Reporting you now.................<p>
-        <p class="text_warning">If you truly dont know how you got here go back to the home page here, but you will still be reported!<%= link_to 'Classfinder', root_path  %><p>
-    <div>
+      <div class="panel">
+        <p class="text_warning">Wud busted you!!!!!! Reporting you now.................
+        <p>
+        <p class="text_warning">If you truly dont know how you got here go back to the home page here, but you will
+          still be reported!<%= link_to 'Classfinder', root_path %><p>
+        <div>
 
 
+        </div>
 
-    </div>
-    
 <% end %>
+<%= will_paginate @users if @users %>
