@@ -110,7 +110,9 @@
       <%= link_to "Check Panel", panel_user_path(@user), class: "btn btn-sucess btn-lg my-btn" %>
       <h4>Items sold by : <%= @user.name.capitalize %></h4>
       <p><%= link_to 'Sell Your Stuff Yeah?', new_item_path %></p>
-      <%= render(partial: 'shared/item', collection: @user.items) || 'You have not sold anything' %>
+      <div class="col-md-9 " id="my-items">
+        <%= render(partial: 'shared/book', collection: @user.books) || 'You have not sold anything' %>
+      </div>
 
   <% end %>
 </div>

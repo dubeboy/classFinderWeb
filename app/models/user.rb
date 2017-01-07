@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 
   has_many :items
   has_many :accommodations
+  has_many :books
   has_and_belongs_to_many :time_slots, dependent: :destroy
 
   validates_confirmation_of :password
