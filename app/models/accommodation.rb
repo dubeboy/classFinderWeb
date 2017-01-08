@@ -13,8 +13,8 @@ class Accommodation < ApplicationRecord
       return k
   end
 
-  # @overload fro overall search
-  def self.search(term)
+  # @overload fro overall search does not work in ruby
+  def self.msearch(term)
     k = where('description like ?', "%#{term}")
     return k
   end
