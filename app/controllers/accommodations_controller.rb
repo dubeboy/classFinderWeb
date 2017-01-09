@@ -8,6 +8,7 @@ class AccommodationsController < ApplicationController
     respond_to do |format|
       format.json
       format.html
+      format.js
     end
   end
 
@@ -68,7 +69,8 @@ class AccommodationsController < ApplicationController
     #fixme term is out for now man
     @acs = Accommodation.search(params[:name], params[:room_type],
                                 price_from: params[:price_from],
-                                price_to: params[:price_to]).paginate(:per_page => 16, :page => params[:page])
+                                price_to: params[:price_to], precise_loc: params[:auck_location])
+               .paginate(:per_page => 16, :page => params[:page])
   end
 
   def secure_room

@@ -27,8 +27,8 @@
   <div class="col-md-4">
     <div class="panel panel-default">
       <div class="panel-body">
-        <h4>Around <%= @ac.location %></h4>
-        <p><span class="label label-info"><%= "#{@ac.room_type} around #{@ac.location}" %></span></p>
+        <h4>Around <%= @ac.location == 'Auckland Park' ? @ac.institution :  @ac.location %></h4>
+        <p><span class="label <%= make_nice_badges(@ac.room_type) %>"><%= "#{@ac.room_type} around #{@ac.location}" %></span></p>
 
         <%= @ac.description %>
         <p>Price: R <span class="text-success text-bold"><%= @ac.price.round(2) %></span>p.m</p>

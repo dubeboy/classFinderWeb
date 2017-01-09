@@ -8,8 +8,8 @@
       <%# link_to [:like, accommodation], method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
       <!--<i class="material-icons my-small-icon" style="color: #ff0722;">favorite</i>-->
       <%# end %>
-      <small class="badge badge-success"><%= accommodation.room_type %></small> <br>
-      Around <%= accommodation.location  %> <br>
+      <small class="badge <%= make_nice_badges(accommodation.room_type) %>"><%= accommodation.room_type %></small> <br>
+      <h5>Around  <%= accommodation.location == 'Auckland Park' ? accommodation.institution :  accommodation.location %> </h5><br>
       By <%= accommodation.user.name %> <br>
       <% if accommodation.user == current_user %>
           <div class="pull-right">

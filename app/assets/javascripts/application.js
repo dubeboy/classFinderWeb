@@ -22,6 +22,31 @@ $.material.init();
 
 var loading_items;
 
+
+function accom_aucland_hide_show() {
+    //Zulu computer
+
+    var b = false;
+
+    var c = $("#location_selected").find('option').filter(':selected').val();
+    console.log(c);
+    if(c != 'Auckland Park') {
+        c = null;
+        $("#if_auckland_park").hide();
+    }
+
+    $("#accommodation_location").click(function () {
+        var k = $("#location_selected").find('option').filter(':selected').val();
+        console.log(k)
+        if(k == 'Auckland Park') {
+            $("#if_auckland_park").show();
+        } else {
+            c = null;
+            $("#if_auckland_park").hide();
+        }
+    });
+}
+
 $(document).ready(function () {
 
     var pagination = $('.pagination');
@@ -81,5 +106,10 @@ $(document).ready(function () {
     $('.carousel').carousel({
         interval: 1000 * 8.5
     });
+
+    accom_aucland_hide_show();
+
 });
+$(document).on('turbolinks:load', accom_aucland_hide_show);
+
 

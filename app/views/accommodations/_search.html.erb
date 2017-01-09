@@ -6,10 +6,18 @@
         <br>
         <%# text_field_tag :search, params[:search], placeholder: "Search", class: ' form-control'%>
         <div class=" form-con ">
-          Location: <%= select_tag 'name', options_for_select(locations_array, params['name'].nil? ? 'Auckland Park' : params['name']), class: 'form-control' %> &nbsp &nbsp
-          <!--Institution: <%# select_tag 'Institutions', options_for_select(institutions_array, "UJ"), class: 'form-control' %> &nbsp &nbsp-->
-          Room Type: <%= select_tag 'room_type', options_for_select(['Single','Sharing', 'Apartment', 'Cottage'], params['room_type'].nil? ? 'Sharing' : params['room_type']),
+          <span id="location_selected">
+               Location: <%= select_tag 'name', options_for_select(locations_array, params['name'].nil? ? 'Auckland Park' : params['name']), class: 'form-control', id: 'accommodation_location'  %> &nbsp &nbsp
+          </span>
+
+          Room Type: <%= select_tag 'room_type', options_for_select(['Single','Sharing', 'Apartment', 'Cottage'],
+                                                                    params['room_type'].nil? ? 'Sharing' : params['room_type']),
                                     class: 'form-control' %> &nbsp &nbsp <br>
+          <span id="if_auckland_park">
+              Areas in Auckland Park: <%= select_tag 'auck_location',
+                                                     options_for_select(if_auckland_park_array,  'UJ'),
+                                                     prompt: '--Select Auckland Park location--', class: 'form-control' %> &nbsp &nbsp
+          &nbsp &nbsp <br></span>
 
           Price From R: <%= number_field_tag :price_from, params[:price_from], min: 0, placeholder: "0.0", class: "form-control"%>&nbsp
           Price To R: <%= number_field_tag :price_to, params[:price_to], min: 0, placeholder: "0.0", class: "form-control"%> &nbsp

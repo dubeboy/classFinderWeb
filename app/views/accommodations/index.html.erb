@@ -1,11 +1,11 @@
-
 <h2 class="text-center">Accommodations</h2>
-
 <div>
   <%= render :partial=> 'search' %>
 </div>
-<div>
+<div id="my-items">
     <%= render(partial: 'shared/accommodation', collection: @acs) || "There's no accommodation to be displayed" %>
 </div>
 
-<div id="infinity-scroll" style="display: inline-block" ><%= will_paginate @acs %></div>
+<!-- ?_=1483917016676&page=2 -->
+
+<div id="infinity-scroll" style="" ><%= will_paginate @acs %></div>
