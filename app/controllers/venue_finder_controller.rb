@@ -5,8 +5,8 @@ class VenueFinderController < ApplicationController
 before_action :open_file
 def index
    d = Time.at(Time.now)
-  #  day = d.wday
-   day = 5
+   day = d.wday
+  #  day = 5
    time = params['time'].nil?  ? d.strftime("%H%M") :  params['time'].delete!(":")
 
     g = get_open_venues(@venue_hashes, time, day)
