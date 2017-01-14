@@ -7,6 +7,7 @@ class SearchController < ApplicationController
       @books = Book.search(params[:search]).paginate(page: params[:page], per_page: 16).order(created_at: :desc) if params[:search]
       respond_to  do |format|
         format.html
+        format.json
         format.js
       end
     end

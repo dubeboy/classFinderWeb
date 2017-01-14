@@ -1,4 +1,5 @@
 <h1 class="text-center"> Currently open venues (UJ-APK) </h1>
+<small class="my-btn text-center">enter time in 24 hour format</small>
 
 
 <%# form_for :venue_finder, :url => find_venue_path, :html => {:id => 'secureRoom', class: 'form-inline'} do |f| %>
@@ -9,7 +10,7 @@
 
 <%= form_tag find_open_venue_path, :method => :get, class: 'form-inline form-search'  do %>
         Select time you want to see if a venue is free:
-        <%= text_field_tag :time, params[:time],  placeholder: "Time, Eg: 8:00", class: ' form-control'%>
+        <%= text_field_tag :time, params[:times],  placeholder: "Time, Eg: 15:03", class: ' form-control'%>
 <%= submit_tag 'Find Venue', name: nil, class: 'btn my-btn', id: 'mySearch' %>
 <% end %>
 
@@ -25,10 +26,10 @@
 </div>
 <% end %>
 <%else%>
-     <div class="col-md-3 item offset-md-6" >
+     <div class="col-md-4 col-md-offset-4" >
   <div class="panel panel-body my_div" style="padding: 0px; overflow: hidden">
     <div class="card-block">
-       mhhhhh, it looks like all venues are open now!
+         <h4> It looks like all venues are open now! becuase its a weekend!!! or the time is not between 8:00 and 18:45 or its a friday and its culture time.</h4>
     </div>
   </div>
 </div>

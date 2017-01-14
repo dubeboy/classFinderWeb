@@ -19,9 +19,6 @@ Rails.application.routes.draw do
   post 'find_open_venue/find_venue' => 'venue_finder#find_venue', as: :find_venue
   
 
-  get "search" => "accommodation#search", :as => "search"
-
-
   resources :localsession
   resources :users do
     member do

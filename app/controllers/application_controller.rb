@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   # protect_from_forgery with: :
 
   helper_method :current_user
-
   private
 
   def current_user

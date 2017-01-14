@@ -5,7 +5,8 @@ class VenueFinderController < ApplicationController
 before_action :open_file
 def index
    d = Time.at(Time.now)
-   day = d.wday
+  #  day = d.wday
+   day = 5
    time = params['time'].nil?  ? d.strftime("%H%M") :  params['time'].delete!(":")
 
     g = get_open_venues(@venue_hashes, time, day)
@@ -156,7 +157,7 @@ private
         return ['T4 P24']
       end
       if day == 5 # fri
-        return []
+        return [] #culture day
       end
     elsif time > 1255 and time <= 1345
       if day == 2 # tues
@@ -169,7 +170,7 @@ private
         return ['H3 P25']
       end
       if day == 5 # fri
-        return []
+        return []  #culture day
       end
     elsif time > 1345 and time <= 1435
       if day == 1
@@ -274,11 +275,13 @@ private
       v_hash.values.compact.each do |v|
 
         f = v.strip # remove white space f is the time slot values
-        puts '======================================='
+        puts '=================444444======================'
         puts time_code
         puts f
-        puts '======================================='
-        if time_code[2] == ' ' #check if it has more that one element
+        puts '========================444==============='
+
+        if !time_code.nil?
+          if time_code[2] == ' ' #check if it has more that one element
           puts 'if one get_venue_for_code'
           b = time_code.split(' ') # split time code into array no!!! spliting time code verytime 
           b.each do |j| #j is each time
@@ -300,11 +303,12 @@ private
             puts 'yyoyoyoyoyo100000000'
             arr_no.push(h)
           end
+         end
         end
-      end
-    end
+      end #end do 1
+    end #end do 2
     return  arr_no
-  end
+  end # end function 
   def subtract(arr_all, arr_happening)
     if arr_happening.count > 0
       return (arr_all - arr_happening)

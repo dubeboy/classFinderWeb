@@ -14,7 +14,7 @@
       <% end %>
     </div>
   </div>
-  <div class="col-md-9" id="my-items">
+  <div id="my-items">
     <% if @books %>
         <%= render(partial: 'shared/book', collection: @books) || '<h4 class="text-center">There are no books the match your search, we are really sorry :)</h4>'.html_safe %>
         </div>
