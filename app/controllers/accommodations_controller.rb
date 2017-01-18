@@ -61,7 +61,7 @@ class AccommodationsController < ApplicationController
     redirect_to accommodations_path
   end
 
-  # ========== under the hood dont look if you can`t handle=========
+  # ==========under the hood dont look if you can`t handle=========
 
   def search
 

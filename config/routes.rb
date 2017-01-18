@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
  
+  get 'select_user_type/index'
+
   get 'welcome/index'
   root 'welcome#index'
   get 'auth/:provider/callback', to: 'sessions#create'
@@ -11,6 +13,8 @@ Rails.application.routes.draw do
   get "sign_up" => "users#new", :as => "sign_up"
   get "about" => "about#index", :as => "about"
   get 'hosts' => "hosts#index", :as => "hosts"
+  get 'hosts/user_type' => "hosts#user_type", as: "hosts/user_type"
+  post 'hosts/choose_user_type' => "hosts#choose_user_type", as: "hosts/choose_user_type"
 
   get 'super_user' => 'super_user#index', as: :super_user #might trim this a little
   post 'do/super_user', action: 'do', controller: 'super_user'
@@ -47,6 +51,14 @@ Rails.application.routes.draw do
       get :likes
     end
   end
+
+  # our api routes should be extracted to its own app yoh
+    namespace :api do
+      namespace :v1 do
+        resources :sessions
+        resources :users
+      end
+    end
 
 
 

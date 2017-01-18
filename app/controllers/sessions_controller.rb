@@ -6,7 +6,6 @@ class SessionsController < ApplicationController
   #this method handles signup respect it
   def create
     if params[:email] and params[:password]
-
       user = User.authenticate(params[:email], params[:password])
       if user
         session[:user_id] = user.id
@@ -16,13 +15,12 @@ class SessionsController < ApplicationController
         render "new"
       end
     else
-
       user = User.from_omniauth(env["omniauth.auth"])
       session[:user_id] = user.id
-      begin
-        redirect_to :back
-      rescue ActionController::RedirectBackError
-        redirect_to root_path
+      if user.runner?
+         redirect_to root_path
+      else
+        redirect_to hosts_user_type_path
       end
     end
   end

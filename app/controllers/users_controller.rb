@@ -10,13 +10,13 @@ class UsersController < ApplicationController
     @user = User.find_or_initialize_by(email: params[:email])
     if @user.update_attributes(user_params)
       session[:user_id] = @user.id
-      redirect_to root_url, notice: 'Signed up!'
+      redirect_to hosts_user_type_path
     else
       render 'new'
     end
   end
 
-  #Dirty
+  #Dirty...
   def show
     # byebug
     #todo sql  fix the reds
@@ -65,6 +65,11 @@ class UsersController < ApplicationController
       end
     end
     @trans
+
+    respond_to do |f|
+      f.html
+      f.json
+    end
   end
 
 =begin

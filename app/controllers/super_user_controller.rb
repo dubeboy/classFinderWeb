@@ -6,6 +6,10 @@ class SuperUserController < ApplicationController
     @trans = Transaction.all
   end
   
+
+  #TODO: protect this please it not safe
+
+
   def do
     user_id = params['user_id']
     u = User.find(user_id)
