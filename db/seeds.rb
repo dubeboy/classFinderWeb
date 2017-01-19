@@ -32,6 +32,7 @@ Category.create(name: 'Education', book_type: "Book")
 Category.create(name: 'Humanities', book_type: "Book")
 Category.create(name: 'Medicine', book_type: "Book")
 Category.create(name: 'Commerce', book_type: "Book")
+Category.create(name: 'Other', book_type: "Book")
 
 
 Institution.create(name: 'Wits', location: 'Braamfontein')

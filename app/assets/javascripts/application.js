@@ -109,6 +109,7 @@ $(document).ready(function () {
 
     accom_aucland_hide_show();
 
+     $( "#crazy" ).show();
 });
 $(document).on('turbolinks:load', accom_aucland_hide_show);
 

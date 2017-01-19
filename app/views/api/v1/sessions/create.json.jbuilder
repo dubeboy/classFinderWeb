@@ -2,6 +2,7 @@ status = false
 json.results do    
     if @user
          json.id @user.id
+         json.runner @user.runner?
          json.email @user.email
          json.passord "private stuff"
          status = true
@@ -12,5 +13,5 @@ json.results do
 end
 json.status status
 message = ""
-status ? message = "You have succesfully logged in dankie boss" : message =  "Not signed in man sorry, please try again"
+status ? message = "You have succesfully logged in dankie boss" : message =  "Not signed in sorry, please try again"
 json.message message

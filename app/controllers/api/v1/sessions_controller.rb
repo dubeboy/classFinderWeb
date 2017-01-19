@@ -4,7 +4,8 @@ class Api::V1::SessionsController < ApplicationController
 #   fixme: REPEATEDish CODE
   def create
     if params[:email] and params[:password]
-        @status = false #true if the user is successfull else not
+      
+      @status = false #true if the user is successfull else not
       @user = User.authenticate(params[:email], params[:password])
       if @user
         session[:user_id] = @user.id

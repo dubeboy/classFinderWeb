@@ -22,7 +22,6 @@
     .my_div > img {
         height: 530px;
     }
-    .sty-for-lt
 }
 
 
@@ -87,6 +86,20 @@ img {
 .my-btn-green  {
     background-color: #00ae00;
 }
+.my-banner {
+    height: 30px;
+    margin-top: -20px ;
+}
+.banner-text {
+   color: white;
+   padding: 3px;
+
+}
+
+ .rm-border {
+     border-radius: 0px;
+ }
+
 
 .btn.nice {
     padding: 10px 40px;

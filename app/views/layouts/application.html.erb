@@ -23,11 +23,11 @@
   <% flash.each do |key, value| %>
 
       <% if key == 'alert'%>
-          <%= content_tag(:div, value, class: 'container alert alert-warning') %>
+          <%= content_tag(:div, value, class: 'rm-border alert alert-warning') %>
       <% elsif key == 'notice' %>
-          <%= content_tag(:div, value, class: 'container alert alert-success') %>
+          <%= content_tag(:div, value, class: 'rm-border alert alert-success') %>
       <% else %>
-          <%= content_tag(:div, value, class: "container alert alert-#{key}") %>
+          <%= content_tag(:div, value, class: "rm-border alert alert-#{key}") %>
       <% end %>
   <% end %>
 </div>

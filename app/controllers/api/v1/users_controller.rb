@@ -23,9 +23,9 @@ class Api::V1::UsersController < ApplicationController
       end
     elsif @user.runner? and params['run'] #runner actions
       trans_by_this_user = Transaction.where("runner_id = '#{@user.id}'").reverse_order
-      if params['run'] == '1' #for open accommodations
+      if params['run'] == '1' #for all students who are intrested
         @trans = trans_by_this_user.select { |t| t unless t.std_confirm? } # this should be selected based on time
-      elsif params['run'] == '2' #for objects that are upcoming for viewing
+      elsif params['run'] == '2' #for all students who are say they have paid for the res
         @trans = trans_by_this_user.select { |t| t if t.std_confirm? } #this is all paid but user id is this one
       elsif params['run'] == '3' #where the student has confirmed, paid by students
         @trans = trans_by_this_user.select { |t| t if t.paid? } #this is all the upcoming one

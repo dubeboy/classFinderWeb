@@ -68,8 +68,8 @@
             <% end %>
           </li>
         </ul>
-
     <% end %>
+         <p> <%= will_paginate @users, id: 'crazy', class: 'pagination' %><p>
 <% else %>
     <div class="hero">
       <div class="panel">
@@ -81,6 +81,4 @@
 
 
         </div>
-
 <% end %>
-<%= will_paginate @users if @users %>

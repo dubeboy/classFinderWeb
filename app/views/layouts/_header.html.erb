@@ -63,9 +63,14 @@
             <li class="<%= active('hosts') %>"><%= link_to 'Sign Up/In', '/hosts', id: "sign_in" %></li>
             <li class="<%= active('about') %>"><%= link_to 'About', about_path %></li>
         <% end %>
-
-
       </ul>
     </div>
   </div>
 </div>
+<% if params[:controller] == 'welcome' %>
+<div class="my-btn-green my-banner">
+  <%= link_to :hosts_choose_user_type, method: :post do %>
+                <p class="text-center banner-text">I wanna be a runner!</p>
+        <% end %>
+</div>
+<% end %>
