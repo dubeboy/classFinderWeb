@@ -1,7 +1,11 @@
 module AccommodationsHelper
   #todo bad code and these should be in the user helper
   def get_accom(transaction)
-    return Accommodation.find(transaction.accomodation_id) unless transaction.nil?
+    unless transaction.nil?
+      if Accommodation.exists?(id: transaction.accomodation_id)
+        return Accommodation.find(transaction.accomodation_id)
+      end
+    end
   end
 
   def get_user(transaction)

@@ -15,7 +15,7 @@ class SuperUserController < ApplicationController
     u = User.find(user_id)
     runner = params['runner'] 
     if runner == "true"
-      k = " from being a Runner "
+      k = ' from being a Accommodation Assistant  '
       if u.runner? == true
         u.runner = false
         

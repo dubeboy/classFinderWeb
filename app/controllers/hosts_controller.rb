@@ -7,12 +7,12 @@ class HostsController < ApplicationController
 
   def choose_user_type
     if current_user.verified
-      redirect_to root_path, notice: 'You can not be runner and a Host as you should ask super user to remove you from Hosts lists'
+      redirect_to root_path, notice: 'You can not be an Accommodation Assistant and a Host as you should ask super user to remove you from Hosts lists'
     else
       current_user.runner = true
       current_user.save!(:validate => false)
       redirect_to edit_user_path(current_user),
-                  notice: 'You are now a Runner. As a Runner you are expected to take clients to view rooms around
+                  notice: 'You are now a Accommodation Assistant. As an Accommodation Assistant you are expected to take clients to view rooms around
                                 an area you are familiar with.Select an area around which you are available to take clients to view rooms.'
     end
   end

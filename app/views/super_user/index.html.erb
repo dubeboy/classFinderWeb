@@ -9,7 +9,7 @@
           <th>Views</th>
           <th>Student Contacts</th>
           <th>Viewing Time</th>
-          <th>Change Runner: the one selected is the current runner</th>
+          <th>Change Accommodation assistant</th>
         </tr>
         </thead>
         <tbody>
@@ -27,11 +27,12 @@
                       <td>
                         <!--form_tag nikka-->
                         <% r = get_runner(t) %>
+                        current Assitant is: <%= r.name %>
                         <%= form_for super_user_path do |f| %>
                             <%= f.hidden_field :trans_id, value: t.id %>
                             <% runners = User.all.collect { |u| [u.name, u.id ] if u.runner? } %>
                             <%= f.select :runner_id, runners.compact , { selected:  r.name } %>
-                            <%= f.submit "Change runner for this booking" %>
+                            <%= f.submit 'Change Accommodation Assistant' %>
                         <% end %>
                       </td>
 
@@ -54,12 +55,12 @@
             <% end %>
 
             <%= link_to [:do, 'super_user', user_id: u.id, runner: true], method: :post, class: 'btn my-btn btn-success' do %>
-                <%= u.runner? ? "Remove From Runner List" : "Make Runner" %>
+                <%= u.runner? ? 'Remove From Accommodation Assistant List' : 'Make Accommodation Assistant' %>
             <% end %>
 
             <% if u.runner? %>
                  Running
-                times: <%= u.time_slots.empty? ? "<h4>[Oops This runner has no running time slots]</h4>".html_safe : u.time_slots.all.collect { |t| t.time } %>
+                times: <%= u.time_slots.empty? ? '<h4>[Oops This Accommodation Assistant has no running time slots]</h4>'.html_safe : u.time_slots.all.collect { |t| t.time } %>
                 <div class=" panel">
                   <table class="table table-bordered">
                     <thead>

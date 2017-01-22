@@ -55,10 +55,9 @@ class AccommodationsController < ApplicationController
 
   def destroy
     @acs = Accommodation.find(params[:id])
-    t = Transaction.find_unique_row(current_user.id, @acs.id)
-    t.destroy unless t.nil?
+    t = Transaction.where('host_id = ? and accomodation_id = ?', current_user.id, @acs.id ).destroy_all
     @acs.destroy
-    redirect_to accommodations_path
+    redirect_to accommodations_path, notice: 'Accommodation deleted.'
   end
 
   # ==========under the hood dont look if you can`t handle=========
@@ -135,8 +134,8 @@ class AccommodationsController < ApplicationController
     end
 
     respond_to do |format|
-      # format.html
-      format.js
+      format.html
+      format.js { render layout: false}
     end
   end
 

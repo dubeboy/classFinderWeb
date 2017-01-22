@@ -29,7 +29,6 @@ function accom_aucland_hide_show() {
     var b = false;
 
     var c = $("#location_selected").find('option').filter(':selected').val();
-    console.log(c);
     if(c != 'Auckland Park') {
         c = null;
         $("#if_auckland_park").hide();
