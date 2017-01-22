@@ -6,13 +6,11 @@
       <th>Location</th>
       <th>Room Type</th>
       <th>Views</th>
-      <th>Student Email</th>
+      <th>Student Contacts</th>
       <th>Viewing Time</th>
       <th>Actions</th>
     </tr>
     </thead>
-
-
     <tbody>
     <% if !@trans.nil? %>
         <% @trans.each do |t| %>
@@ -23,26 +21,24 @@
                   <td><%= a.location %></td>
                   <td><%= a.room_type %></td>
                   <td><%= a.views %></td>
-                  <td><%= get_user(t).email %></td>
+                  <td><%= u.email %> : <%= u.contacts %></td>
                   <td><%= "#{t.month} : #{t.time}" %></td>
                   <td>
-
                     <% if t.go_ahead? %>
 
                         <%= link_to [:pay, a, student_id: t.user_id, trans_id: t.id],  method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
                             <i class="material-icons my-small-icon" style="color: #ff0722;">done</i><small>Confirm Student Payment</small>
                         <% end %></td>
-
                     <% else %>
                         <%= link_to [:go_ahead, a, student_id: t.user_id, trans_id: t.id],  method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
-                            <i class="material-icons my-small-icon" style="color: #ff0722;">done</i><small>go ahead room is a vailable, </small>
+                            <!--<i class="material-icons my-small-icon" style="color: #ff0722;">done</i><small>-->
+                    Go ahead room is a vailable, </small>
                         <% end %>
                     <% end  %>
               <% end %>
             </tr>
         <% end %>
     <% end %>
-
     </tbody>
   </table>
 </div>

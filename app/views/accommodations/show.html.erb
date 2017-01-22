@@ -30,13 +30,14 @@
         <h4>Around <%= @ac.location == 'Auckland Park' ? @ac.institution :  @ac.location %></h4>
         <p><span class="label <%= make_nice_badges(@ac.room_type) %>"><%= "#{@ac.room_type} around #{@ac.location}" %></span></p>
 
-        <%= @ac.description %>
+        <%= simple_format(@ac.description) %>
         <p>Price: R <span class="text-success text-bold"><%= @ac.price.round(2) %></span>p.m</p>
         <p>Views: <%= @ac.views %></p>
       </div>
       <div class="">
         <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#secureRoom">Secure Room</button>-->
-        <button type="button" class="btn my-btn-green nice" data-toggle="modal" data-target="#viewBooking">I'm hooked, I wanna go see this room 
+        <button type="button" class="btn my-btn-green nice" data-toggle="modal" data-target="#viewBooking">
+          I'm hooked, I wanna go see this room!
         </button>
       </div>
     </div>
@@ -44,12 +45,12 @@
     <!--seller Infomation -->
     <div class="panel panel-default">
       <div class="panel-body">
-        <h4 class="text-bold">Seller Info</h4>
+        <h4 class="text-bold">Host Info</h4>
         <div class="">
           <%= link_to(check_if_nil(@ac.user.profile_img, '/profile.png', 'user-avatar'), user_path(@ac.user)) %>
         </div>
-        <p><%= @ac.user.email %></p>
-        <p><%= @ac.user.contacts %></p>
+        <p><%# @ac.user.email %></p>
+        <p><%# @ac.user.contacts %></p>
       </div>
     </div>
 

@@ -111,8 +111,6 @@ class AccommodationsController < ApplicationController
         puts '------------------------------------902323'
         puts av_r.class
         puts '------------------------------------45454'
-
-
         available_runners = av_r.compact
         puts available_runners
         puts available_runners.class
@@ -175,6 +173,9 @@ class AccommodationsController < ApplicationController
     end
     redirect_to :back, notice: 'Notified accommodation host keep up the good work!'
   end
+
+
+
 
   def go_ahead
     @ac = nil

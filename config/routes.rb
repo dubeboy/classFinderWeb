@@ -17,7 +17,9 @@ Rails.application.routes.draw do
   post 'hosts/choose_user_type' => "hosts#choose_user_type", as: "hosts/choose_user_type"
 
   get 'super_user' => 'super_user#index', as: :super_user #might trim this a little
+  post 'super_user', action: :change_runner, controller: 'super_user'
   post 'do/super_user', action: 'do', controller: 'super_user'
+
 
   get 'find_open_venue', action: 'index', controller: 'venue_finder'
   post 'find_open_venue/find_venue' => 'venue_finder#find_venue', as: :find_venue
@@ -36,7 +38,8 @@ Rails.application.routes.draw do
     member do
       post 'secure_room', :action => :secure_room
       post  'pay', action: :pay
-      post 'student_pay', action: :student_pay #todo
+      post 'student_pay', action: :student_pay #todo protect all of them they are not protected
+
       delete 'cancel', action: :cancel #todo
       post 'go_ahead', action: :go_ahead
     end

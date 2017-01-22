@@ -1,4 +1,50 @@
 <% if @users %>
+    <div class=" panel">
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>Reference ID</th>
+          <th>Location</th>
+          <th>Room Type</th>
+          <th>Views</th>
+          <th>Student Contacts</th>
+          <th>Viewing Time</th>
+          <th>Change Runner: the one selected is the current runner</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if !@trans.nil? %>
+            <% @trans.each do |t| %>
+                <tr>
+                  <% if(a = get_accom(t)) %>
+                      <% u = get_user(t) %> <%# i would suspect that if the accom is there then the user is also there %>
+                      <th scope="row"><%= link_to u.token, accommodation_path(a) %></th>
+                      <td><%= a.location %></td>
+                      <td><%= a.room_type %></td>
+                      <td><%= a.views %></td>
+                      <td><%= u.email %> : <%= u.contacts %></td>
+                      <td><%= "#{t.month} : #{t.time}" %></td>
+                      <td>
+                        <!--form_tag nikka-->
+                        <% r = get_runner(t) %>
+                        <%= form_for super_user_path do |f| %>
+                            <%= f.hidden_field :trans_id, value: t.id %>
+                            <% runners = User.all.collect { |u| [u.name, u.id ] if u.runner? } %>
+                            <%= f.select :runner_id, runners.compact , { selected:  r.name } %>
+                            <%= f.submit "Change runner for this booking" %>
+                        <% end %>
+                      </td>
+
+                  <% end %>
+                </tr>
+            <% end %>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+<!--#######################################ICE!!!!!!##############################################-->
+
     <% @users.each do |u| %>
         <ul>
           <li><%= u.id %> : <%= u.email %>,<%= u.name %> <br>

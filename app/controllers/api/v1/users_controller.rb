@@ -9,6 +9,7 @@ class Api::V1::UsersController < ApplicationController
         flash[:warning] = "Please add your bank details."
       end
       if @user and params['cat']
+        # do something like TODO: where('host_id = ?', @user.id ) to avoid sql injection
         trans_by_this_user = Transaction.where("host_id = '#{@user.id}'").reverse_order #array of this hosts trasctns
         if params['cat'] == '0'
           @acs = @user.accommodations

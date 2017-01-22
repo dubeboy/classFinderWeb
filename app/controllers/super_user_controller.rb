@@ -41,6 +41,17 @@ class SuperUserController < ApplicationController
     end
     redirect_to :back
    
-  end 
+  end
+
+
+  # //protect
+  def change_runner
+    runner_id = params['/super_user'][:runner_id]
+    transaction_id = params['/super_user'][:trans_id]
+    t = Transaction.find(transaction_id)
+    t.runner_id = runner_id
+    t.save!
+    redirect_to
+  end
  
 end

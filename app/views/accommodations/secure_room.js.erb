@@ -1,4 +1,10 @@
-$('#notification').append(' <%= @k ? content_tag(:div, 'Congratulations you have successfully booked to view this room' , class: 'container alert  alert-success') : content_tag(:div, 'Sorry request cannot be processed..., because you have already made this requst test case: not enough runners pics a diffrent time', class: 'container alert alert-warning') %>');
+$('#notification')
+    .append(' <%= @k ? content_tag(:div, 'Congratulations you have successfully booked to view this room.
+                                          Please send Confirmation message(Text/WhatsApp) to 0823114484 with name and surname to confirm your booking ' ,
+
+     class: 'container alert  alert-success') : content_tag(:div,
+      'Sorry request cannot be processed, because you have
+      already booked this room. Have you sent the confirmation message to 0823114484?', class: 'container alert alert-warning') %>');
 //$('#secureSubmit').click(function() {
 //  $("#secureRoom .close").click()
 //});

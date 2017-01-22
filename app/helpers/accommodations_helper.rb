@@ -8,6 +8,9 @@ module AccommodationsHelper
     return User.find(transaction.user_id)
   end
 
+  def get_runner(transaction)
+      return User.find(transaction.runner_id)
+  end
   def make_nice_badges(room_type)
     if room_type == 'Sharing'
       return 'c-green'
