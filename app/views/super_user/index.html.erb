@@ -13,7 +13,7 @@
         </tr>
         </thead>
         <tbody>
-        <% if !@trans.nil? %>
+        <% unless @trans.nil? %>
             <% @trans.each do |t| %>
                 <tr>
                   <% if(a = get_accom(t)) %>
@@ -48,7 +48,7 @@
 
     <% @users.each do |u| %>
         <ul>
-          <li><%= u.id %> : <%= u.email %>,<%= u.name %> <br>
+          <li><%= link_to "#{u.id} : #{u.email}, #{u.name}", user_path(u) %> <br>
 
             <%= link_to [:do, 'super_user', user_id: u.id, runner: false], method: :post, class: 'btn my-btn' do %>
                 <%= u.verified? ? "Remove From Admin" : "make Admin" %>

@@ -37,4 +37,14 @@ class Api::V1::UsersController < ApplicationController
          f.json
         end
     end
+
+     def panel
+    user = User.find(params[:id])
+    @trans_by_this_user = Transaction.where("user_id = '#{user.id}'") #array of this hosts trasctns
+    # @acs = Accommodation.find(trans_by_this_user.collect { |t| t.accomodation_id }) #just getting the users accomodations
+     respond_to do |f|
+         f.json
+      end 
+  end
+
 end

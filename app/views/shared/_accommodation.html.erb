@@ -10,7 +10,7 @@
       <%# end %>
       <small class="badge <%= make_nice_badges(accommodation.room_type) %>"><%= accommodation.room_type %></small> <br>
       <h5>Around  <%= accommodation.location == 'Auckland Park' ? accommodation.institution :  accommodation.location %> </h5><br>
-      By <%= accommodation.user.name %> <br>
+      By <%= accommodation.user.name %>
       <% if accommodation.user == current_user %>
           <div class="pull-right">
             <%= link_to 'Delete', accommodation_path(accommodation),

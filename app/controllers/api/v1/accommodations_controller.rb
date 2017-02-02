@@ -1,10 +1,11 @@
-class AccommodationsController < ApplicationController
+class Api::V1::AccommodationsController < ApplicationController
 
-  before_action :authenticate_user!, except: [:index, :show, :search]
+  # before_action :authenticate_user!, except: [:index, :show, :search]
+  # before_action :require_api_key!, except: [:index, :show, :search] //Todo NB in the future man
   #use that before_action to set the @user when finding first
 
   def index #fixme
-    @acs = Accommodation.all.paginate(page: params[:page], per_page: 16).order(created_at: :desc)
+    @acs = Accommodation.all.paginate(page: params[:page], per_page: 6).order(created_at: :desc)
     respond_to do |format|
       format.json
       format.html
@@ -25,16 +26,13 @@ class AccommodationsController < ApplicationController
         params[:images].each { |image|
           @ac.pictures.create(image: image)
         }
-        redirect_to @ac
-      else
-        render 'new'
       end
+      redirect_to @ac
     else
       flash[:warning] = 'Please make sure that the item you trying to upload has a picture as well '
       render 'new'
     end
   end
-
 
 
   def edit
@@ -48,7 +46,6 @@ class AccommodationsController < ApplicationController
   end
 
   def show
-    
     @ac = Accommodation.find(params[:id])
     views = @ac.views
     views += 1 if @ac.user != current_user
@@ -57,7 +54,7 @@ class AccommodationsController < ApplicationController
 
   def destroy
     @acs = Accommodation.find(params[:id])
-    t = Transaction.where('host_id = ? and accomodation_id = ?', current_user.id, @acs.id ).destroy_all
+    t = Transaction.where('host_id = ? and accomodation_id = ?', current_user.id, @acs.id).destroy_all
     @acs.destroy
     redirect_to accommodations_path, notice: 'Accommodation deleted.'
   end
@@ -75,16 +72,16 @@ class AccommodationsController < ApplicationController
 
     respond_to do |format|
       format.json
-      format.html 
+      format.html
       format.js
     end
   end
 
   def secure_room
     #todo check if the user is actually not a host
-    host_id = params['user']['host_id']
-    student_id = params['user']['std_id']
-    booking_type = params['user']['booking_type']
+    host_id = params['host_id']
+    student_id = params['std_id']
+    booking_type = params['booking_type']
     advert_id = params['id']
     ad = Accommodation.find(advert_id)
     #pron to Sql injection
@@ -104,11 +101,10 @@ class AccommodationsController < ApplicationController
     elsif booking_type == "0" #booking type = 0 = view accomodation
       #find runner and set runner
       if Transaction.where("user_id='#{student_id}' and accomodation_id='#{advert_id}'").where("booking_type = 'f' ").count == 0
-        p = params['user']
-        time = p['time']  # to 8:00
-        month = p['month']
+        time = params['time'] # to 8:00
+        month = params['month']
 
-        av_r = User.all.collect { |r| available(r, time) if(r.runner? and r.run_location == ad.location) } #todo should runner location be defined for a accommodation house only?
+        av_r = User.all.collect { |r| available(r, time) if (r.runner? and r.run_location == ad.location) } #todo should runner location be defined for a accommodation house only?
         puts '------------------------------------902323'
         puts av_r.class
         puts '------------------------------------45454'
@@ -119,25 +115,24 @@ class AccommodationsController < ApplicationController
         puts '------------------------------------902323'
         if available_runners.length != 0
           puts '----------900e-----'
-              rand_i = available_runners.length == 1 ? 0 : rand(0..(available_runners.length-1)) #fixme what!!!!  #todo improve runner assignment
-              runner = available_runners[rand_i] #fixme say whaaaaa!!!
-              runner_id = runner.id
+          rand_i = available_runners.length == 1 ? 0 : rand(0..(available_runners.length-1)) #fixme what!!!!  #todo improve runner assignment
+          runner = available_runners[rand_i] #fixme say whaaaaa!!!
+          runner_id = runner.id
           puts
           puts '---------ewe434------'
-              t = Transaction.new(user_id: student_id, accomodation_id: advert_id,
-                                  runner_id: runner_id, booking_type: 0, paid: 0,
-                                  time: time, month: month, std_confirm: false, host_id: ad.user.id)
-               @k = t.save!
+          t = Transaction.new(user_id: student_id, accomodation_id: advert_id,
+                              runner_id: runner_id, booking_type: 0, paid: 0,
+                              time: time, month: month, std_confirm: false, host_id: ad.user.id)
+          @k = t.save!
         else
-              @k = false
-        end 
-        
+          @k = false
+        end
+
       end
     end
 
     respond_to do |format|
-      format.html
-      format.js { render layout: false}
+      format.json 
     end
   end
 
@@ -174,8 +169,6 @@ class AccommodationsController < ApplicationController
     end
     redirect_to :back, notice: 'Notified accommodation host keep up the good work!'
   end
-
-
 
 
   def go_ahead
@@ -232,8 +225,6 @@ class AccommodationsController < ApplicationController
   end
 
 
-
-
   private
   def acc_params
     #params.require(:item).permit(:price, :name, :description, {avatars: []})
@@ -245,7 +236,7 @@ class AccommodationsController < ApplicationController
   # end
   #todo does this does what it is supposed to do
   def available(r, time) #call the time slot table to this runner
-    runner_times = r.time_slots.all.collect { |rt| rt.time}
+    runner_times = r.time_slots.all.collect { |rt| rt.time }
     puts '===========================9'
     puts runner_times
     puts time
@@ -257,6 +248,6 @@ class AccommodationsController < ApplicationController
         return r
       end
     }
-     return nil
+    return nil
   end
 end

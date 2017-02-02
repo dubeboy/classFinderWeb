@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
- 
+
   get 'select_user_type/index'
 
   get 'welcome/index'
@@ -59,7 +59,24 @@ Rails.application.routes.draw do
     namespace :api do
       namespace :v1 do
         resources :sessions
-        resources :users
+       resources :users do
+    member do
+      get 'panel', action: :panel
+    end
+  end
+        resources :accommodations do
+          member do
+            post 'secure_room', :action => :secure_room
+            post  'pay', action: :pay
+            post 'student_pay', action: :student_pay #todo protect all of them they are not protected
+
+            delete 'cancel', action: :cancel #todo
+            post 'go_ahead', action: :go_ahead
+          end
+          collection do
+            get 'search', :action => :search
+          end
+        end
       end
     end
 

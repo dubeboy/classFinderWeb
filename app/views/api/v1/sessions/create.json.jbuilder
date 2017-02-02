@@ -12,6 +12,5 @@ json.results do
     end
 end
 json.status status
-message = ""
 status ? message = "You have succesfully logged in dankie boss" : message =  "Not signed in sorry, please try again"
 json.message message
