@@ -19,18 +19,24 @@ class Api::V1::AccommodationsController < ApplicationController
 
   #todo only verified users can create accomodations
   def create
-    @ac = Accommodation.new(acc_params)
-    @ac.user = current_user
+    @status = false
+    ac = Accommodation.new(location: params[:location],
+                             price: params[:price], room_type: params[:room_type], 
+                             description: params[:description], institution: params[:institution]  )
+    ac.user = User.find(params[:user_id])
     if params[:images]
-      if @ac.save
+      if ac.save
         params[:images].each { |image|
-          @ac.pictures.create(image: image)
+          puts '######################################'
+          puts image
+          puts '######################################'
+          ac.pictures.create(image: image)
         }
+        @status = true
       end
-      redirect_to @ac
+      # redirect_to @ac  todo: should look into this man
     else
-      flash[:warning] = 'Please make sure that the item you trying to upload has a picture as well '
-      render 'new'
+       @status = false
     end
   end
 
