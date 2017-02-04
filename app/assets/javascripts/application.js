@@ -46,9 +46,8 @@ function accom_aucland_hide_show() {
     });
 }
 
-$(document).ready(function () {
-
-    var pagination = $('.pagination');
+var pager = function() {
+     var pagination = $('.pagination');
     pagination.hide();
 
     if ($('#infinity-scroll').size() > 0) {
@@ -82,7 +81,11 @@ $(document).ready(function () {
             }
         });
     }
+}
 
+$(document).ready(function () {
+
+    pager(); 
     // $('.grid').masonry({
     //     // options
     //     itemSelector: '.item',
@@ -110,6 +113,11 @@ $(document).ready(function () {
 
      $( "#crazy" ).show();
 });
-$(document).on('turbolinks:load', accom_aucland_hide_show);
+
+$(document).on('turbolinks:load', accom_aucland_hide_show, pager);
+$(document).on('turbolinks:load', function() {
+    accom_aucland_hide_show();
+    pager();
+});
 
 
