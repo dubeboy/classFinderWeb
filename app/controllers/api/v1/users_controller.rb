@@ -2,15 +2,15 @@ class Api::V1::UsersController < ApplicationController
 
  def create
 
-  if (params[:token]) 
-      @user = User.new(name: params[:name],
-     email: params[:email])
-      if @user.update_attributes(user_params)
-      else
-    end
-  end 
-  @user = User.new(name: params[:name], password: params[:password],
-     email: params[:email], password_confirmation)
+  # if (params[:token]) 
+  #     @user = User.fromy(name: params[:name],
+  #    email: params[:email])
+  #     if @user.update_attributes(user_params)
+  #     else
+  #   end
+  # end 
+  # @user = User.new(name: params[:name], password: params[:password],
+  #    email: params[:email], password_confirmation)
     
   end
 
