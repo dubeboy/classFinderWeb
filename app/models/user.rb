@@ -49,18 +49,7 @@ class User < ActiveRecord::Base
   end
 
   def self.from_omniauth(auth)
-    # if created_already?(email:  auth.info.email)
-    #   provider = auth.provider
-    #   uid = auth.uid
-    #   name = auth.info.name
-    #   email = auth.info.email
-    #
-    #   oauth_token = auth.credentials.token
-    #   oauth_expires_at = Time.at(auth.credentials.expires_at)
-    #
-    #   update!(provider: provider, uid: uid, name: name, oauth_expires_at: oauth_expires_at,
-    #           oauth_token: oauth_token)
-    # else
+    
       where(provider: auth.provider, uid: auth.uid, email: auth.info.email ).first_or_initialize.tap do |user|
         user.provider = auth.provider
         user.uid = auth.uid

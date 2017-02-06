@@ -1,17 +1,31 @@
 class Api::V1::UsersController < ApplicationController
 
  def create
-
-  # if (params[:token]) 
-  #     @user = User.fromy(name: params[:name],
-  #    email: params[:email])
-  #     if @user.update_attributes(user_params)
-  #     else
-  #   end
-  # end 
-  # @user = User.new(name: params[:name], password: params[:password],
-  #    email: params[:email], password_confirmation)
-    
+    @status = false
+    if (params[:token]) 
+        if User.find_by_email(params[:email]).nil? #if there is no user
+            user = User.new(name: params[:name], email: params[:email],
+                                                              provider: 'google_oauth2', uid: params[:token])
+            user.runner = params[:is_runner]
+            @status = user.save(:validate => false) #because no password!
+            @u = User.find_by_email(params[:email])
+        else 
+            @status = false
+        end
+    else 
+      if User.find_by_email(params[:email]).nil? #if there is no user
+         user = User.new(name: params[:name], password: params[:password],
+                                             email: params[:email], password_confirmation: params[:password])
+       user.runner = params[:is_runner]
+       @status = user.save
+       @u = User.find_by_email(params[:email])
+      else
+         @status = false
+      end
+    end 
+    respond_to do |f|
+         f.json
+    end
   end
 
     #this shoukd returns the runner or host info
