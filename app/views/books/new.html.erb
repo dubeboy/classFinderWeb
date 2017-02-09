@@ -44,17 +44,11 @@
             <span class="text-bold">: (Rands)</span>
             <%= f.number_field :price, min: 0, step: 'any',  class: 'form-control' %>
           </div>
-
-
-
           <p class="form-g">
             <%= f.label :avatars, "Book Preview Images" %><br />
             <small>To upload many images using PC hold ctrl while selecting images, on your phone long press one image and then you can select many images</small>
             <%= file_field_tag "images[]", type: :file, multiple: true %>
           </p>
-
-
-
           <hr>
           <%= f.submit "Add New Item", class: 'btn btn-flat my-btn' %>
       <% end %>

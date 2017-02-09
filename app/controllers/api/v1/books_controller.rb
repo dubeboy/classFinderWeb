@@ -4,7 +4,8 @@ class Api::V1::BooksController < ApplicationController
 
   def index
     if params['cat']
-      @books =  Category.find(params['cat']).books.all.paginate(page: params[:page], per_page: 16).order(created_at: :desc)
+      @books =  Category.find(params['cat']).books.all.paginate(page: params[:page],
+                                                                   per_page: 16).order(created_at: :desc)
     else
       @books = Book.all.paginate(page: params[:page], per_page: 16).order(created_at: :desc)
     end
@@ -17,14 +18,11 @@ class Api::V1::BooksController < ApplicationController
   def show
     @book = Book.find(params[:id])
   end
-
-  def new
-    @book = Book.new
-  end
-
+  
   def create
-    @book = Book.new(books_params)
-    @book.user = current_user
+    @book = Book.new(title: params[:title], category_id: params[:category_id], 
+                                                    price: params[:price], description: params[:description] )
+    @book.user = User.find(params[:user_id])
     i = Institution.new(name: params[:inst_name])
     @book.institution = params[:category_id]
     if params[:images]
@@ -33,10 +31,9 @@ class Api::V1::BooksController < ApplicationController
           @book.pictures.create(image: image)
         }
       end
-      redirect_to @book
+      # redirect_to @book
     else
       flash[:warning] = 'Please make sure that the book you trying to upload has a picture as well '
-      render 'new'
     end
   end
 
