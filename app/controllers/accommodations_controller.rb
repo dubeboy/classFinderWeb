@@ -48,7 +48,6 @@ class AccommodationsController < ApplicationController
   end
 
   def show
-    
     @ac = Accommodation.find(params[:id])
     views = @ac.views
     views += 1 if @ac.user != current_user

@@ -67,8 +67,6 @@ class Api::V1::UsersController < ApplicationController
         end
     end
 
-
-
      def panel
     user = User.find(params[:id])
     @trans_by_this_user = Transaction.where("user_id = '#{user.id}'") #array of this hosts trasctns
