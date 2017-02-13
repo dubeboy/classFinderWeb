@@ -3,6 +3,7 @@
   <div class="panel ">
     <div class="panel-body">
 
+      <p class="text-bold">When you have successfully sold a book you we require a small fixed fee, to just keep us afloat, click button below to see prices <br> <button  class = "btn btn-sm my-btn-green" id="bookPrices" data-toggle="modal" data-target="#viewPrices">Prices</button>  </p>
       <%= form_for @book, html: {multipart: true} do |f| %>
 
           <p>
@@ -29,7 +30,7 @@
           </p>
 
           <p class="form-group">
-            <label for="item_category_id">Which istititution can we get this Book</label> <br />
+            <label for="item_category_id">Which institution can we get this Book</label> <br />
             <%= f.select :institution_id , Institution.all.collect {|c| [c.name, c]}, { class: 'form-control' } %>
           </p>
 
@@ -55,3 +56,31 @@
     </div>
   </div>
 </div>
+
+<div id="viewPrices" class="modal fade" tabindex="-1" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title text-bold text-danger">Times and prices</h4>
+      </div>
+      <div class="modal-body">
+        <p>A person can purchase your book in organised times and you can also meet a classfinder representative so that we can also get our commision </p>
+        <p>Prices if book is:</p>
+        <li>R100-300 we take R10</li>
+        <li>R301-600 we take R20</li>
+        <li>R601-900 we take R30</li>
+        <li>R901-1200 we take R40</li>
+        <hr>
+        <p> The times of meetup are and place is infront of the library</p>
+        <li>7:00-8:00</li>
+        <li>13:00-14:00</li>
+        <li>16:00-17:00</li>
+        <hr>
+        <p class="text-bold">You need to also check from time to see if there is anybody who has </p>
+
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -39,6 +39,7 @@ Institution.create(name: 'Wits', location: 'Braamfontein')
 Institution.create(name: 'UJ-Auckland Park', location: 'Auckland Park')
 Institution.create(name: 'UJ-DFC', location: 'Doornfontein')
 Institution.create(name: 'UJ-Soweto', location: 'Soweto')
+Institution.create(name: 'Other', location: 'Braamfontein')
 # Institution.create(name: 'UJ-Bunting', location: 'Auckland Park')  #left this on perpose todo fixme
 
 #Time Slots
@@ -47,3 +48,5 @@ TimeSlot.create(time: "10:00")
 TimeSlot.create(time: "12:00")
 TimeSlot.create(time: "14:00")
 TimeSlot.create(time: "16:00")
+
+#BooksTime Slots

@@ -17,9 +17,9 @@ Rails.application.routes.draw do
   post 'hosts/choose_user_type' => "hosts#choose_user_type", as: "hosts/choose_user_type"
 
   get 'super_user' => 'super_user#index', as: :super_user #might trim this a little
+  get 'books_list' => 'super_user#books_list'
   post 'super_user', action: :change_runner, controller: 'super_user'
   post 'do/super_user', action: 'do', controller: 'super_user'
-
 
   get 'find_open_venue', action: 'index', controller: 'venue_finder'
   post 'find_open_venue/find_venue' => 'venue_finder#find_venue', as: :find_venue
@@ -29,11 +29,17 @@ Rails.application.routes.draw do
   resources :users do
     member do
       get 'panel', action: :panel
+      get 'books_panel', action: :books_panel
     end
   end
   resources :sessions
   #resources :category  removed it
-  resources :books
+  resources :books do
+    member do
+      post 'buy', action: :buy
+      post 'sold', action: :sold
+    end
+  end
   resources :accommodations do
     member do
       post 'secure_room', :action => :secure_room

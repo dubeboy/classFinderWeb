@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  buyer_id: 1
+  sold: 
+  in_trans: false
+  time: MyString
+
+two:
+  user_id: 1
+  buyer_id: 1
+  sold: 
+  in_trans: false
+  time: MyString

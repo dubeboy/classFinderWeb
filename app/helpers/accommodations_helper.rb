@@ -15,6 +15,17 @@ module AccommodationsHelper
   def get_runner(transaction)
       return User.find(transaction.runner_id)
   end
+
+  def get_book(t)
+    return Book.find(t.book_id)
+  end
+  
+  def get_seller(t)
+    User.find(t.user_id)
+  end
+  def get_buyer(t)
+    User.find(t.buyer_id)
+  end
   def make_nice_badges(room_type)
     if room_type == 'Sharing'
       return 'c-green'

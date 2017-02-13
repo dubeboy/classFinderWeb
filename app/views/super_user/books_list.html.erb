@@ -1,0 +1,41 @@
+<div id="msg">
+</div>
+<div>
+  <%= link_to "Accommodation bookings", accommodations_path   %>
+
+  <h3> Your Bookings Transaction</h3>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Buyer</th>
+      <th>Seller</th>
+      <th>time</th>
+      <th>Sold</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @trans.each do |transaction| %>
+        <% book = get_book(transaction) %>
+        <% seller = get_seller(transaction) %>
+        <% buyer = get_buyer(transaction) %>
+        <tr>
+          <% #todo is this required? %>
+          <td><%= buyer.name %> : <%= buyer.contacts %></td>
+          <td><%= seller.name %> : <%= seller.contacts %></td>
+          <td><%= transaction.time %></td>
+          <td><%= transaction.sold? %></td>
+          <td>
+            <%= link_to [:sold, book, trans_id: transaction.id],
+                        method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
+                <%= transaction.sold? ?
+                        "Congrats Sold!" : "Sold!" %>
+            <% end %>
+            <%# else %>
+            <!--waiting for host confirmation-->
+            <%# end %>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

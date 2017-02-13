@@ -1,0 +1,6 @@
+$("#msg").show()
+<% if @saved %>
+  $("#msg").append("<p>You have now set an appointment to sell  your books</p>");
+<% else %>
+  $("#msg").append("<p>We have updated your appointment </p>");
+<% end %>

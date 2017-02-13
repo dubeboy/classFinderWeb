@@ -7,6 +7,10 @@ class SuperUserController < ApplicationController
   end
   
 
+  def books_list
+    @trans = BooksTransaction.all.paginate(page: params[:page], per_page: 150).order(created_at: :desc) if current_user.king?
+  end
+
   #TODO: protect this please it not safe
 
 
@@ -16,7 +20,7 @@ class SuperUserController < ApplicationController
     runner = params['runner'] 
     if runner == "true"
       k = ' from being a Accommodation Assistant  '
-      if u.runner? == true
+      if u.runner?
         u.runner = false
         
         b = " Removed  "

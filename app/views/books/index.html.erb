@@ -14,6 +14,23 @@
   </section>
 </div>
 <div class="col-md-9" id="my-items">
+
+  <div class="col-md-12 my-search ">
+    <div class=" text-center">
+      <div class="form-group">
+        <%= form_tag search_index_path, :method => :get, id: 'items_search', class: 'form-inline form-search' do %>
+            <div class=" form-g">
+              Select
+              category: <%= select_tag "category", options_from_collection_for_select(@cat, 'id', "name" ), class: 'form-control' %>
+              <%= text_field_tag :search, params[:search], placeholder: 'Search Books and Accommodation', class: ' form-control', style: 'width: 500px' %>
+              <%= submit_tag 'Search', name: nil, class: 'btn  my-btn-green', id: 'mySearch' %>
+              <%# submit_tag '', name: nil, class: 'btn btn-info ', id: 'mySearch' %>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
   <% if @books.empty? %>
   <p class="text-center">Nothing Found in this category</p>
       <% else %>

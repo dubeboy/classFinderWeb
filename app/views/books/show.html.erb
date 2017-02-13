@@ -1,4 +1,6 @@
+<div id="notification">
 
+</div>
 <!-- Slider -->
 <div class="col-md-12" id="slider">
   <!-- Top part of the slider -->
@@ -23,30 +25,48 @@
     </div>
   </div>
   <div class="col-md-4">
+    <div class="rm-border alert alert-success" id="msg" style="display: none"></div>
     <div class="panel panel-default">
       <div class="panel-body">
         <h4><%=  @book.title %> by <%=  @book.author %></h4>
         <p><span class="label label-info"><%= @book.category.name if @book.category %> </span> </p>
         <%= @book.description %>
+        <% if @book.institution %>
+            <p class="text-bold">Available around  <%= @book.institution.nil? ? "UJ" : @book.institution.name  %></p>
+      <% end %>
         <p class="text-success text-bold">Price: R <%= @book.price.round(2) %></p>
+
+        <!--</p>-->
         <!--<span class="likes-count" data-id="<%# @book.id %>" > <%# @book.tot_likes %> </span>-->
         <%# link_to [:like, @book], method: :post, class: 'like', remote: true, form: {'data-type' => "json" }  do %>
             <!--<i class="material-icons my-small-icon" style="color: #ff0722;">favorite</i>-->
         <%# end %>
         <!--<p>Views: <%# @book.views %></p>-->
+
+        <button type="button" class="btn my-btn-green nice" data-toggle="modal" data-target="#viewBooking">
+          I'm hooked, I wanna buy this book!
+        </button>
+        <% if !current_user.nil? && current_user == @book.user && !get_trans(@book).nil? %>
+            <%= link_to [:sold, @book,  trans_id: get_trans(@book).id],
+                        method: :post, class: 'btn my-btn nice ', remote: true, form: {'data-type' => "json" }  do %>
+                <%= get_trans(@book).sold? ?
+                        "Congrats Sold!" : "Sell!" %>
+            <% end %>
+            <% end %>
       </div>
+
     </div>
     <!--seller Infomation -->
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <h4 class="text-bold">Seller Info</h4>
-        <div class="">
-          <%= link_to(check_if_nil(@book.user.profile_img, '/profile.png', 'user-avatar'), user_path(@book.user)) %>
-        </div>
-        <p><%= @book.user.email %></p>
-        <p><%= @book.user.contacts %></p>
-      </div>
-    </div>
+    <!--<div class="panel panel-default">-->
+      <!--<div class="panel-body">-->
+        <!--<h4 class="text-bold">Seller Info</h4>-->
+        <!--<div class="">-->
+          <!--<%= link_to(check_if_nil(@book.user.profile_img, '/profile.png', 'user-avatar'), user_path(@book.user)) %>-->
+        <!--</div>-->
+        <!--<p><%# @book.user.email %></p>-->
+        <!--<p><%# @book.user.contacts %></p>-->
+      <!--</div>-->
+    <!--</div>-->
 
   </div>
 </div>
@@ -64,4 +84,38 @@
         <% k += 1%>
     <% end %>
   </ul>
+</div>
+
+
+<div id="viewBooking" class="modal fade" tabindex="-1" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title text-bold text-danger">Please select time</h4>
+      </div>
+      <div class="modal-body">
+
+        <p>This is the time that you would be able to meet up to sell the book</p>
+          <br>
+
+        <div id="my-form">
+          <%= form_for :user, :remote => true, :url => buy_book_path, :html => {:id => 'secureRoom'} do |f| %>
+              <%= f.hidden_field :seller_id, value: @book.user.id %>
+              <%= f.hidden_field :buyer_id, value: current_user.id if current_user %>
+              <%= f.hidden_field :book_id, value: @book.id %>
+              <% #todo use select time %>
+
+              <div class="input-group">
+                Select Time:
+                <%= f.select :time , ["7:00-8:00", '13:00-14:00', '16:00-17:00'], class: 'form-control'  %>
+              </div>
+              </div>
+              </div>
+              <div class="modal-footer">
+                <%= f.submit 'Continue', class: 'btn btn-success', id: 'viewBookingBtn' %>
+          <% end %>
+          </div>
+          </div>
+  </div>
 </div>

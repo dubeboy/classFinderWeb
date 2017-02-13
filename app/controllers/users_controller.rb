@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action :authenticate_user!, only: [:edit, :update, :panel]
+  before_action :authenticate_user!, only: [:edit, :update, :panel, :books_panel]
 
   def new
     @user = User.new
@@ -79,6 +79,12 @@ class UsersController < ApplicationController
     @user = current_user
     @trans_by_this_user = Transaction.where("user_id = '#{@user.id}'") #array of this hosts trasctns
     # @acs = Accommodation.find(trans_by_this_user.collect { |t| t.accomodation_id }) #just getting the users accomodations
+  end
+
+
+  def books_panel
+    @user = current_user
+    @trans = BooksTransaction.where("user_id = '#{@user.id}'")
   end
 
   def edit

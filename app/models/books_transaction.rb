@@ -1,0 +1,2 @@
+class BooksTransaction < ApplicationRecord
+end
