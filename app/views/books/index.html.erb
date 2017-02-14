@@ -22,7 +22,7 @@
             <div class=" form-g">
               Select
               category: <%= select_tag "category", options_from_collection_for_select(@cat, 'id', "name" ), class: 'form-control' %>
-              <%= text_field_tag :search, params[:search], placeholder: 'Search Books and Accommodation', class: ' form-control', style: 'width: 500px' %>
+              <%= text_field_tag :search, params[:search], placeholder: 'Search Books', class: ' form-control', style: 'width: 500px' %>
               <%= submit_tag 'Search', name: nil, class: 'btn  my-btn-green', id: 'mySearch' %>
               <%# submit_tag '', name: nil, class: 'btn btn-info ', id: 'mySearch' %>
             </div>
