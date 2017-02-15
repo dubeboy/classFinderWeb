@@ -3,7 +3,7 @@ class BooksController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    @cat = Category.all.select { |x| x if x.book_type == "Book"}
+    @cat = Category.all.select { |x| x if x.book_type == 'Book' }
     if params['cat']
       @books =  Category.find(params['cat']).books.all.paginate(page: params[:page], per_page: 16).order(created_at: :desc)
     else

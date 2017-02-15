@@ -24,7 +24,7 @@ class Accommodation < ApplicationRecord
 
   def self.set_to_zero_if_empty(price)
       if price.empty? 
-        return 0
+        return -1
       else 
         return price
       end 
