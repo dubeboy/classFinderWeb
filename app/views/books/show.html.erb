@@ -30,10 +30,9 @@
       <div class="panel-body">
         <h4><%=  @book.title %> by <%=  @book.author %></h4>
         <p><span class="label label-info"><%= @book.category.name if @book.category %> </span> </p>
+        <p class="card-text ">Available around <%= @book.institution.nil? ? "UJ" : @book.institution.name  %> </p>
         <%= @book.description %>
-        <% if @book.institution %>
-            <p class="text-bold">Available around  <%= @book.institution.nil? ? "UJ" : @book.institution.name  %></p>
-      <% end %>
+
         <p class="text-success text-bold">Price: R <%= @book.price.round(2) %></p>
 
         <!--</p>-->
@@ -42,17 +41,23 @@
             <!--<i class="material-icons my-small-icon" style="color: #ff0722;">favorite</i>-->
         <%# end %>
         <!--<p>Views: <%# @book.views %></p>-->
+        <% if current_user.nil?  %>
 
+            <button type="button" class="btn my-btn-green nice" data-toggle="modal" data-target="#viewBooking">
+              I'm hooked, I wanna buy this book!
+            </button>
+        <% elsif current_user == @book.user %>
         <button type="button" class="btn my-btn-green nice" data-toggle="modal" data-target="#viewBooking">
           I'm hooked, I wanna buy this book!
         </button>
-        <% if !current_user.nil? && current_user == @book.user && !get_trans(@book).nil? %>
+        <% if !get_trans(@book).nil? %>
             <%= link_to [:sold, @book,  trans_id: get_trans(@book).id],
                         method: :post, class: 'btn my-btn nice ', remote: true, form: {'data-type' => "json" }  do %>
                 <%= get_trans(@book).sold? ?
                         "Congrats Sold!" : "Sell!" %>
+              <% end %>
             <% end %>
-            <% end %>
+        <% end %>
       </div>
 
     </div>

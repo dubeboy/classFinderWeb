@@ -25,7 +25,11 @@ class BooksController < ApplicationController
     prms = params[:user]
     bt = BooksTransaction.new(user_id: prms[:seller_id], buyer_id: prms[:buyer_id],
                               book_id: prms[:book_id], time: prms[:time], in_trans: true)
+
    @save =  bt.save!
+    if(@save)
+      AgentTexter.alert(bt).deliver_now
+    end
   end
 
   def sold
