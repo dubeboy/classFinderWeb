@@ -50,11 +50,11 @@
         <button type="button" class="btn my-btn-green nice" data-toggle="modal" data-target="#viewBooking">
           I'm hooked, I wanna buy this book!
         </button>
-        <% if !get_trans(@book).nil? %>
+        <% if !get_trans(@book).nil? && current_user == @book.user %>
             <%= link_to [:sold, @book,  trans_id: get_trans(@book).id],
                         method: :post, class: 'btn my-btn nice ', remote: true, form: {'data-type' => "json" }  do %>
                 <%= get_trans(@book).sold? ?
-                        "Congrats Sold!" : "Sell!" %>
+                        "Congrats Sold!" : "Mark as sold" %>
               <% end %>
             <% end %>
         <% end %>
@@ -114,6 +114,11 @@
               <div class="input-group">
                 Select Time:
                 <%= f.select :time , ["7:00-8:00", '13:00-14:00', '16:00-17:00'], class: 'form-control'  %>
+              </div>
+              <br>
+              <div class="input-group">
+                Select Day:
+                <%= f.select :day , ["Mon", 'Tues', 'Wed', 'Thurs', 'Fri'], class: 'form-control'  %>
               </div>
               </div>
               </div>

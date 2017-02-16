@@ -27,9 +27,9 @@ class BooksController < ApplicationController
                               book_id: prms[:book_id], time: prms[:time], in_trans: true)
 
    @save =  bt.save!
-    if(@save)
-      AgentTexter.alert(bt).deliver_now
-    end
+    # if(@save)
+    #   AgentTexter.alert(bt).deliver_now
+    # end
   end
 
   def sold
