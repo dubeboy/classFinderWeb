@@ -8,7 +8,8 @@
     <tr>
       <th>Buyer</th>
       <th>Seller</th>
-      <th>time</th>
+      <th>Time</th>
+      <th>Day</th>
       <th>Sold</th>
     </tr>
     </thead>
@@ -22,6 +23,7 @@
           <td><%= buyer.name %></td>
           <td><%= seller.name %></td>
           <td><%= transaction.time %></td>
+          <td><%= transaction.day %></td>
           <td><%= transaction.sold? %></td>
           <td>
             <%= link_to [:sold, book, trans_id: transaction.id],

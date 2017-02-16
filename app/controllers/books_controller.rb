@@ -24,7 +24,7 @@ class BooksController < ApplicationController
   def buy
     prms = params[:user]
     bt = BooksTransaction.new(user_id: prms[:seller_id], buyer_id: prms[:buyer_id],
-                              book_id: prms[:book_id], time: prms[:time], in_trans: true)
+                              book_id: prms[:book_id], time: prms[:time], in_trans: true, day: prms[:day])
 
    @save =  bt.save!
     # if(@save)

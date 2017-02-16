@@ -46,18 +46,17 @@
             <button type="button" class="btn my-btn-green nice" data-toggle="modal" data-target="#viewBooking">
               I'm hooked, I wanna buy this book!
             </button>
-        <% elsif current_user == @book.user %>
+        <% elsif current_user != @book.user %>
         <button type="button" class="btn my-btn-green nice" data-toggle="modal" data-target="#viewBooking">
           I'm hooked, I wanna buy this book!
         </button>
-        <% if !get_trans(@book).nil? && current_user == @book.user %>
+        <% elsif !get_trans(@book).nil? && current_user == @book.user %>
             <%= link_to [:sold, @book,  trans_id: get_trans(@book).id],
                         method: :post, class: 'btn my-btn nice ', remote: true, form: {'data-type' => "json" }  do %>
                 <%= get_trans(@book).sold? ?
                         "Congrats Sold!" : "Mark as sold" %>
               <% end %>
             <% end %>
-        <% end %>
       </div>
 
     </div>
