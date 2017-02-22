@@ -16,4 +16,8 @@ module ApplicationHelper
   def institutions_array
     ['UJ', 'Wits']
   end
+
+  def clean_number(n)
+      number  =  n.scan(/\d+/)
+  end
 end

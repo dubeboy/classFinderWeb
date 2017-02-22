@@ -20,11 +20,14 @@ class Api::V1::BooksController < ApplicationController
   end
   
   def create
-    @book = Book.new(title: params[:title], category_id: params[:category_id], 
-                                                    price: params[:price], description: params[:description] )
+    @book = Book.new(title: params[:title], 
+                                           author: params[:author], 
+                                           price: params[:price], 
+                                           category_id: params[:category_id],
+                                           description: params[:description])
+    
     @book.user = User.find(params[:user_id])
-    i = Institution.new(name: params[:inst_name])
-    @book.institution = params[:category_id]
+    @book.institution = Institution.find(params[:category_id])
     if params[:images]
       if @book.save
         params[:images].each { |image|

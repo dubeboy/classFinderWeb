@@ -25,6 +25,7 @@ gem 'will_paginate'
 
 group :development do
   gem 'web-console', '~> 2.0'
+  # gem 'ruby-debug-ide', '~> 0.6.0'
   gem 'faker'
   gem 'spring' #this gem cost me the whole day ' talikung about unmet depencies while bundler was satified'
   gem 'byebug'

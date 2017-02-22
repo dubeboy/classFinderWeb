@@ -843,278 +843,327 @@
     ["E RING COMPUTER LAB 207", "S3", " S4", nil, nil, nil, nil, nil, nil],
     ["E RING COMPUTER LAB 207", " S3", " S4", "WE 17", nil, nil, nil, nil, nil]
 
+# function to
 
+def exists(string, array)
+    array.each_with_index do |element,index|
+        if string.strip == element.strip
+            return true
+        end
+    end
+    false
+end
 
-@t  = ["A LES G01", "C1", "C2", nil, nil, nil, nil, nil, nil],
-    ["A LES G01", "C3", "C4", nil, nil, nil, nil, nil, nil],
-    ["A LES G01", "H1", "H2", " H3", " H4", nil, nil, nil, nil],
-    ["B RING 726", "R3", nil, nil, nil, nil, nil, nil, nil],
-    ["B RING 726", "S1", nil, nil, nil, nil, nil, nil, nil],
-    ["B RING 726", "Z1", nil, nil, nil, nil, nil, nil, nil],
-    ["C LES 101", "G4", nil, nil, nil, nil, nil, nil, nil],
-    ["C RING 307 COMPUTER LAB", " P19", nil, nil, nil, nil, nil, nil, nil],
-    ["C RING 308", "P21", "P22", nil, nil, nil, nil, nil, nil],
-    ["C1 LAB 215 LABORATORY", "K1", " K2", " K3", " K4", nil, nil, nil, nil],
-    ["C2 LAB 122 LABORATORY", "P22", "P23", "P24", "P25", "P26", "P27", "P28", " O3"],
-    ["C2 LAB 123 LABORATORY", "P23", "P24", "P25", "P26", "P27", "P28", " O3", " G3"],
-    ["D LAB BASEMENT ROOM K03", "P13", "P14", nil, nil, nil, nil, nil, nil],
-    ["D LAB BASEMENT ROOM K03", "T3", " T4", nil, nil, nil, nil, nil, nil],
-    ["D3 LAB 330 LABORATORY", "N1", " N2", " N3", " N4", nil, nil, nil, nil],
-    ["D3 LAB 330 LABORATORY", "P25", "P26", "P27", "P28", nil, nil, nil, nil],
-    ["D3 LAB 330 LABORATORY", "P29", "P30", "P31", "P32", nil, nil, nil, nil],
-    ["E RING COMPUTER LAB 207", "S3", " S4", nil, nil, nil, nil, nil, nil],
-    ["E RING COMPUTER LAB 207", " S3", " S4", "WE 17", nil, nil, nil, nil, nil]
+#compacting the venue with all of its codes
+def gen_it
+  i = 0
+    output = []
+    @v.each do |venue_row|  # elm is an array ['v', 'c', 'c']
+      at_v_row_element = venue_row.compact
+        if !output.empty?
+          output.each do |output_element| # ['venue', 'c', 'c']
+                if output_element[0] == at_v_row_element[0] #venue names
+                    at_v_row_element.each do |code|
+                        if !exists(code, output_element) # if the code does not exist in the current output element(which is also an array)
+                          output_element.push(code)
+                        end
+                    end
+                else
+                  output.push(at_v_row_element)
+                  # break
+                end
+                # break
+             end
+        else
+                output.push(at_v_row_element)
+        end
 
+    # puts output
+    #   puts
+
+      if i > 50
+        break
+      end
+      i += 1
+      # puts output.to_s
+    end
+    return output #out put the result
+end
+
+puts '----------------result'
+puts gen_it.to_s
+puts '----------------result'
+puts 'The end'
 
 require 'csv'
 
 
+ monday_apk = [['NULL'], ['NULL'], ['NULL'], ['O1'], ['O2'], ['Z1'],
+               ['Z2'], ['K1', 'P1'], ['K2', 'P2'], ['H1', 'P3'], ['H2', 'P4'], ['R3'], ['R4']]
 
 
-def convert_time_to_do_mon(time)
-  puts 'In here'
-  if time >= 1000 and time <= 1045
-    return ['O1']
-  elsif time > 1045 and time <= 1135
-    return ['02']
-  elsif time > 1135 and time <= 1225 # monday starts here
-    return ['Z1']
-  elsif time > 1025 and time <= 1315
-    return ['Z2']
-  elsif time > 1315 and time <= 1405
-    return ['K1',  'P1']
-  elsif time > 1405 and time <= 1455
-    return ['K2' ,  'P2']
-  elsif time > 1455 and time <= 1545
-    return ['H1' , 'P3']
-  elsif time > 1545 and time <= 1635
-    return ['H2' , 'P4']
-  elsif time > 1635 and time <= 1725
-    return ['R3']
-  elsif time > 1725 and time <= 1815
-    return ['R4']
-  else
-    nil
-  end
-end
-def convert_time_to_code(time, day)
-  if day == 1
-    convert_time_to_do_mon(time)
-  else #this is when day os not 2
-    if time >= 800 and time <= 845
-      if day == 2
-        return ['G1']
-      end
-      if day == 3
-        return ['G2']
-      end
-      if day == 4
-        return ['L1']
-      end
-      if day == 5
-        return ['Z3']
-      end
+ tuesday_apk = [['G1'], ['N1'], ['N2'], ['M1'],
+                ['M2'], ['Q1'], ['Q2'], ['I1', 'P6'], ['I2', 'P7'],
+                ['K3', 'P8'], ['K4', 'P9'], ['L3'], ['L4']]
 
-    elsif time > 845 and time <= 935
-      if day == 2
-        return ['N1']
-      end
-      if day == 3
-        return ['M3']
-      end
-      if day == 4
-        return ['L2']
-      end
-      if day == 5
-        return ['Z4']
-      end
-    elsif time > 935 and time <= 1025 # monday starts here
-      if day == 2 # tues
-        return ['N2']
-      end
-      if day == 3 # wed
-        return ['M4', 'P12']
-      end
-      if day == 4 # thurs
-        return ['R1',  'p21']
-      end
-      if day == 5 # fri
-        return ['Q3']
-      end
-    elsif time > 1025 and time <= 1115
-      if day == 2 # tues
-        return ['M1']
-      end
-      if day == 3 # wed
-        return ['T1', 'P13']
-      end
-      if day == 4 # thurs
-        return ['R2 P22']
-      end
-      if day == 5 # fri
-        return ['Q4']
-      end
-    elsif time > 1115 and time <= 1205
-      if day == 2 # tues
-        return ['M2']
-      end
-      if day == 3 # wed
-        return ['T2', 'P14']
-      end
-      if day == 4 # thurs
-        return ['T3', 'P23']
-      end
-      if day == 5 # fri
-        return ['04']
-      end
-    elsif time > 1205 and time <= 1255
-      if day == 2 # tues
-        return ['Q1']
-      end
-      if day == 3 # wed
-        return ['S1', 'P15']
-      end
-      if day == 4 # thurs
-        return ['T4', 'P24']
-      end
-      if day == 5 # fri
-        return [] #culture day
-      end
-    elsif time > 1255 and time <= 1345
-      if day == 2 # tues
-        return ['Q2']
-      end
-      if day == 3 # wed
-        return ['S2', 'P16']
-      end
-      if day == 4 # thurs
-        return ['H3', 'P25']
-      end
-      if day == 5 # fri
-        return []  #culture day
-      end
-    elsif time > 1345 and time <= 1435
-      if day == 2 # tues
-        return ['I1', 'P6']
-      end
-      if day == 3 # wed
-        return ['J1' ,'P17']
-      end
-      if day == 4 # thurs
-        return ['H4', 'P26']
-      end
-      if day == 5 # fri
-        return ['J3', 'P29']
-      end
-    elsif time > 1435 and time <= 1525
+  wednesday_apk = [['G2'], ['M3'], ['M4', 'P12'], ['T1', 'P13'],
+                   ['T2', 'P14'], ['S1', 'P15'], ['S2', 'P16'],
+                   ['J1', 'P17'], ['J2', 'P18'], ['C1', 'P19'], ['C2', 'P20'], ['N3'], ['N4']]
 
-      if day == 2 # tues
-        return ['L2', 'P7']
-      end
-      if day == 3 # wed
-        return ['J2', 'P18']
-      end
-      if day == 4 # thurs
-        return ['I3', 'P27']
-      end
-      if day == 5 # fri
-        return ['J4', 'P30']
-      end
-    elsif time > 1525 and time <= 1615
+  thursday_apk = [['L1'], ['L2'], ['R1', 'P21'], ['R2', 'P22'],
+                 ['T3', 'P23'], ['T4', 'P24'], ['H3', 'P25'],
+                 ['H4', 'P26'], ['I3', 'P27'], ['I4', 'P28'], ['O3'], ['G3'], ['G4']]
 
-      if day == 2 # tues
-        return ['K3', 'P8']
-      end
-      if day == 3 # wed
-        return ['C1', 'P19']
-      end
-      if day == 4 # thurs
-        return ['I4' ,'P28']
-      end
-      if day == 5 # fri
-        return ['C3', 'P31']
-      end
-    elsif time > 1615 and time <= 1705
+  friday_apk = [['Z3'], ['Z4'], ['Q3'], ['Q4'], ['O4'],
+                ['NULL'], ['NULL'], ['J3', 'P29'],
+                ['J4', 'P30'], ['C3', 'P31'],['C4', 'P32'], ['S3'], ['S4']]
 
-      if day == 2 # tues
-        return ['K4', 'P9']
-      end
-      if day == 3 # wed
-        return ['C2' ,  'P20']
-      end
-      if day == 4 # thurs
-        return ['O3']
-      end
-      if day == 5 # fri
-        return ['C4',  'P32']
-      end
-    elsif time > 1705 and time <= 1755
 
-      if day == 2 # tues
-        return ['L3']
-      end
-      if day == 3 # wed
-        return ['N3']
-      end
-      if day == 4 # thurs
-        return ['G3']
-      end
-      if day == 5 # fri
-        return ['S3']
-      end
-    elsif time > 1755 and time <= 1845  # else its part time man
-      if day == 2 # tues
-        return ['L4']
-      end
-      if day == 3 # wed
-        return ['N4']
-      end
-      if day == 4 # thurs
-        return ['G4']
-      end
-      if day == 5 # fri
-        return ['S4']
-      end
-    else
-      []
-    end
-  end
-end
 
+# def convert_time_to_do_mon(time)
+#   puts 'In here'
+#   if time >= 1000 and time <= 1045
+#     return ['O1']
+#   elsif time > 1045 and time <= 1135
+#     return ['02']
+#   elsif time > 1135 and time <= 1225 # monday starts here
+#     return ['Z1']
+#   elsif time > 1025 and time <= 1315
+#     return ['Z2']
+#   elsif time > 1315 and time <= 1405
+#     return ['K1',  'P1']
+#   elsif time > 1405 and time <= 1455
+#     return ['K2' ,  'P2']
+#   elsif time > 1455 and time <= 1545
+#     return ['H1' , 'P3']
+#   elsif time > 1545 and time <= 1635
+#     return ['H2' , 'P4']
+#   elsif time > 1635 and time <= 1725
+#     return ['R3']
+#   elsif time > 1725 and time <= 1815
+#     return ['R4']
+#   else
+#     nil
+#   end
+# end
+# def convert_time_to_code(time, day)
+#   if day == 1
+#     convert_time_to_do_mon(time)
+#   else #this is when day os not 2
+#     if time >= 800 and time <= 845
+#       if day == 2
+#         return ['G1']
+#       end
+#       if day == 3
+#         return ['G2']
+#       end
+#       if day == 4
+#         return ['L1']
+#       end
+#       if day == 5
+#         return ['Z3']
+#       end
+#
+#     elsif time > 845 and time <= 935
+#       if day == 2
+#         return ['N1']
+#       end
+#       if day == 3
+#         return ['M3']
+#       end
+#       if day == 4
+#         return ['L2']
+#       end
+#       if day == 5
+#         return ['Z4']
+#       end
+#     elsif time > 935 and time <= 1025 # monday starts here
+#       if day == 2 # tues
+#         return ['N2']
+#       end
+#       if day == 3 # wed
+#         return ['M4', 'P12']
+#       end
+#       if day == 4 # thurs
+#         return ['R1',  'p21']
+#       end
+#       if day == 5 # fri
+#         return ['Q3']
+#       end
+#     elsif time > 1025 and time <= 1115
+#       if day == 2 # tues
+#         return ['M1']
+#       end
+#       if day == 3 # wed
+#         return ['T1', 'P13']
+#       end
+#       if day == 4 # thurs
+#         return ['R2 P22']
+#       end
+#       if day == 5 # fri
+#         return ['Q4']
+#       end
+#     elsif time > 1115 and time <= 1205
+#       if day == 2 # tues
+#         return ['M2']
+#       end
+#       if day == 3 # wed
+#         return ['T2', 'P14']
+#       end
+#       if day == 4 # thurs
+#         return ['T3', 'P23']
+#       end
+#       if day == 5 # fri
+#         return ['04']
+#       end
+#     elsif time > 1205 and time <= 1255
+#       if day == 2 # tues
+#         return ['Q1']
+#       end
+#       if day == 3 # wed
+#         return ['S1', 'P15']
+#       end
+#       if day == 4 # thurs
+#         return ['T4', 'P24']
+#       end
+#       if day == 5 # fri
+#         return [] #culture day
+#       end
+#     elsif time > 1255 and time <= 1345
+#       if day == 2 # tues
+#         return ['Q2']
+#       end
+#       if day == 3 # wed
+#         return ['S2', 'P16']
+#       end
+#       if day == 4 # thurs
+#         return ['H3', 'P25']
+#       end
+#       if day == 5 # fri
+#         return []  #culture day
+#       end
+#     elsif time > 1345 and time <= 1435
+#       if day == 2 # tues
+#         return ['I1', 'P6']
+#       end
+#       if day == 3 # wed
+#         return ['J1' ,'P17']
+#       end
+#       if day == 4 # thurs
+#         return ['H4', 'P26']
+#       end
+#       if day == 5 # fri
+#         return ['J3', 'P29']
+#       end
+#     elsif time > 1435 and time <= 1525
+#
+#       if day == 2 # tues
+#         return ['L2', 'P7']
+#       end
+#       if day == 3 # wed
+#         return ['J2', 'P18']
+#       end
+#       if day == 4 # thurs
+#         return ['I3', 'P27']
+#       end
+#       if day == 5 # fri
+#         return ['J4', 'P30']
+#       end
+#     elsif time > 1525 and time <= 1615
+#
+#       if day == 2 # tues
+#         return ['K3', 'P8']
+#       end
+#       if day == 3 # wed
+#         return ['C1', 'P19']
+#       end
+#       if day == 4 # thurs
+#         return ['I4' ,'P28']
+#       end
+#       if day == 5 # fri
+#         return ['C3', 'P31']
+#       end
+#     elsif time > 1615 and time <= 1705
+#
+#       if day == 2 # tues
+#         return ['K4', 'P9']
+#       end
+#       if day == 3 # wed
+#         return ['C2' ,  'P20']
+#       end
+#       if day == 4 # thurs
+#         return ['O3']
+#       end
+#       if day == 5 # fri
+#         return ['C4',  'P32']
+#       end
+#     elsif time > 1705 and time <= 1755
+#
+#       if day == 2 # tues
+#         return ['L3']
+#       end
+#       if day == 3 # wed
+#         return ['N3']
+#       end
+#       if day == 4 # thurs
+#         return ['G3']
+#       end
+#       if day == 5 # fri
+#         return ['S3']
+#       end
+#     elsif time > 1755 and time <= 1845  # else its part time man
+#       if day == 2 # tues
+#         return ['L4']
+#       end
+#       if day == 3 # wed
+#         return ['N4']
+#       end
+#       if day == 4 # thurs
+#         return ['G4']
+#       end
+#       if day == 5 # fri
+#         return ['S4']
+#       end
+#     else
+#       []
+#     end
+#   end
+# end
+#
 # CSV.foreach('/home/divine/RubymineProjects/store/lib/tasks/tab.csv') do |row|
 #   puts row.inspect
 # end
-
-
-def compact(time, day)
-  j = Array.new
-  #this is the compacted array
-  code = convert_time_to_code(time, day) #time code Array like [xx,xx]
-  puts '-------------------------------code'
-  puts code
-  puts '------------------------------code'
-  @t.each { |b| #this is each venue
-    b = b.compact
-    b.each do |element|
-      h = false
-      code.each do |c|
-        # i need to just to check if
-        # elem
-        puts 'wjooo-------------------code'
-         puts c
-        puts 'wjooo-------------------codert'
-        if c == element.strip
-          puts 'yes'
-          # j.push(b) #so u bash back the venue
-          h = true #so if there is
-        end
-        if h
-          j.push(b)
-        end
-      end
-    end
-  }
-   @t - j
-end
-
-puts compact(1706, 5).count
+#
+#
+# def compact(time, day)
+#   j = Array.new
+#   #this is the compacted array
+#   code = convert_time_to_code(time, day) #time code Array like [xx,xx]
+#   puts '-------------------------------code'
+#   puts code
+#   puts '------------------------------code'
+#   @all_venues.each { |b| #this is each venue
+#     b = b.compact
+#     b.each do |element|
+#       h = false
+#       code.each do |c|
+#         # i need to just to check if
+#         # elem
+#         puts 'wjooo-------------------code'
+#          puts c
+#         puts 'wjooo-------------------codert'
+#         if c == element.strip
+#           puts 'yes'
+#           # j.push(b) #so u bash back the venue
+#           h = true #so if there is
+#         end
+#         if h
+#           j.push(b)
+#         end
+#       end
+#     end
+#   }
+#    @all_venues - j
+# end
+#
+# puts compact(1706, 5).count
