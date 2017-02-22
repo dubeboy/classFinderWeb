@@ -18,6 +18,16 @@ class Api::V1::BooksController < ApplicationController
   def show
     @book = Book.find(params[:id])
   end
+
+
+  def search
+      @books = Book.search(params[:search]).paginate(page: params[:page], per_page: 6).order(created_at: :desc) if params[:search]
+      respond_to  do |format|
+        format.json
+      end
+  end
+
+
   
   def create
     @book = Book.new(title: params[:title], 

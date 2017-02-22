@@ -64,9 +64,12 @@ Rails.application.routes.draw do
   # our api routes should be extracted to its own app yoh  , Reformat man!!!
     namespace :api do
       namespace :v1 do
-        resources :books
         resources :sessions
-
+        resources :books do
+          collection do
+           get 'search', :action => :search # yeah its a get
+          end 
+        end 
        resources :users do
          member do
           get 'panel', action: :panel
