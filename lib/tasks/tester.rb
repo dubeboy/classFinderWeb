@@ -854,14 +854,14 @@ def exists(string, array)
     false
 end
 
-#compacting the venue with all of its codes
+#compacting duplicate venues to a single venue with all of its codes
 def gen_it
   i = 0
-    output = []
-    @v.each do |venue_row|  # elm is an array ['v', 'c', 'c']
+    output = [] #all the outputs - final out put should be like  [[v1, code1, code2, code3], [v2, code4, code3, code7  ], ...]
+    @v.each do |venue_row|  # venue_row is an array ['venue', 'c', 'c']
       at_v_row_element = venue_row.compact
         if !output.empty?
-          output.each do |output_element| # ['venue', 'c', 'c']
+          output.each do |output_element| # ['venue', 'c', 'c'], looping thru each element
                 if output_element[0] == at_v_row_element[0] #venue names
                     at_v_row_element.each do |code|
                         if !exists(code, output_element) # if the code does not exist in the current output element(which is also an array)
