@@ -1,6 +1,6 @@
 class Api::V1::BooksController < ApplicationController
 
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: [:index, :show, :search]
 
   def index
     if params['cat']
@@ -21,7 +21,8 @@ class Api::V1::BooksController < ApplicationController
 
 
   def search
-      @books = Book.search(params[:search]).paginate(page: params[:page], per_page: 6).order(created_at: :desc) if params[:search]
+       b = Book.search(params[:search]).paginate(page: params[:page], per_page: 16).order(created_at: :desc) if params[:search]
+       @books = b.where(category_id:  params[:category].to_i)
       respond_to  do |format|
         format.json
       end

@@ -40,7 +40,6 @@ class BooksController < ApplicationController
   end
 
   def create
-    byebug
     @book = Book.new(books_params)
     @book.user = current_user
     @book.institution = Institution.find(params[:book][:category_id])

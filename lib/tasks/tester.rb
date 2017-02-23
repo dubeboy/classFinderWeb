@@ -869,10 +869,10 @@ def gen_it
                         end
                     end
                 else
-                  output.push(at_v_row_element)
-                  # break
+                    if output_element == (output[output.length() -1])
+                        output.push(at_v_row_element) 
+                    end
                 end
-                # break
              end
         else
                 output.push(at_v_row_element)
