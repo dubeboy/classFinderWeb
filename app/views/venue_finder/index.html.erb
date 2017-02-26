@@ -1,5 +1,5 @@
-<h1 class="text-center"> Currently open venues (UJ-APK) </h1>
-<small class="my-btn text-center">enter time in 24 hour format</small>
+<h2 class="text-center"> Currently open venues (UJ-APK) </h2>
+<p class="text-center">Enter time in 24 hour format</p>
 
 
 <%# form_for :venue_finder, :url => find_venue_path, :html => {:id => 'secureRoom', class: 'form-inline'} do |f| %>
@@ -8,14 +8,33 @@
             <%# f.submit 'Find Venue', class: 'btn my-btn' %>
 <%# end %>
 
-<%= form_tag find_open_venue_path, :method => :get, class: 'form-inline form-search'  do %>
-        Select time you want to see if a venue is free:
-        <%= text_field_tag :time, params[:times],  placeholder: "Time, Eg: 15:03", class: ' form-control'%>
-<%= submit_tag 'Find Venue', name: nil, class: 'btn my-btn', id: 'mySearch' %>
-<% end %>
+<div class="" >
+  <div class="panel panel-body my_div" style="padding: 0px; overflow: hidden">
+    <div class="card-block form-group text-center " style="margin-top: -13px;
+        margin-bottom: -14px;
+        margin-left: 60px;">
+      <div>
+        <%= form_tag find_open_venue_path, :method => :get, class: 'form-inline form-search'  do %>
+            <%= text_field_tag :time, params[:times],  placeholder: "Time, Eg: 15:03", class: 'form-control'%>
+            <span class="">
+               <i  class="fa fa-search" aria-hidden="true">
+                  <%= submit_tag 'Find Venue', name: nil, class: 'btn my-btn-green ', id: 'mySearch' %>
+                </i>
+            </span>
+        <% end %>
+      </div>
+      <% unless @open_venues.empty? %>
+
+          <p>There are <%= @open_venues.count %> open venues <br/></p>
+
+          </div>
+      <% end %>
+  </div>
+</div>
 
 
-<% unless @open_venues.nil? %>
+<% unless @open_venues.empty? %>
+
 <% @open_venues.each do |h| %>
     <div class="col-md-3 item" >
   <div class="panel panel-body my_div" style="padding: 0px; overflow: hidden">
@@ -29,7 +48,7 @@
      <div class="col-md-4 col-md-offset-4" >
   <div class="panel panel-body my_div" style="padding: 0px; overflow: hidden">
     <div class="card-block">
-         <h4> It looks like all venues are open now! becuase its a weekend!!! or the time is not between 8:00 and 18:45 or its a friday and its culture time.</h4>
+      <h4> <b>It looks like all venues are open now!</b> because its a weekend!!! or the time is not between 8:00 and 18:45 therefor classes have not started yet or its a friday and its culture time.</h4>
     </div>
   </div>
 </div>

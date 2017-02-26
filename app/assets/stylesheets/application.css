@@ -98,6 +98,8 @@ img {
 
  .rm-border {
      border-radius: 0px;
+     padding-left: 50px;
+     padding-right: 50px;
  }
 
 
