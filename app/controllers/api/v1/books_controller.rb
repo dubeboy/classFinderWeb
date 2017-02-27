@@ -1,6 +1,6 @@
 class Api::V1::BooksController < ApplicationController
 
-  before_action :authenticate_user!, except: [:index, :show, :search]
+  # before_action :authenticate_user!, except: [:index, :show, :search]
 
   def index
     if params['cat']
@@ -27,8 +27,6 @@ class Api::V1::BooksController < ApplicationController
         format.json
       end
   end
-
-
   
   def create
     @book = Book.new(title: params[:title], 
