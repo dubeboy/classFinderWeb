@@ -27,9 +27,20 @@ class BooksController < ApplicationController
                               book_id: prms[:book_id], time: prms[:time], in_trans: true, day: prms[:day])
 
    @save =  bt.save!
-    # if(@save)
-    #   AgentTexter.alert(bt).deliver_now
-    # end
+    if @save
+      seller = User.find(prms[:seller_id])
+      buyer = User.find(prms[:buyer_id])
+      book = Book.find(prms[:book_id])
+
+      loc = "classfinderpp.com/users/#{seller.id}/books_panel"
+      loc_buyer = "classfinderpp.com/users/#{buyer.id}/books_panel"
+
+      SendSmsJob.perform_later(seller.contacts, "Hi!, Someone wants to buy your book!(#{book.title}), please check your panel here for more information: #{loc}")
+      SendSmsJob.perform_later(buyer.contacts, "Hi!, You have just requested to buy (#{book.title}), please check your panel here for more information: #{loc_buyer}")
+      SendSmsJob.perform_later('0814650713', "Hi!, id: #{buyer.id} name: #{buyer.name} wants to buy book: (#{book.title}) sold buy id: #{seller.id} name: #{seller.name}, please check your transaction in panel")
+
+    end 
+    #Should also notify the user here 
   end
 
   def sold
@@ -42,7 +53,7 @@ class BooksController < ApplicationController
   def create
     @book = Book.new(books_params)
     @book.user = current_user
-    @book.institution = Institution.find(params[:book][:category_id])
+    @book.institution = Institution.find(params[:book][:institution_id])
     if params[:images]
       if @book.save
         params[:images].each { |image|

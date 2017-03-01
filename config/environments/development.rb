@@ -43,5 +43,5 @@ Rails.application.configure do
   ######PAPERCLIP CONFIGS#######
   #### Twillo Config #####
 
-  config.textris_delivery_method = :twilio
+  # config.textris_delivery_method = :twilio
 end

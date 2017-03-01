@@ -64,6 +64,7 @@ Rails.application.routes.draw do
   # our api routes should be extracted to its own app yoh  , Reformat man!!!
     namespace :api do
       namespace :v1 do
+        get 'venue_finder/index'
         resources :sessions
         resources :books do
           collection do

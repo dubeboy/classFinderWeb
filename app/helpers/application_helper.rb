@@ -18,6 +18,8 @@ module ApplicationHelper
   end
 
   def clean_number(n)
-      number  =  n.scan(/\d+/)
+      number = n.scan(/\d+/).join
+      number[0] == '0' ? number = '+27' + number[1..10] : number
+      return number
   end
 end

@@ -8,9 +8,13 @@ class Api::V1::UsersController < ApplicationController
                                                               provider: 'google_oauth2', uid: params[:token])
             user.runner = params[:is_runner]
             @status = user.save(:validate => false) #because no password!
-            @u = User.find_by_email(params[:email])
+            if(user.save(:validate => false)) 
+              @status = true
+              @u = User.find_by_email(params[:email])
+            end
         else 
-            @status = false
+            @status = true
+            @u = User.find_by_email(params[:email])
         end
     else 
       if User.find_by_email(params[:email]).nil? #if there is no user

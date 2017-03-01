@@ -46,7 +46,6 @@ gem 'jquery-ui-rails'
 gem 'font-awesome-rails'
 #Sending SMS
 gem 'twilio-ruby'
-gem 'textris'
 
 group :development do
   gem 'puma-heroku'
