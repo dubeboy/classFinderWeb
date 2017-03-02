@@ -74,12 +74,10 @@ class Api::V1::AccommodationsController < ApplicationController
     @acs = Accommodation.search(params[:name], params[:room_type],
                                 price_from: params[:price_from],
                                 price_to: params[:price_to], precise_loc: params[:auck_location])
-               .paginate(:per_page => 16, :page => params[:page])
+               .paginate(:per_page => 6, :page => params[:page])
 
     respond_to do |format|
       format.json
-      format.html
-      format.js
     end
   end
 
