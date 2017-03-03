@@ -1,6 +1,6 @@
 <div class="col-md-3 item" >
   <div class="panel panel-body my_div" style="padding: 0px; overflow: hidden">
-    <%= image_tag accommodation.pictures[0].image, class: 'card-img-top' unless accommodation.pictures[0].nil?  %>
+    <%= image_tag accommodation.pictures[0].image.url(:medium), class: 'card-img-top' unless accommodation.pictures[0].nil?  %>
     <div class="card-block">
       <h4 class="card-title"> <span class="text-bold text-success"> R <%= accommodation.price.round(2) %></span></h4>
 

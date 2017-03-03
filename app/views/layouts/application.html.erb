@@ -2,7 +2,10 @@
 <html>
 <head>
 
-  <title>Classfinder</title>
+  <title><%= @meta_title ? @meta_title : ApplicationController::BRAND_NAME %></title>
+  <% if @meta_description.present? %>
+      <meta name=”description” content=”<%= @meta_description %>”>
+  <% end %>
   <%= favicon_link_tag 'favicon.ico' %>
    <meta charset="utf-8">
    <meta name="viewport"    content="width=device-width, initial-scale=1.0">
@@ -18,7 +21,7 @@
 
 </head>
 <body>
-
+<%= render 'layouts/google_analytics' %>
 <div>
 <%= render 'layouts/header' %>
   <% flash.each do |key, value| %>

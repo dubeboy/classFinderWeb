@@ -17,6 +17,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'will_paginate'
+gem 'friendly_id'
 
 #todo investigate this has_password thing
 # Use ActiveModel has_secure_password

@@ -5,6 +5,12 @@ class ApplicationController < ActionController::Base
   require 'venue_finder_lib'
   helper_method :current_user
   helper_method :get_free
+  BRAND_NAME = 'Classfinder++'.freeze
+
+  def meta_title(title)
+    [title, BRAND_NAME].reject(&:empty?).join(' | ')
+  end
+
   private
 
   def current_user

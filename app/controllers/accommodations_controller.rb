@@ -5,10 +5,13 @@ class AccommodationsController < ApplicationController
 
   def index #fixme
     @acs = Accommodation.all.paginate(page: params[:page], per_page: 16).order(created_at: :desc)
+    @meta_title = meta_title 'Accommodation'
+    @meta_description = 'Search for accommodation or res near your campus'
     respond_to do |format|
       format.json
       format.html
       format.js
+
     end
   end
 

@@ -2,7 +2,7 @@
     <% unless get_trans(book).sold? %>
         <div class="col-md-4 item <%= gen_style(book) %>" >
           <div class="panel panel-body" style="padding: 0px;">
-            <%= image_tag book.pictures[0].image, class: 'card-img-top img-responsive' unless book.pictures[0].nil?  %>
+            <%= image_tag book.pictures[0].image.url(:medium), class: 'card-img-book-top img-responsive' unless book.pictures[0].nil?  %>
             <div class="card-block">
               <h4 class="card-title"> <span class="text-bold"><%= fit_title(book.title) %></span> <small>in <span class="label label-info"><%= book.category.name if book.category %></span></small></h4>
               <p class="card-text">Available around <%= book.institution.nil? ? "UJ" : book.institution.name  %> </p>
@@ -25,7 +25,7 @@
 <% else %>
     <div class="col-md-4 item <%# gen_style(book) %>" >
       <div class="panel panel-body" style="padding: 0px;">
-        <%= image_tag book.pictures[0].image, class: 'card-img-top img-responsive' unless book.pictures[0].nil?  %>
+        <%= image_tag book.pictures[0].image.url(:medium), class: 'card-img-book-top img-responsive' unless book.pictures[0].nil?  %>
         <div class="card-block">
           <h4 class="card-title"> <span class="text-bold"><%= fit_title(book.title) %></span> <small>in <span class="label label-info"><%= book.category.name if book.category %></span></small></h4>
           <p class="card-text ">Available around <%= book.institution.nil? ? "UJ" : book.institution.name  %> </p>
