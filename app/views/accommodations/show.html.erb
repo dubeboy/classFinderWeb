@@ -11,7 +11,7 @@
         <% counter = 0 %>
         <% @ac.pictures.each do |p| %>
             <div class="<%= image_slider_helper(counter) %>  " data-slide-number=<%= counter %>>
-                 <%= image_tag p.image, class: 'img-responsive' , id: 'my_img'%>
+                 <%= image_tag p.image, class: 'img-responsive center-block' , id: 'my_img'%>
                  <% counter += 1 %>
             </div>
         <% end %>

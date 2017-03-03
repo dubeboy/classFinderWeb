@@ -70,10 +70,16 @@ class Api::V1::AccommodationsController < ApplicationController
   def search
 
     @Inst = ['UJ ', 'Wits', 'Other']
+
+    if params[:price_to] == '0'
+      x = ""
+    else 
+        x = params[:price_to]
+    end
     #fixme term is out for now man
     @acs = Accommodation.search(params[:name], params[:room_type],
                                 price_from: params[:price_from],
-                                price_to: params[:price_to], precise_loc: params[:auck_location])
+                                price_to: x, precise_loc: params[:auck_location])
                .paginate(:per_page => 6, :page => params[:page])
 
     respond_to do |format|
