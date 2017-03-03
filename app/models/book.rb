@@ -1,5 +1,4 @@
 class Book < ApplicationRecord
-
   #todo check validity in  the model it self
   has_many :pictures, :dependent => :destroy
   belongs_to :category
@@ -17,5 +16,9 @@ class Book < ApplicationRecord
     else
       return nil
     end
+  end
+
+  def send_it(number, msg)
+    send_sms(number, msg)
   end
 end

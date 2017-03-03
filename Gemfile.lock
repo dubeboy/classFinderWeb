@@ -67,6 +67,11 @@ GEM
     coffee-script-source (1.10.0)
     concurrent-ruby (1.0.2)
     debug_inspector (0.0.2)
+    delayed_job (4.1.2)
+      activesupport (>= 3.0, < 5.1)
+    delayed_job_active_record (4.1.1)
+      activerecord (>= 3.0, < 5.1)
+      delayed_job (>= 3.0, < 5)
     erubis (2.7.0)
     execjs (2.7.0)
     faker (1.6.6)
@@ -225,6 +230,7 @@ DEPENDENCIES
   bcrypt-ruby
   byebug
   coffee-rails (~> 4.1.0)
+  delayed_job_active_record
   faker
   font-awesome-rails
   friendly_id
@@ -239,6 +245,7 @@ DEPENDENCIES
   rails
   rails-assets-bootstrap!
   rails-assets-bootstrap-material-design!
+  rake (= 11.3.0)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   spring

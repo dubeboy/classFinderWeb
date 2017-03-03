@@ -11,13 +11,16 @@ gem 'coffee-rails', '~> 4.1.0'                  #FIXME REMOVE THIS ON WINDOWS
 # gem 'therubyracer', platforms: :ruby
 
 gem 'jquery-rails'
+gem 'rake', '11.3.0'
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'will_paginate'
+# TODO NEED  TO RUN THE PART WHERE WE ACTUALLY MAP THE ID THING TO THE NICE URL , involves DB, so scary https://2017doneright.com/comprehensive-guide-on-seo-in-rails-8b124ca81d37#.dkh300u3b
 gem 'friendly_id'
+gem 'delayed_job_active_record'
 
 #todo investigate this has_password thing
 # Use ActiveModel has_secure_password

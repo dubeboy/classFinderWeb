@@ -1,15 +1,28 @@
 <div class="col-md 3">
-  <section class="col-md-3" style="background-color: navajowhite">
 
-    <a class="btn btn-block btn-danger" href="?cat=2" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Science</a>
-    <a class="btn btn-block btn-danger" href="?cat=3" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Engineering</a>
-    <a class="btn btn-block btn-danger" href="?cat=4" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Law</a>
-    <a class="btn btn-block btn-danger" href="?cat=5" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Architecture And Design</a>
-    <a class="btn btn-block btn-danger" href="?cat=6" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Education</a>
-    <a class="btn btn-block btn-danger" href="?cat=7" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Humanities</a>
-    <a class="btn btn-block btn-danger" href="?cat=8" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Medicine</a>
-    <a class="btn btn-block btn-danger" href="?cat=9" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Commerce</a>
-    <a class="btn btn-block btn-danger" href="?cat=10" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Other</a>
+
+
+
+  <section class="col-md-3" >
+
+    <div class="panel panel-warning">
+      <div class="panel-heading">
+        <h3 class="panel-title">Books categories</h3>
+      </div>
+      <div class="panel-body">
+        <a class="btn btn-block" href="?cat=2" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Science</a>
+        <a class="btn btn-block btn-danger" href="?cat=3" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Engineering</a>
+        <a class="btn btn-block btn-danger" href="?cat=4" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Law</a>
+        <a class="btn btn-block btn-danger" href="?cat=5" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Architecture And Design</a>
+        <a class="btn btn-block btn-danger" href="?cat=6" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Education</a>
+        <a class="btn btn-block btn-danger" href="?cat=7" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Humanities</a>
+        <a class="btn btn-block btn-danger" href="?cat=8" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Medicine</a>
+        <a class="btn btn-block btn-danger" href="?cat=9" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Commerce</a>
+        <a class="btn btn-block btn-danger" href="?cat=10" style="color: rgb(243, 238, 245); background-position: 80% 79%; background-color: rgba(255, 87, 34, 0.92);" >Other</a>
+
+      </div>
+    </div>
+
 
   </section>
 </div>
@@ -20,9 +33,8 @@
       <div class="form-group">
         <%= form_tag search_index_path, :method => :get, id: 'items_search', class: 'form-inline form-search' do %>
             <div class=" form-g">
-              Select
-              category: <%= select_tag "category", options_from_collection_for_select(@cat, 'id', "name" ), class: 'form-control' %>
-              <%= text_field_tag :search, params[:search], placeholder: 'Search Books', class: ' form-control', style: 'width: 500px' %>
+               <%= select_tag "category", options_from_collection_for_select(@cat, 'id', "name" ), class: 'form-control' %>
+              <%= text_field_tag :search, params[:search], placeholder: 'Select category and Search Books', class: ' form-control', style: 'width: 500px' %>
               <%= submit_tag 'Search', name: nil, class: 'btn  my-btn-green', id: 'mySearch' %>
               <%# submit_tag '', name: nil, class: 'btn btn-info ', id: 'mySearch' %>
             </div>
