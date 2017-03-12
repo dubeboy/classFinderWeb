@@ -50,6 +50,13 @@ class BooksController < ApplicationController
     bt.save
   end
 
+  def destroy
+    @book = Book.find(params[:id])
+    t = BooksTransaction.where('book_id = ?', @book.id).destroy_all
+    @book.destroy
+    redirect_to books_path, notice: 'Accommodation deleted.'
+  end
+
   def create
     @book = Book.new(books_params)
     @book.user = current_user
