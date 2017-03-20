@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170303012415) do
+ActiveRecord::Schema.define(version: 20170318005416) do
 
   create_table "accommodations", force: :cascade do |t|
     t.string   "location"
@@ -134,6 +134,22 @@ ActiveRecord::Schema.define(version: 20170303012415) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "network_categories", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_network_categories_on_name", unique: true
+  end
+
+  create_table "networks", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "user_id"
+    t.integer  "network_category_id"
+    t.index ["name"], name: "index_networks_on_name", unique: true
+  end
+
   create_table "pictures", force: :cascade do |t|
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
@@ -144,6 +160,17 @@ ActiveRecord::Schema.define(version: 20170303012415) do
     t.integer  "item_id"
     t.integer  "book_id"
     t.integer  "accommodation_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "views"
+    t.integer  "likes"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "network_id"
+    t.index ["name"], name: "index_posts_on_name", unique: true
   end
 
   create_table "profiles", force: :cascade do |t|

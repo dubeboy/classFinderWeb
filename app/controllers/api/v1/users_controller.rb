@@ -1,5 +1,16 @@
 class Api::V1::UsersController < ApplicationController
 
+
+def check_if_user_exits 
+   h = User.find_by_email(params[:email])
+  if(h) 
+    @exits = true
+    @u = h
+    return
+  end
+  @exits = false
+end 
+
  def create
     @status = false
     if (params[:token]) 
@@ -11,6 +22,8 @@ class Api::V1::UsersController < ApplicationController
             if(user.save(:validate => false)) 
               @status = true
               @u = User.find_by_email(params[:email])
+            else 
+              @status = false #not requred i think
             end
         else 
             @status = true

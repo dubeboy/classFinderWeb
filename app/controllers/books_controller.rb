@@ -54,7 +54,7 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     t = BooksTransaction.where('book_id = ?', @book.id).destroy_all
     @book.destroy
-    redirect_to books_path, notice: 'Accommodation deleted.'
+    redirect_to books_path, notice: 'Book deleted.'
   end
 
   def create

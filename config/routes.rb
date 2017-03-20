@@ -66,6 +66,9 @@ Rails.application.routes.draw do
       namespace :v1 do
         get 'venue_finder/index'
         resources :sessions
+        resources :networks do
+          resources :network_posts
+        end
         resources :books do
           collection do
            get 'search', :action => :search # yeah its a get
@@ -74,6 +77,9 @@ Rails.application.routes.draw do
        resources :users do
          member do
           get 'panel', action: :panel
+         end
+         collection do
+          get 'user_exits', action: :check_if_user_exits 
          end
         end
         resources :accommodations do

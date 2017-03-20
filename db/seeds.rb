@@ -34,6 +34,19 @@ Category.create(name: 'Medicine', book_type: "Book")
 Category.create(name: 'Commerce', book_type: "Book")
 Category.create(name: 'Other', book_type: "Book")
 
+NetworkCategory.create(name: 'Education')
+NetworkCategory.create(name: 'Science')
+NetworkCategory.create(name: 'Engineering')
+NetworkCategory.create(name: 'Law')
+NetworkCategory.create(name: 'Architecture And Design')
+NetworkCategory.create(name: 'Humanities')
+NetworkCategory.create(name: 'Commerce')
+NetworkCategory.create(name: 'Business')
+NetworkCategory.create(name: 'Music')
+NetworkCategory.create(name: 'Religion')
+NetworkCategory.create(name: 'Entertainment')
+
+
 
 Institution.create(name: 'Wits', location: 'Braamfontein')
 Institution.create(name: 'UJ-Auckland Park', location: 'Auckland Park')

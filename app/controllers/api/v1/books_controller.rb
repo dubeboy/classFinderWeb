@@ -1,7 +1,6 @@
 class Api::V1::BooksController < ApplicationController
 
   # before_action :authenticate_user!, except: [:index, :show, :search]
-  include Messenger
   def index
     if params['cat']
       @books =  Category.find(params['cat']).books.all.paginate(page: params[:page],
@@ -30,7 +29,7 @@ class Api::V1::BooksController < ApplicationController
   
   def create
     @status = false
-    @book = Book.new(title: params[:title], 
+    @book = Book.new(title: params[:book_title], 
                                            author: params[:author], 
                                            price: params[:price], 
                                            category_id: params[:category_id],
@@ -46,7 +45,9 @@ class Api::V1::BooksController < ApplicationController
         @status = true
       end
     else
-      flash[:warning] = 'Please make sure that the book you trying to upload has a picture as well '
+    end
+    respond_to  do |format|
+      format.json
     end
   end
 
