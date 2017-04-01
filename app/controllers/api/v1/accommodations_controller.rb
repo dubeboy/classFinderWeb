@@ -5,7 +5,7 @@ class Api::V1::AccommodationsController < ApplicationController
   #use that before_action to set the @user when finding first
 
   def index #fixme
-    @acs = Accommodation.all.paginate(page: params[:page], per_page: 6).order(created_at: :desc)
+    @acs = Accommodation.all.paginate(page: params[:page], per_page: 8).order(created_at: :desc)
     respond_to do |format|
       format.json
       format.html
@@ -21,7 +21,7 @@ class Api::V1::AccommodationsController < ApplicationController
   def create
     @status = false
     ac = Accommodation.new(location: params[:location],
-                             price: params[:price], room_type: params[:room_type], 
+                             price: params[:price], room_type: params[:room_type],
                              description: params[:description], institution: params[:institution]  )
     ac.user = User.find(params[:user_id])
     if params[:images]
@@ -73,7 +73,7 @@ class Api::V1::AccommodationsController < ApplicationController
 
     if params[:price_to] == '0'
       x = ""
-    else 
+    else
         x = params[:price_to]
     end
     #fixme term is out for now man
@@ -142,7 +142,7 @@ class Api::V1::AccommodationsController < ApplicationController
     end
 
     respond_to do |format|
-      format.json 
+      format.json
     end
   end
 

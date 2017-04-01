@@ -1,5 +1,17 @@
 Rails.application.routes.draw do
 
+  namespace :api do
+    namespace :v1 do
+      get 'comments/index'
+    end
+  end
+
+  namespace :api do
+    namespace :v1 do
+      get 'comments/com'
+    end
+  end
+
   get 'select_user_type/index'
 
   get 'welcome/index'
@@ -67,7 +79,10 @@ Rails.application.routes.draw do
         get 'venue_finder/index'
         resources :sessions
         resources :networks do
-          resources :network_posts
+          resources :network_posts do
+            post 'like', action: :like
+            resources :comments
+          end 
         end
         resources :books do
           collection do
