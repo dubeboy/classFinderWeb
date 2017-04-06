@@ -7,8 +7,8 @@ json.network_posts do
 	json.likes n.likes
 	json.comments do
     json.array! n.comments do |comment|
-      json.comment = comment.com
-      json.user_name = comment.user.name
+      json.comment comment.com
+      json.user_name comment.user.name
     end
   end
 	json.poster_img_url n.user.profile_img.url(:thumb)

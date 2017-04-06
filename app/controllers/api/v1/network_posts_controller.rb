@@ -32,7 +32,7 @@ class Api::V1::NetworkPostsController < ApplicationController
   end
 
   def index
-    @network_posts = Post.where('network_id=?', params[:network_id]).paginate(page: params[:page], per_page: 8).order(created_at: :desc)
+    @network_posts = Post.where('network_id=?', params[:topic_id]).paginate(page: params[:page], per_page: 8).order(created_at: :desc)
     respond_to  do |format|
       format.json
     end

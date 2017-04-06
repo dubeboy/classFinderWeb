@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170401185040) do
+ActiveRecord::Schema.define(version: 20170405200428) do
 
   create_table "accommodations", force: :cascade do |t|
     t.string   "location"
@@ -157,6 +157,7 @@ ActiveRecord::Schema.define(version: 20170401185040) do
     t.integer  "user_id"
     t.integer  "network_category_id"
     t.         "desc"
+    t.integer  "network_type"
     t.index ["name"], name: "index_networks_on_name", unique: true
   end
 
