@@ -5,7 +5,8 @@ class Api::V1::AccommodationsController < ApplicationController
   #use that before_action to set the @user when finding first
 
   def index #fixme
-    @acs = Accommodation.all.paginate(page: params[:page], per_page: 8).order(created_at: :desc)
+    @acs = Accommodation.all.paginate(page: params[:page],
+                                    per_page: 20).order(created_at: :desc)
     respond_to do |format|
       format.json
       format.html

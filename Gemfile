@@ -11,11 +11,11 @@ gem 'coffee-rails', '~> 4.1.0'                  #FIXME REMOVE THIS ON WINDOWS
 # gem 'therubyracer', platforms: :ruby
 
 gem 'jquery-rails'
-gem 'rake', '11.3.0'
+gem 'rake'
 gem 'turbolinks'
 gem 'active_model_serializers', '~> 0.10.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
+gem 'jbuilder'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'will_paginate'
@@ -57,6 +57,6 @@ group :development do
 end
 
 group :production do
-  gem 'pg'
+#  gem 'pg'
 end 
 

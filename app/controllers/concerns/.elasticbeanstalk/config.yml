@@ -1,0 +1,13 @@
+branch-defaults:
+  master:
+    environment: store-env
+    group_suffix: null
+global:
+  application_name: store
+  branch: null
+  default_ec2_keyname: aws-eb
+  default_platform: Ruby 2.3 (Puma)
+  default_region: us-west-2
+  profile: eb-cli
+  repository: null
+  sc: git

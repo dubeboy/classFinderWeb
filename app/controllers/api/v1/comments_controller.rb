@@ -1,6 +1,6 @@
 class Api::V1::CommentsController < ApplicationController
   def index
-  	@comments = Comment.where('post_id = ?', params[:network_post_id]).paginate(page: params[:page], per_page: 8).order(created_at: :desc)
+  	@comments = Comment.where('post_id = ?', params[:network_post_id]).paginate(page: params[:page], per_page: 16).order(created_at: :desc)
   end
 
   def create

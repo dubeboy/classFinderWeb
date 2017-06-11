@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  address: MyString
+  wifi: MyString
+  user_id: 1
+  nsfas: false
+  common: MyString
+  prepaid_elec: false
+  accommodation_id: 1
+
+two:
+  address: MyString
+  wifi: MyString
+  user_id: 1
+  nsfas: false
+  common: MyString
+  prepaid_elec: false
+  accommodation_id: 1

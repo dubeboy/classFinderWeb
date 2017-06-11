@@ -20,7 +20,7 @@ class Api::V1::BooksController < ApplicationController
 
 
   def search
-       b = Book.search(params[:search]).paginate(page: params[:page], per_page: 16).order(created_at: :desc) if params[:search]
+       b = Book.search(params[:search]).paginate(page: params[:page], per_page: 20).order(created_at: :desc) if params[:search]
        @books = b.where(category_id:  params[:category].to_i)
       respond_to  do |format|
         format.json

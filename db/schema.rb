@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170405200428) do
+ActiveRecord::Schema.define(version: 20170508141055) do
 
   create_table "accommodations", force: :cascade do |t|
     t.string   "location"
@@ -30,6 +30,13 @@ ActiveRecord::Schema.define(version: 20170405200428) do
     t.boolean  "is_secured"
     t.string   "slug"
     t.index ["slug"], name: "index_accommodations_on_slug", unique: true
+  end
+
+  create_table "attend_events", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "books", force: :cascade do |t|
@@ -158,6 +165,7 @@ ActiveRecord::Schema.define(version: 20170405200428) do
     t.integer  "network_category_id"
     t.         "desc"
     t.integer  "network_type"
+    t.string   "handle"
     t.index ["name"], name: "index_networks_on_name", unique: true
   end
 
@@ -179,10 +187,11 @@ ActiveRecord::Schema.define(version: 20170405200428) do
     t.text     "description"
     t.integer  "views"
     t.integer  "likes"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "network_id"
     t.integer  "user_id"
+    t.boolean  "is_event",    default: false
     t.index ["name"], name: "index_posts_on_name", unique: true
   end
 
@@ -203,6 +212,14 @@ ActiveRecord::Schema.define(version: 20170405200428) do
     t.integer  "profile_img_file_size"
     t.datetime "profile_img_updated_at"
     t.integer  "user_id"
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "network_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "network_id"], name: "index_subscriptions_on_user_id_and_network_id"
   end
 
   create_table "time_slots", force: :cascade do |t|

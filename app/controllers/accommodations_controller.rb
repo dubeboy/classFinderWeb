@@ -3,6 +3,9 @@ class AccommodationsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show, :search]
   #use that before_action to set the @user when finding first
 
+  #this is now a room
+
+
   def index #fixme
     @acs = Accommodation.all.paginate(page: params[:page], per_page: 16).order(created_at: :desc)
     @meta_title = meta_title 'Accommodation'
@@ -11,7 +14,6 @@ class AccommodationsController < ApplicationController
       format.json
       format.html
       format.js
-
     end
   end
 

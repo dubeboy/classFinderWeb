@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
   has_many :books
   has_many :networks
   has_and_belongs_to_many :time_slots, dependent: :destroy
+  has_many :subcriptions
+  has_many :attend_events
 
   validates_confirmation_of :password
   validates_presence_of :password, :on => :create
@@ -50,7 +52,7 @@ class User < ActiveRecord::Base
   end
 
   def self.from_omniauth(auth)
-    
+
       where(provider: auth.provider, uid: auth.uid, email: auth.info.email ).first_or_initialize.tap do |user|
         user.provider = auth.provider
         user.uid = auth.uid

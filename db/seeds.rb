@@ -46,6 +46,7 @@ NetworkCategory.create(name: 'Music')
 NetworkCategory.create(name: 'Religion')
 NetworkCategory.create(name: 'Entertainment')
 
+#network topics for each of the networks
 
 
 Institution.create(name: 'Wits', location: 'Braamfontein')
@@ -61,5 +62,3 @@ TimeSlot.create(time: "10:00")
 TimeSlot.create(time: "12:00")
 TimeSlot.create(time: "14:00")
 TimeSlot.create(time: "16:00")
-
-#BooksTime Slots
