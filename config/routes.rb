@@ -2,6 +2,12 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      get 'house/index'
+    end
+  end
+
+  namespace :api do
+    namespace :v1 do
       get 'networks_cat_events/create'
     end
   end
@@ -111,18 +117,21 @@ Rails.application.routes.draw do
          collection do
           get 'user_exits', action: :check_if_user_exits
          end
-        end
-        resources :accommodations do
-          member do
-            post 'secure_room', :action => :secure_room
-            post  'pay', action: :pay
-            post 'student_pay', action: :student_pay #todo protect all of them they are not protected
+       end
+        resources :houses
+        resources :houses do
+          resources :accommodations do
+            member do
+              post 'secure_room', :action => :secure_room
+              post  'pay', action: :pay
+              post 'student_pay', action: :student_pay #todo protect all of them they are not protected
 
-            delete 'cancel', action: :cancel #todo
-            post 'go_ahead', action: :go_ahead
-          end
-          collection do
-            get 'search', :action => :search
+              delete 'cancel', action: :cancel #todo
+              post 'go_ahead', action: :go_ahead
+            end
+            collection do
+              get 'search', :action => :search
+            end
           end
         end
       end

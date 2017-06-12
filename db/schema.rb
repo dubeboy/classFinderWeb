@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170508141055) do
+ActiveRecord::Schema.define(version: 20170611171752) do
 
   create_table "accommodations", force: :cascade do |t|
     t.string   "location"
@@ -119,6 +119,18 @@ ActiveRecord::Schema.define(version: 20170508141055) do
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  end
+
+  create_table "houses", force: :cascade do |t|
+    t.string   "address"
+    t.string   "wifi"
+    t.integer  "user_id"
+    t.boolean  "nsfas"
+    t.string   "common"
+    t.boolean  "prepaid_elec"
+    t.integer  "accommodation_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "institutions", force: :cascade do |t|
