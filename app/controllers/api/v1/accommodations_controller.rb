@@ -23,6 +23,7 @@ class Api::V1::AccommodationsController < ApplicationController
     @status = false
     ac = Accommodation.new(price: params[:price], room_type: params[:room_type],
                              description: params[:description] )
+    ac.house = House.find(params[:house_id])
     ac.user = User.find(params[:user_id])
     if params[:images]
       if ac.save

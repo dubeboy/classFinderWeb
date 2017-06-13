@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170611171752) do
+ActiveRecord::Schema.define(version: 20170613143910) do
 
   create_table "accommodations", force: :cascade do |t|
     t.string   "location"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20170611171752) do
     t.integer  "transaction_id"
     t.boolean  "is_secured"
     t.string   "slug"
+    t.integer  "house_id"
     t.index ["slug"], name: "index_accommodations_on_slug", unique: true
   end
 

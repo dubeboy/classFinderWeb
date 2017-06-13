@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :items
   has_many :accommodations
   has_many :books
+  has_many :houses
   has_many :networks
   has_and_belongs_to_many :time_slots, dependent: :destroy
   has_many :subcriptions
