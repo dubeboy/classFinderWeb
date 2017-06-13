@@ -20,13 +20,19 @@ class Api::V1::HouseController < ApplicationController
   end
 
   def create
+    @house = House.new(house_params)
+    @status = false
 
+    params[:accommodations].each do |accom|
+      @house.accommodations.create(accom)
+    end if params[:accommodations] #flying fish code haahahahahahahah
+    if @house.save
+      @status = true
+    end
   end
-
   def search
 
   end
-
   private
   def house_params
     params.require(:house).permit!

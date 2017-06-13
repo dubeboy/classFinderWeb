@@ -21,9 +21,8 @@ class Api::V1::AccommodationsController < ApplicationController
   #todo only verified users can create accomodations
   def create
     @status = false
-    ac = Accommodation.new(location: params[:location],
-                             price: params[:price], room_type: params[:room_type],
-                             description: params[:description], institution: params[:institution]  )
+    ac = Accommodation.new(price: params[:price], room_type: params[:room_type],
+                             description: params[:description] )
     ac.user = User.find(params[:user_id])
     if params[:images]
       if ac.save
@@ -194,7 +193,7 @@ class Api::V1::AccommodationsController < ApplicationController
       acc = Accommodation.find(the_trans.accomodation_id)
 
       the_trans.message = "Dear #{student.name.capitalize} we at #{host.name.capitalize} have
-                           confirmed that we have recieved your request to secure the
+                           confirmed that we have received your request to secure the
                            room. You can go
                            ahead and deposit #{acc.price} using banking details
                            attached below \n #{host.bank_details} \n your reference number: #{student.token}"

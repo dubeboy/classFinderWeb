@@ -91,6 +91,7 @@ Rails.application.routes.draw do
     end
   end
 
+
   # our api routes should be extracted to its own app yoh  , Reformat man!!!
     namespace :api do
       namespace :v1 do
@@ -118,8 +119,8 @@ Rails.application.routes.draw do
           get 'user_exits', action: :check_if_user_exits
          end
        end
-        resources :houses
-        resources :houses do
+        resources :house
+        resources :house do
           resources :accommodations do
             member do
               post 'secure_room', :action => :secure_room
