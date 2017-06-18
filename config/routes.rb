@@ -118,9 +118,9 @@ Rails.application.routes.draw do
          collection do
           get 'user_exits', action: :check_if_user_exits
          end
+         resources :house
        end
         resources :house
-        resources :house do
           resources :accommodations do
             member do
               post 'secure_room', :action => :secure_room
@@ -134,7 +134,6 @@ Rails.application.routes.draw do
               get 'search', :action => :search
             end
           end
-        end
-      end
+       end
     end
 end

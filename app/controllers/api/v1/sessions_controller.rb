@@ -2,6 +2,9 @@ class Api::V1::SessionsController < ApplicationController
   # todo create a different path for the system sign in
   #this method handles signup respect it
 #   fixme: REPEATEDish CODE
+  swagger_controller :users, "Sessions for logging in"
+
+
   def create
     if params[:email] and params[:password]
       

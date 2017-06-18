@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
 
+
   before_action :authenticate_user!, only: [:edit, :update, :panel, :books_panel]
 
   def new

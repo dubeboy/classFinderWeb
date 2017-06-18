@@ -1,5 +1,6 @@
 class House < ApplicationRecord
   has_many :accommodations
   belongs_to :user
-  validates_presence_of :accommodations
+  has_many :near_tos
+  validates_presence_of :user, :address, :nsfas
 end

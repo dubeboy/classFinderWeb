@@ -1,5 +1,5 @@
 class Accommodation < ApplicationRecord
-  # belongs_to :user
+   belongs_to :user
   belongs_to :house
   has_many :pictures, :dependent => :destroy
   validates_presence_of :location, :room_type, :description, :price

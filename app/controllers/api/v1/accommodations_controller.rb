@@ -4,6 +4,8 @@ class Api::V1::AccommodationsController < ApplicationController
   # before_action :require_api_key!, except: [:index, :show, :search] //Todo NB in the future man
   #use that before_action to set the @user when finding first
 
+  swagger_controller :users, "Accommodations"
+
   def index #fixme
     @acs = Accommodation.all.paginate(page: params[:page],
                                     per_page: 20).order(created_at: :desc)
@@ -21,13 +23,16 @@ class Api::V1::AccommodationsController < ApplicationController
   #todo only verified users can create accomodations
   def create
     @status = false
-    ac = Accommodation.new(price: params[:price], room_type: params[:room_type],
-                             description: params[:description] )
+    ac = Accommodation.new(
+                            price: params[:price],
+                            room_type: params[:room_type],
+                            description: params[:description]
+    )
     ac.house = House.find(params[:house_id])
     ac.user = User.find(params[:user_id])
     if params[:images]
       if ac.save
-        params[:images].each { |image|
+         params[:images].each { |image|
           puts '######################################'
           puts image
           puts '######################################'
@@ -39,6 +44,7 @@ class Api::V1::AccommodationsController < ApplicationController
     else
        @status = false
     end
+    # byebug #end the bugs : yeyyy TODO: show stoper #bye bug
   end
 
 

@@ -1,5 +1,7 @@
 class Api::V1::UsersController < ApplicationController
 
+  swagger_controller :users, "User Controller"
+
 
 def check_if_user_exits 
    h = User.find_by_email(params[:email])
@@ -19,7 +21,7 @@ end
                                                               provider: 'google_oauth2', uid: params[:token])
             user.runner = params[:is_runner]
             @status = user.save(:validate => false) #because no password!
-            if(user.save(:validate => false)) 
+            if user.save(:validate => false)
               @status = true
               @u = User.find_by_email(params[:email])
             else 
@@ -31,8 +33,13 @@ end
         end
     else 
       if User.find_by_email(params[:email]).nil? #if there is no user
-         user = User.new(name: params[:name], password: params[:password],
-                                             email: params[:email], password_confirmation: params[:password])
+         user = User.new(
+             name: params[:name],
+             password: params[:password],
+             email: params[:email],
+             password_confirmation: params[:password],
+          contacts: params[:phone])
+
        user.runner = params[:is_runner]
        @status = user.save
        @u = User.find_by_email(params[:email])
@@ -52,7 +59,7 @@ end
 
     if @user.verified?
       if @user.bank_details.nil? and @user
-        flash[:warning] = "Please add your bank details."
+        flash[:warning] = 'Please add your bank details.'
       end
       if @user and params['cat']
         # do something like TODO: where('host_id = ?', @user.id ) to avoid sql injection

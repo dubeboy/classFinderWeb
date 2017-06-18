@@ -52,6 +52,8 @@ gem 'font-awesome-rails'
 #Sending SMS
 gem 'twilio-ruby'
 
+gem 'swagger-docs'
+
 group :development do
   gem 'puma-heroku'
 end

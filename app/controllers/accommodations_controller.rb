@@ -5,7 +5,6 @@ class AccommodationsController < ApplicationController
 
   #this is now a room
 
-
   def index #fixme
     @acs = Accommodation.all.paginate(page: params[:page], per_page: 16).order(created_at: :desc)
     @meta_title = meta_title 'Accommodation'

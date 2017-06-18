@@ -1,4 +1,7 @@
 class Api::V1::HouseController < ApplicationController
+  swagger_controller :users, "House Man"
+
+
   def index
     @houses = House.all.paginate(page: params[:page],
                                       per_page: 20).order(created_at: :desc)
@@ -14,21 +17,29 @@ class Api::V1::HouseController < ApplicationController
     @house.update(house_params)
   end
 
-
   def show
     @house = House.find(params[:id])
   end
 
   def create
-    @house = House.new(house_params)
     @status = false
+    @house = House.new(
+        address: params[:address],
+        location: params[:location],
+        city: params[:city],
+        wifi: params[:wifi],
+        nsfas: params[:nsfas],
+        common: params[:common],
+        prepaid_elec: params[:prepaid_elec],
+        country: params[:country]
+    )
 
-    params[:accommodations].each do |accom|
-      @house.accommodations.create(accom)
-    end if params[:accommodations] #flying fish code haahahahahahahah
+    @house.user = User.find(params[:user_id])
+
     if @house.save
       @status = true
     end
+    byebug #end the bugs : yeyyy TODO: show stopper #bye bug
   end
   def search
 
