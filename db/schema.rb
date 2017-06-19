@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170613162123) do
+ActiveRecord::Schema.define(version: 20170619132726) do
 
   create_table "accommodations", force: :cascade do |t|
     t.string   "location"
@@ -136,6 +136,7 @@ ActiveRecord::Schema.define(version: 20170613162123) do
     t.string   "city"
     t.string   "string"
     t.string   "nearto_id"
+    t.string   "country"
   end
 
   create_table "institutions", force: :cascade do |t|
@@ -211,7 +212,7 @@ ActiveRecord::Schema.define(version: 20170613162123) do
     t.string   "name"
     t.text     "description"
     t.integer  "views"
-    t.integer  "likes"
+    t.integer  "likes",       default: 0
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.integer  "network_id"

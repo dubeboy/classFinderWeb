@@ -31,7 +31,7 @@ class Api::V1::HouseController < ApplicationController
         nsfas: params[:nsfas],
         common: params[:common],
         prepaid_elec: params[:prepaid_elec],
-        country: params[:country]
+        country: "South Africa"
     )
 
     @house.user = User.find(params[:user_id])
@@ -39,8 +39,16 @@ class Api::V1::HouseController < ApplicationController
     if @house.save
       @status = true
     end
-    byebug #end the bugs : yeyyy TODO: show stopper #bye bug
+
+    @house = House.find_by_address(params[:address])
+
+    respond_to do |format|
+      format.json
+      format.html
+      format.js
+    end
   end
+
   def search
 
   end
