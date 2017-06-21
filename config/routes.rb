@@ -120,7 +120,11 @@ Rails.application.routes.draw do
          end
          resources :house
        end
-        resources :house
+        resources :house do
+          member do
+            get 'get_accoms', action: :get_accoms
+          end
+        end
           resources :accommodations do
             member do
               post 'secure_room', :action => :secure_room

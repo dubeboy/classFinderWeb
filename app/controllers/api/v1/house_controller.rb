@@ -21,6 +21,19 @@ class Api::V1::HouseController < ApplicationController
     @house = House.find(params[:id])
   end
 
+  def get_accoms
+    house = House.find(params[:id])
+    @accoms = house.accommodations
+
+    respond_to do |format|
+      format.json
+      format.html
+      format.js
+    end
+
+  end
+
+
   def create
     @status = false
     @my_house = nil
