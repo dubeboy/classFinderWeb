@@ -23,8 +23,10 @@ class Api::V1::HouseController < ApplicationController
 
   def create
     @status = false
+    @my_house = nil
+    address = params[:address]
     @house = House.new(
-        address: params[:address],
+        address: addre,
         location: params[:location],
         city: params[:city],
         wifi: params[:wifi],
@@ -40,7 +42,7 @@ class Api::V1::HouseController < ApplicationController
       @status = true
     end
 
-    @house = House.find_by_address(params[:address])
+    @my_house = House.find_by_address(address)
 
     respond_to do |format|
       format.json
@@ -50,8 +52,8 @@ class Api::V1::HouseController < ApplicationController
   end
 
   def search
-
   end
+
   private
   def house_params
     params.require(:house).permit!
