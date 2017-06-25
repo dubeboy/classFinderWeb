@@ -5,7 +5,7 @@ class Api::V1::UsersController < ApplicationController
 
 def check_if_user_exits 
    h = User.find_by_email(params[:email])
-  if(h) 
+  if h
     @exits = true
     @u = h
     return

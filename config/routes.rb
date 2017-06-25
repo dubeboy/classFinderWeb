@@ -2,6 +2,12 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      get 'refs/index'
+    end
+  end
+
+  namespace :api do
+    namespace :v1 do
       get 'house/index'
     end
   end
