@@ -39,24 +39,24 @@ class Api::V1::HouseController < ApplicationController
     @my_house = nil
     address = params[:address]
     @house = House.new(
-        address: addre,
+        address: address,
         location: params[:location],
         city: params[:city],
         wifi: params[:wifi],
         nsfas: params[:nsfas],
         common: params[:common],
         prepaid_elec: params[:prepaid_elec],
-        country: "South Africa"
+        country: 'South Africa'
     )
 
     @house.user = User.find(params[:user_id])
 
-    if @house.save
+    v = @house.save!
+    if v
       @status = true
+      @my_house = House.where('address = ?', address).limit(1)[0]
     end
-
-    @my_house = House.find_by_address(address)
-
+    puts address + ": thats the address man"
     respond_to do |format|
       format.json
       format.html

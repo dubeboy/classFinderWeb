@@ -31,7 +31,7 @@ class Api::V1::AccommodationsController < ApplicationController
     ac.house = House.find(params[:house_id])
     ac.user = User.find(params[:user_id])
     if params[:images]
-      if ac.save
+      if ac.save!
          params[:images].each { |image|
           puts '######################################'
           puts image
