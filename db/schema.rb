@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170619132726) do
+ActiveRecord::Schema.define(version: 20170626155234) do
 
   create_table "accommodations", force: :cascade do |t|
     t.string   "location"
@@ -206,6 +206,7 @@ ActiveRecord::Schema.define(version: 20170619132726) do
     t.integer  "book_id"
     t.integer  "accommodation_id"
     t.integer  "post_id"
+    t.integer  "house_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -275,6 +276,13 @@ ActiveRecord::Schema.define(version: 20170619132726) do
     t.text     "message"
     t.boolean  "go_ahead"
     t.integer  "runner_id"
+  end
+
+  create_table "user_accommodation_shares", force: :cascade do |t|
+    t.string   "user_token"
+    t.integer  "accom_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

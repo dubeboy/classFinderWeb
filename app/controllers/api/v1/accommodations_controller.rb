@@ -9,6 +9,7 @@ class Api::V1::AccommodationsController < ApplicationController
   def index #fixme
     @acs = Accommodation.all.paginate(page: params[:page],
                                     per_page: 20).order(created_at: :desc)
+
     respond_to do |format|
       format.json
       format.html
