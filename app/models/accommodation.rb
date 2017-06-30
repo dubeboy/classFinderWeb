@@ -3,6 +3,7 @@ class Accommodation < ApplicationRecord
   belongs_to :house
   has_many :pictures, :dependent => :destroy
   validates_presence_of :room_type, :description, :price
+  validates_presence_of :deposit
 
 
 #no sql injection here

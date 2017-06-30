@@ -53,6 +53,7 @@ gem 'font-awesome-rails'
 gem 'twilio-ruby'
 
 gem 'swagger-docs'
+gem 'stripe'
 
 group :development do
   gem 'puma-heroku'

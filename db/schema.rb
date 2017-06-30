@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170626155234) do
+ActiveRecord::Schema.define(version: 20170629175713) do
 
   create_table "accommodations", force: :cascade do |t|
     t.string   "location"
@@ -19,9 +19,9 @@ ActiveRecord::Schema.define(version: 20170626155234) do
     t.text     "description"
     t.integer  "user_id"
     t.integer  "view"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.integer  "views",          default: 0
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
+    t.integer  "views",                                  default: 0
     t.integer  "tot_likes"
     t.integer  "price_to"
     t.integer  "price_from"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20170626155234) do
     t.boolean  "is_secured"
     t.string   "slug"
     t.integer  "house_id"
+    t.decimal  "deposit",        precision: 8, scale: 2
     t.index ["slug"], name: "index_accommodations_on_slug", unique: true
   end
 

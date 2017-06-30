@@ -204,6 +204,8 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     sqlite3 (1.3.13)
+    stripe (2.12.0)
+      faraday (~> 0.9)
     swagger-docs (0.2.9)
       activesupport (>= 3)
       rails (>= 3)
@@ -259,6 +261,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   spring
   sqlite3
+  stripe
   swagger-docs
   turbolinks
   twilio-ruby

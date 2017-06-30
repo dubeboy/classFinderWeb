@@ -26,6 +26,7 @@ class Api::V1::AccommodationsController < ApplicationController
     @status = false
     ac = Accommodation.new(
                             price: params[:price],
+                            deposit: params[:deposit],
                             room_type: params[:room_type],
                             description: params[:description]
     )
@@ -174,6 +175,39 @@ class Api::V1::AccommodationsController < ApplicationController
     end
   end
 
+
+  def deposit
+      # accom = Accommodation.find(params[:id])
+      # am = accom.deposit * 100 # the deposit because stripe works in cents 
+      @amount = 2000
+      @msg = ""
+      @status = false
+
+      customer = Stripe::Customer.create(
+        :email => 'dubedivine@gmail.com',
+        :source  => params[:stripeToken]
+      )
+
+      charge = Stripe::Charge.create(
+        :customer    => customer.id,
+        :amount      => @amount,
+        :description => "deposit for accommodation id: ",
+        :currency    => 'zar'
+      )
+      @status = true
+
+    rescue Stripe::CardError => e
+      @msg = e.message
+      @status = false
+
+
+    respond_to do |format|
+      format.json
+    end 
+  end 
+
+
+#student transaction
   def student_pay
     @ac = nil
     the_trans = Transaction.find(params[:trans_id])

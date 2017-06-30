@@ -12,7 +12,7 @@ json.results do
         json.image_url p.image.url(:thumb)
      end
      house = i.house
-     json.house do   #loop to show the houses
+     json.house do
        json.city house.city
        json.common house.common
        json.country house.country

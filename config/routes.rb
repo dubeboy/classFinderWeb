@@ -135,6 +135,7 @@ Rails.application.routes.draw do
             member do
               post 'secure_room', :action => :secure_room
               post  'pay', action: :pay
+              post 'deposit', action: :deposit
               post 'student_pay', action: :student_pay #todo protect all of them they are not protected
 
               delete 'cancel', action: :cancel #todo
