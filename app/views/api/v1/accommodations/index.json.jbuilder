@@ -5,6 +5,7 @@ json.results do
      json.room_type i.room_type
      json.price i.price
      json.description i.description
+     json.deposit i.deposit
      json.pictures i.pictures do |p|
         json.image_id p.id
         json.image_name p.image_file_name

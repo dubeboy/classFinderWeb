@@ -123,6 +123,7 @@ Rails.application.routes.draw do
          end
          collection do
           get 'user_exits', action: :check_if_user_exits
+          get 'save_fcm_token', action: :save_fcm_token
          end
          resources :house
        end
@@ -142,6 +143,7 @@ Rails.application.routes.draw do
               post 'go_ahead', action: :go_ahead
             end
             collection do
+              get  'refs', action: :share_ref
               get 'search', :action => :search
             end
           end

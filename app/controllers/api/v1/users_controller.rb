@@ -1,9 +1,6 @@
 class Api::V1::UsersController < ApplicationController
-
   swagger_controller :users, "User Controller"
-
-
-def check_if_user_exits 
+def check_if_user_exits
    h = User.find_by_email(params[:email])
   if h
     @exits = true
@@ -15,10 +12,13 @@ end
 
  def create
     @status = false
-    if (params[:token]) 
-        if User.find_by_email(params[:email]).nil? #if there is no user
-            user = User.new(name: params[:name], email: params[:email],
-                                                              provider: 'google_oauth2', uid: params[:token])
+    if params[:token]
+      if User.find_by_email(params[:email]).nil? #if there is no user
+            user = User.new(name: params[:name],
+                            email: params[:email],
+                            provider: 'google_oauth2',
+                            fcm_token: params[:fcm_token],
+                            uid: params[:token])
             user.runner = params[:is_runner]
             @status = user.save(:validate => false) #because no password!
             if user.save(:validate => false)
@@ -50,8 +50,30 @@ end
     respond_to do |f|
          f.json
     end
+ end
+
+
+  def save_fcm_token
+    fcm_token = params[:fcm_token]
+    u = User.find_by_email(params[:email])
+    u.fcm_token = fcm_token
+    @status = u.save
+    respond_to do |f|
+      f.json
+    end
   end
 
+
+  def set_user_token
+    firebase_cloud_msg_token = params[:fcm_token]
+    u = User.find(params[:email])
+    u.fcm_token = firebase_cloud_msg_token
+    u.save
+
+    respond_to do |res|
+      res.json
+    end
+  end
     #this shoukd returns the runner or host info
     def show
     @user = User.find(params[:id])
@@ -91,7 +113,9 @@ end
         end
     end
 
-     def panel
+
+
+  def panel
     user = User.find(params[:id])
     @trans_by_this_user = Transaction.where("user_id = '#{user.id}'") #array of this hosts trasctns
     # @acs = Accommodation.find(trans_by_this_user.collect { |t| t.accomodation_id }) #just getting the users accomodations

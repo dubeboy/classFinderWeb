@@ -21,6 +21,27 @@ class Api::V1::AccommodationsController < ApplicationController
     @ac = Accommodation.new
   end
 
+  # it should just oncrement the number clicks people have clicked on that refrence
+
+
+  def share_ref
+    token = params[:tk]
+    accom_id = params[:accom_id]
+    @status = false
+
+    u = User.find_by_token(token)
+    @accom = Accommodation.find(accom_id)
+      user_share = UserAccommodationShare.find_by_user_token(token)
+
+      if user_share.nil? && !@accom.nil?
+        @status = UserAccommodationShare.new(accom_id: @accom.id, user_token: u.id).save
+      else
+        user_share.count = user_share.count + 1
+        user_share.save! unless @accom.nil?
+        @status = true
+      end
+  end
+
   #todo only verified users can create accomodations
   def create
     @status = false
@@ -179,31 +200,68 @@ class Api::V1::AccommodationsController < ApplicationController
   def deposit
       # accom = Accommodation.find(params[:id])
       # am = accom.deposit * 100 # the deposit because stripe works in cents 
-      @amount = 2000
+      depo = params[:deposit].to_i * 100
+      @amount = depo
       @msg = ""
       @status = false
+      student = User.find_by_email(params[:email])
+      accommodation = Accommodation.find(params[:id])
+      host = accommodation.user
+
+
+      # todo: should check if the transactin exists before we create another one
 
       customer = Stripe::Customer.create(
-        :email => 'dubedivine@gmail.com',
+        :email => student.email,
         :source  => params[:stripeToken]
       )
 
+      host_customer = Stripe::Customer.create(
+          :email => host.email,
+          :source  => params[:hostStripeToken]
+      )
+
+      #the we take 2 percent of what ever the deposit is and the rest goes to the owner
       charge = Stripe::Charge.create(
         :customer    => customer.id,
         :amount      => @amount,
-        :description => "deposit for accommodation id: ",
-        :currency    => 'zar'
+        :description => "#{@amount} deposit for accommodation id: #{accommodation.id} and user id #{student.id}: (#{student.name}) ",
+        :currency    => 'zar',
+        :destination => {
+            :amount => (@amount - (@amount * 0.2)).to_i,
+            :account => host_customer.id,
+        }
+
       )
       @status = true
 
-    rescue Stripe::CardError => e
+      t = Transaction.new(user_id: student.id,
+                          accomodation_id: accommodation.id,
+                          host_id: host.id,
+                          paid: true)
+
+      t.save
+
+      # notify the owners
+      notify_user(reg_ids= [student.fcm_token],
+                  options = {from: "Classfinder++",
+                             data: "congratulations you have just secured the accommodation",
+                             accommodation_id: accommodation.id })
+      notify_user(reg_ids= [host.fcm_token],
+                  options = {from: "Classfinder++",
+                          data: "congratulations you have a new tenet #{student.name}, the paid R#{@amount}",
+                          accommodation_id: accommodation.id })
+
+      respond_to do |format|
+        format.json
+      end
+
+
+
+  rescue Stripe::CardError => e
       @msg = e.message
       @status = false
 
-
-    respond_to do |format|
-      format.json
-    end 
   end 
 
 

@@ -54,6 +54,8 @@ gem 'twilio-ruby'
 
 gem 'swagger-docs'
 gem 'stripe'
+# gem 'redis', '~> 3.0'
+gem 'fcm'
 
 group :development do
   gem 'puma-heroku'

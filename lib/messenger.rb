@@ -17,5 +17,4 @@ module Messenger
       number[0] == '0' ? number = '+27' + number[1..10] : number
       return number
   end
-
 end

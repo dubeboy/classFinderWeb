@@ -3,8 +3,11 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   # protect_from_forgery with: :
   require 'venue_finder_lib'
+  require 'fcm'
   helper_method :current_user
   helper_method :get_free
+  helper_method :notify_user
+
   BRAND_NAME = 'Classfinder++'.freeze
 
   def meta_title(title)
@@ -35,7 +38,14 @@ class ApplicationController < ActionController::Base
 
   end
 
-
-
-
+=begin
+    token - is an array with of reg ids
+    options - is hash with data to be sebt to the client
+=end
+  def notify_user(reg_ids = [], options = {})
+    fcm = FCM.new("AIzaSyCl5ylWRVZU3ci8DC3if1KOxZ0zN2oS1aY")
+    registration_ids= reg_ids  # an array of one or more client registration tokens
+    # options = {data: {score: "123"}, collapse_key: "updated_score"}
+    response = fcm.send(registration_ids, options)
+  end
 end
