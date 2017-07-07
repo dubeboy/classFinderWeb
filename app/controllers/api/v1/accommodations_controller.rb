@@ -9,7 +9,6 @@ class Api::V1::AccommodationsController < ApplicationController
   def index #fixme
     @acs = Accommodation.all.paginate(page: params[:page],
                                     per_page: 20).order(created_at: :desc)
-
     respond_to do |format|
       format.json
       format.html
@@ -30,7 +29,8 @@ class Api::V1::AccommodationsController < ApplicationController
     @status = false
 
     u = User.find_by_token(token)
-    @accom = Accommodation.find(accom_id)
+    unless accom_id.nil? #if not nil?
+      @accom = Accommodation.find(accom_id)
       user_share = UserAccommodationShare.find_by_user_token(token)
 
       if user_share.nil? && !@accom.nil?
@@ -38,8 +38,20 @@ class Api::V1::AccommodationsController < ApplicationController
       else
         user_share.count = user_share.count + 1
         user_share.save! unless @accom.nil?
+        NotifyWorker.perform_async(user_share.fcm_token, "#{ user_share.count -1 } +1 on your link click") #todo: notify user when link is clicked
         @status = true
       end
+      notify_user([user_share.fcm_token], {data: 'notified'})
+      # NotifyWorker.perform_async(user_share.fcm_token, 'someone is searching for an accommodation like yours, click to see them', 'Classfinder Search Rader')
+    else  #this is for when invinting an accommodation owner todo: this should in its own controller
+      @status = true
+      @msg = 'redirect to sign in'
+    end
+
+    respond_to do |format|
+      format.json
+    end
+
   end
 
   #todo only verified users can create accomodations
@@ -98,20 +110,29 @@ class Api::V1::AccommodationsController < ApplicationController
   # ==========under the hood dont look if you can`t handle=========
 
   def search
+    @inst = ['UJ ', 'Wits', 'Other']
+    nsfas = params[:nsfas]
+    location = params[:name]
 
-    @Inst = ['UJ ', 'Wits', 'Other']
-
-    if params[:price_to] == '0'
+     if params[:price_to] == '0'  # should have used to_i
       x = ""
     else
         x = params[:price_to]
     end
     #fixme term is out for now man
-    @acs = Accommodation.search(params[:name], params[:room_type],
-                                price_from: params[:price_from],
-                                price_to: x, precise_loc: params[:auck_location])
-               .paginate(:per_page => 6, :page => params[:page])
-
+    # need to search the houses first
+    @house = House.where('nsfas = ? and location = ?', nsfas, location).paginate(:per_page => 6, :page => params[:page])
+    @acs = Array.new
+    @house.each do |h|
+      h.accommodations.each do |a|
+        b = a.search(params[:room_type],
+                     price_from: params[:price_from],
+                     price_to: x)
+        @acs.append(b)
+        NotifyWorker.perform_async(b.user.fcm_token, 'someone is searching for an accommodation like yours, click to see them', 'Classfinder Search Rader')
+      end
+    end
+    @acs = @acs.paginate(:per_page => 6, :page => params[:page])
     respond_to do |format|
       format.json
     end
@@ -124,50 +145,42 @@ class Api::V1::AccommodationsController < ApplicationController
     booking_type = params['booking_type']
     advert_id = params['id']
     ad = Accommodation.find(advert_id)
+    time = params[:time]
+    month = params[:month]
     #pron to Sql injection
     #booking type information 1 is secure and 0 is view
     #todo make sure that a person can not secure a room twice extract common stuff
     @k = false
-    if booking_type == "1"
+    if booking_type == '1'
       #todo check this man put in model
       if Transaction.where("user_id='#{student_id}' and accomodation_id='#{advert_id}'").where("booking_type = 't' ").count == 0
         t = Transaction.new(user_id: student_id, accomodation_id: advert_id,
                             host_id: host_id, booking_type: 1, paid: 0)
         ad.is_secured = true
         ad.save! #todo put this in the models some how #before_action?
-        @k = t.save!
+        @k = t.save
       end
 
     elsif booking_type == "0" #booking type = 0 = view accomodation
       #find runner and set runner
       if Transaction.where("user_id='#{student_id}' and accomodation_id='#{advert_id}'").where("booking_type = 'f' ").count == 0
-        time = params['time'] # to 8:00
-        month = params['month']
+          t = Transaction.new(user_id: student_id,
+                              accomodation_id: advert_id,
+                              booking_type: 0, #false uhm..... why dude!
+                              paid: 0, #false
+                              time: time,
+                              month: month,
+                              std_confirm: false,
+                              host_id: ad.user.id)
+          @k = t.save
 
-        av_r = User.all.collect { |r| available(r, time) if (r.runner? and r.run_location == ad.location) } #todo should runner location be defined for a accommodation house only?
-        puts '------------------------------------902323'
-        puts av_r.class
-        puts '------------------------------------45454'
-        available_runners = av_r.compact
-        puts available_runners
-        puts available_runners.class
-        puts available_runners.length
-        puts '------------------------------------902323'
-        if available_runners.length != 0
-          puts '----------900e-----'
-          rand_i = available_runners.length == 1 ? 0 : rand(0..(available_runners.length-1)) #fixme what!!!!  #todo improve runner assignment
-          runner = available_runners[rand_i] #fixme say whaaaaa!!!
-          runner_id = runner.id
-          puts
-          puts '---------ewe434------'
-          t = Transaction.new(user_id: student_id, accomodation_id: advert_id,
-                              runner_id: runner_id, booking_type: 0, paid: 0,
-                              time: time, month: month, std_confirm: false, host_id: ad.user.id)
-          @k = t.save!
-        else
-          @k = false
-        end
+          student = User.find(student_id)
+          host = User.find(host_id)
 
+          if @k
+            NotifyWorker.perform_async(host.fcm_token, "#{student.name} would like to come a view one of your rooms at #{time} on #{month}, click to view more details', 'Classfinder Booking Radar")
+            NotifyWorker.perform_async(student.fcm_token, "you have successfully booked to view the room, you will here from the accommodation owner soon', 'Classfinder Booking Radar")
+          end
       end
     end
 
@@ -225,7 +238,8 @@ class Api::V1::AccommodationsController < ApplicationController
       charge = Stripe::Charge.create(
         :customer    => customer.id,
         :amount      => @amount,
-        :description => "#{@amount} deposit for accommodation id: #{accommodation.id} and user id #{student.id}: (#{student.name}) ",
+        :description => "#{@amount} deposit for accommodation id: #{accommodation.id}
+                        and user id #{student.id}: (#{student.name}) ",
         :currency    => 'zar',
         :destination => {
             :amount => (@amount - (@amount * 0.2)).to_i,
@@ -239,24 +253,23 @@ class Api::V1::AccommodationsController < ApplicationController
                           accomodation_id: accommodation.id,
                           host_id: host.id,
                           paid: true)
-
       t.save
-
       # notify the owners
-      notify_user(reg_ids= [student.fcm_token],
-                  options = {from: "Classfinder++",
-                             data: "congratulations you have just secured the accommodation",
-                             accommodation_id: accommodation.id })
-      notify_user(reg_ids= [host.fcm_token],
-                  options = {from: "Classfinder++",
-                          data: "congratulations you have a new tenet #{student.name}, the paid R#{@amount}",
-                          accommodation_id: accommodation.id })
+      # notify_user(reg_ids= [student.fcm_token],
+      #             options = {from: "Classfinder++",
+      #                        data: "congratulations you have just secured the accommodation",
+      #                        accommodation_id: accommodation.id })
+      # notify_user(reg_ids= [host.fcm_token],
+      #             options = {from: "Classfinder++",
+      #                     data: "congratulations you have a new tenet #{student.name}, the paid R#{@amount}",
+      #                     accommodation_id: accommodation.id })
+
+      NotifyWorker.perform_async(student.fcm_token, 'congratulations you have just secured the accommodation', 'Classfinder Deposit Rader')
+      NotifyWorker.perform_async(host.fcm_token, "congratulations you have a new tenet #{student.name}, the paid R#{@amount}", 'Classfinder Deposit Rader')
 
       respond_to do |format|
         format.json
       end
-
-
 
   rescue Stripe::CardError => e
       @msg = e.message

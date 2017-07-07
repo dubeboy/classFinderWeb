@@ -56,6 +56,7 @@ gem 'swagger-docs'
 gem 'stripe'
 # gem 'redis', '~> 3.0'
 gem 'fcm'
+gem 'sidekiq'
 
 group :development do
   gem 'puma-heroku'

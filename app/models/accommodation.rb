@@ -12,10 +12,10 @@ class Accommodation < ApplicationRecord
     price_from = set_to_zero_if_empty(price_from)
     price_to = set_to_zero_if_empty(price_to)
 
-    if !precise_loc.empty?
+    if !precise_loc.empty? #todo: always empty please remove
       k = where('location = ? and room_type = ? and institution = ?', location, room_type, precise_loc)
     else
-      k = where('location = ? and room_type = ?', location, room_type)
+      k = where('room_type = ?', room_type)
     end
 
     if price_from.to_i >= 0 and price_to.to_i >= 0

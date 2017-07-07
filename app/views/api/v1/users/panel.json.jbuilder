@@ -1,7 +1,7 @@
 json.transactions do
     json.array! @trans_by_this_user do |t|
       a = get_accom(t) #accommodation!
-      r = get_runner(t)
+      r = get_user(t)
       json.accom_id = a.id
       json.student_email r.email
       json.student_contact r.contacts

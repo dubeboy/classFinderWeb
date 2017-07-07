@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+
+
+
   namespace :api do
     namespace :v1 do
       get 'refs/index'
@@ -124,6 +127,7 @@ Rails.application.routes.draw do
          collection do
           get 'user_exits', action: :check_if_user_exits
           get 'save_fcm_token', action: :save_fcm_token
+          get 'send_sms', action: :send_sms
          end
          resources :house
        end
@@ -138,15 +142,21 @@ Rails.application.routes.draw do
               post  'pay', action: :pay
               post 'deposit', action: :deposit
               post 'student_pay', action: :student_pay #todo protect all of them they are not protected
-
+              
               delete 'cancel', action: :cancel #todo
               post 'go_ahead', action: :go_ahead
             end
             collection do
               get  'refs', action: :share_ref
               get 'search', :action => :search
+              get 'get_user', action: :get_user
             end
           end
        end
     end
+
+
+  # SIDEKIQ
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
 end

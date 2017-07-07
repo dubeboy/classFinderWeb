@@ -1,56 +1,71 @@
 class Api::V1::UsersController < ApplicationController
   swagger_controller :users, "User Controller"
-def check_if_user_exits
-   h = User.find_by_email(params[:email])
-  if h
-    @exits = true
-    @u = h
-    return
-  end
-  @exits = false
-end 
 
- def create
+  def check_if_user_exits
+    h = User.find_by_email(params[:email])
+    if h
+      @exits = true
+      @u = h
+      return
+    end
+    @exits = false
+  end
+
+  def create
     @status = false
     if params[:token]
       if User.find_by_email(params[:email]).nil? #if there is no user
-            user = User.new(name: params[:name],
-                            email: params[:email],
-                            provider: 'google_oauth2',
-                            fcm_token: params[:fcm_token],
-                            uid: params[:token])
-            user.runner = params[:is_runner]
-            @status = user.save(:validate => false) #because no password!
-            if user.save(:validate => false)
-              @status = true
-              @u = User.find_by_email(params[:email])
-            else 
-              @status = false #not requred i think
-            end
-        else 
-            @status = true
-            @u = User.find_by_email(params[:email])
+        user = User.new(name: params[:name],
+                        email: params[:email],
+                        provider: 'google_oauth2',
+                        fcm_token: params[:fcm_token],
+                        uid: params[:token])
+        user.runner = params[:is_runner]
+        @status = user.save(:validate => false) #because no password!
+        if user.save(:validate => false)
+          @status = true
+          @u = User.find_by_email(params[:email])
+        else
+          @status = false #not requred i think
         end
-    else 
-      if User.find_by_email(params[:email]).nil? #if there is no user
-         user = User.new(
-             name: params[:name],
-             password: params[:password],
-             email: params[:email],
-             password_confirmation: params[:password],
-          contacts: params[:phone])
-
-       user.runner = params[:is_runner]
-       @status = user.save
-       @u = User.find_by_email(params[:email])
       else
-         @status = false
+        @status = true
+        @u = User.find_by_email(params[:email])
       end
-    end 
-    respond_to do |f|
-         f.json
+    else
+      if User.find_by_email(params[:email]).nil? #if there is no user
+        user = User.new(
+            name: params[:name],
+            password: params[:password],
+            email: params[:email],
+            password_confirmation: params[:password],
+            contacts: params[:phone])
+
+        user.runner = params[:is_runner]
+        @status = user.save
+        @u = User.find_by_email(params[:email])
+      else
+        @status = false
+      end
     end
- end
+    respond_to do |f|
+      f.json
+    end
+  end
+
+
+  def send_sms
+    phone = params[:phone_number]
+    user_id = params[:user_id]
+    u = User.find(user_id)
+
+    # todo: what to write
+    # SendSmsJob.perform_later(phone, "#{u.name} is inviting you to classfinder, to advertise your accommodation for a targeted audience, like: classfinderpp.com/api/v1/refs?token=#{u.token}")
+    SmsWorker.perform_async(phone, "#{u.name} is inviting you to classfinder, to advertise your accommodation for a targeted audience, accept by clicking http://classfinderpp.com/api/v1/refs?token=#{u.token}")
+    respond_to do |f|
+      f.json
+    end
+  end
 
 
   def save_fcm_token
@@ -58,6 +73,14 @@ end
     u = User.find_by_email(params[:email])
     u.fcm_token = fcm_token
     @status = u.save
+    respond_to do |f|
+      f.json
+    end
+  end
+
+
+  def getUser
+    @user = User.find(params[:user_id])
     respond_to do |f|
       f.json
     end
@@ -74,8 +97,9 @@ end
       res.json
     end
   end
-    #this shoukd returns the runner or host info
-    def show
+
+  #this shoukd returns the runner or host info
+  def show
     @user = User.find(params[:id])
     booking_type = params['booking_type']
 
@@ -89,39 +113,38 @@ end
         if params['cat'] == '0'
           @acs = @user.accommodations
         elsif params['cat'] == '1' #for available accommodations
-          @trans = trans_by_this_user.collect { |t| t unless t.paid? }
+          @trans = trans_by_this_user.collect {|t| t unless t.paid?}
         elsif params['cat'] == '3' #where the student has confirmed, paid by students
-          @trans = trans_by_this_user.collect { |t| t if t.std_confirm? }
+          @trans = trans_by_this_user.collect {|t| t if t.std_confirm?}
         elsif params['cat'] == '4' #upcoming waiting confirmation
-          @trans = trans_by_this_user.collect { |t| t if t.paid }
+          @trans = trans_by_this_user.collect {|t| t if t.paid}
         end
         @acs = @user.accommodations if @user
       end
     elsif @user.runner? and params['run'] #runner actions
       trans_by_this_user = Transaction.where("runner_id = '#{@user.id}'").reverse_order
       if params['run'] == '1' #for all students who are intrested
-        @trans = trans_by_this_user.select { |t| t unless t.std_confirm? } # this should be selected based on time
+        @trans = trans_by_this_user.select {|t| t unless t.std_confirm?} # this should be selected based on time
       elsif params['run'] == '2' #for all students who are say they have paid for the res
-        @trans = trans_by_this_user.select { |t| t if t.std_confirm? } #this is all paid but user id is this one
+        @trans = trans_by_this_user.select {|t| t if t.std_confirm?} #this is all paid but user id is this one
       elsif params['run'] == '3' #where the student has confirmed, paid by students
-        @trans = trans_by_this_user.select { |t| t if t.paid? } #this is all the upcoming one
+        @trans = trans_by_this_user.select {|t| t if t.paid?} #this is all the upcoming one
       end
     end
     @trans
     respond_to do |f|
-         f.json
-        end
+      f.json
     end
-
+  end
 
 
   def panel
     user = User.find(params[:id])
     @trans_by_this_user = Transaction.where("user_id = '#{user.id}'") #array of this hosts trasctns
     # @acs = Accommodation.find(trans_by_this_user.collect { |t| t.accomodation_id }) #just getting the users accomodations
-     respond_to do |f|
-         f.json
-      end 
+    respond_to do |f|
+      f.json
+    end
   end
 
 end
