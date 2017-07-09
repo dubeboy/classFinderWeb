@@ -41,7 +41,6 @@ class Api::V1::AccommodationsController < ApplicationController
         NotifyWorker.perform_async(user_share.fcm_token, "#{ user_share.count -1 } +1 on your link click") #todo: notify user when link is clicked
         @status = true
       end
-      notify_user([user_share.fcm_token], {data: 'notified'})
       # NotifyWorker.perform_async(user_share.fcm_token, 'someone is searching for an accommodation like yours, click to see them', 'Classfinder Search Rader')
     else  #this is for when invinting an accommodation owner todo: this should in its own controller
       @status = true

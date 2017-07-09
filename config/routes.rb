@@ -128,6 +128,8 @@ Rails.application.routes.draw do
           get 'user_exits', action: :check_if_user_exits
           get 'save_fcm_token', action: :save_fcm_token
           get 'send_sms', action: :send_sms
+          get 'get_user', action: :get_user
+          get 'notify_host', action: :notify_host
          end
          resources :house
        end
@@ -149,7 +151,6 @@ Rails.application.routes.draw do
             collection do
               get  'refs', action: :share_ref
               get 'search', :action => :search
-              get 'get_user', action: :get_user
             end
           end
        end

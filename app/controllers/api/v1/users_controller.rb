@@ -54,6 +54,16 @@ class Api::V1::UsersController < ApplicationController
   end
 
 
+  def notify_host
+    user = User.find(params[:user_id])
+    room_id = params[:room_id]
+
+    NotifyWorker.perform_async(user.fcm_token, 
+                              'A Classfinder possible tenent would like to ask you about a particular accommodation', 
+                              'Cf possible tenent', data = {room_id: room_id})
+  end
+
+
   def send_sms
     phone = params[:phone_number]
     user_id = params[:user_id]
@@ -79,7 +89,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
 
-  def getUser
+  def get_user
     @user = User.find(params[:user_id])
     respond_to do |f|
       f.json
