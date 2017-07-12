@@ -5,5 +5,6 @@ if @status
     json.email @u.email
     json.runner @u.runner
     json.token @u.token
+    json.host @u.host
   end
 end

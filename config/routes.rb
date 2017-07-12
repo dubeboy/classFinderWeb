@@ -130,6 +130,7 @@ Rails.application.routes.draw do
           get 'send_sms', action: :send_sms
           get 'get_user', action: :get_user
           get 'notify_host', action: :notify_host
+          get 'get_host_info', action: :get_host_info
          end
          resources :house
        end

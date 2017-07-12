@@ -6,5 +6,6 @@ if @user
     json.runner @user.runner
     json.token @user.token
     json.fcm_token @user.fcm_token
+    json.host @user.host
   end
 end

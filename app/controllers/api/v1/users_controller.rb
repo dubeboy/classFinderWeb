@@ -55,12 +55,14 @@ class Api::V1::UsersController < ApplicationController
 
 
   def notify_host
-    user = User.find(params[:user_id])
+    host = User.find(params[:host_id])
+    sender = User.find(params[:sender_id])
     room_id = params[:room_id]
+    is_open_by_host = params[:is_open_by_host]
 
     NotifyWorker.perform_async(user.fcm_token, 
                               'A Classfinder possible tenent would like to ask you about a particular accommodation', 
-                              'Cf possible tenent', data = {room_id: room_id})
+                              'Cf possible tenent', data = {room_id: room_id, room_location: "", sender_id: sender.id, is_open_by_host: is_open_by_host, host_id: host.id})
   end
 
 
@@ -132,7 +134,7 @@ class Api::V1::UsersController < ApplicationController
         @acs = @user.accommodations if @user
       end
     elsif @user.runner? and params['run'] #runner actions
-      trans_by_this_user = Transaction.where("runner_id = '#{@user.id}'").reverse_order
+      trans_by_this_user = Transaction.where("runner_id = ?", @user.id).reverse_order
       if params['run'] == '1' #for all students who are intrested
         @trans = trans_by_this_user.select {|t| t unless t.std_confirm?} # this should be selected based on time
       elsif params['run'] == '2' #for all students who are say they have paid for the res
@@ -145,6 +147,16 @@ class Api::V1::UsersController < ApplicationController
     respond_to do |f|
       f.json
     end
+  end
+
+
+  def get_host_info
+      # student name
+      # time to view
+      # location as well
+      host_id = params[:host_user_id]
+      @t = Transaction.where("host_id= ?", host_id).paginate(page: params[:page],
+                                    per_page: 20).order(created_at: :desc)
   end
 
 
