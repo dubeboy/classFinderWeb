@@ -60,9 +60,14 @@ class Api::V1::UsersController < ApplicationController
     room_id = params[:room_id]
     is_open_by_host = params[:is_open_by_host]
 
-    NotifyWorker.perform_async(user.fcm_token, 
+    NotifyWorker.perform_async(host.fcm_token, 
                               'A Classfinder possible tenent would like to ask you about a particular accommodation', 
-                              'Cf possible tenent', data = {room_id: room_id, room_location: "", sender_id: sender.id, is_open_by_host: is_open_by_host, host_id: host.id})
+                              'Cf possible tenent', 
+                              data = {room_id: room_id, 
+                                      room_location: "", 
+                                      sender_id: sender.id, 
+                                      is_open_by_host: is_open_by_host, 
+                                      host_id: host.id})
   end
 
 
