@@ -112,6 +112,8 @@ class Api::V1::AccommodationsController < ApplicationController
     nsfas = params[:nsfas] 
     location = params[:location] #brixton , auckland park, johannesburg #can be null yoh null? no nearby place
     near_to = params[:near_to]
+    searcher_fcm_token = params[:fcm_token]
+    #todo: for the search we should have anonymous chat
 
     if params[:price_to] == '0'  # should have used to_i
       x = ""
@@ -135,7 +137,10 @@ class Api::V1::AccommodationsController < ApplicationController
                      price_from: params[:price_from],
                      price_to: x).paginate(:per_page => 6, :page => params[:page])
         @acs.append(b)
-        NotifyWorker.perform_async(b.user.fcm_token, 'someone is searching for an accommodation like yours, click to see them', 'Classfinder Search Rader')
+        NotifyWorker.perform_async(b.user.fcm_token,
+                                   'someone is searching for an accommodation like yours, click to chat to them',
+                                   'Classfinder Search Rader', data={ search: 'yes', searcher_fcm_token: searcher_fcm_token })
+        #todo: abilty for them to initiate conversations
       end
     end
     @acs
@@ -184,8 +189,12 @@ class Api::V1::AccommodationsController < ApplicationController
           host = User.find(host_id)
 
           if @k
-            NotifyWorker.perform_async(host.fcm_token, "#{student.name} would like to come a view one of your rooms at #{time} on #{month}, click to view more details', 'Classfinder Booking Radar")
-            NotifyWorker.perform_async(student.fcm_token, "you have successfully booked to view the room, you will here from the accommodation owner soon', 'Classfinder Booking Radar")
+            NotifyWorker.perform_async(host.fcm_token, 
+              "#{student.name} would like to come a view one of your rooms at #{time} on #{month},click to view more details'", 
+               'Classfinder++', data={for_host: 'yes'})
+            NotifyWorker.perform_async(student.fcm_token, 
+              "you have successfully booked to view the room, you will here from the accommodation owner soon'", 
+              'Classfinder Booking Radar', data={for_host: 'no'})
           end
       end
     end
