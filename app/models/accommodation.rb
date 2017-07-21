@@ -7,22 +7,15 @@ class Accommodation < ApplicationRecord
 
 
 #no sql injection here
-  def self.search(location, room_type, price_from: 0, price_to: 0, precise_loc: '')
-
+def self.search(location, room_type, price_from: 0, price_to: 0, precise_loc: '')
     price_from = set_to_zero_if_empty(price_from)
     price_to = set_to_zero_if_empty(price_to)
-
-    if !precise_loc.empty? #todo: always empty please remove
-      k = where('location = ? and room_type = ? and institution = ?', location, room_type, precise_loc)
-    else
-      k = where('room_type = ?', room_type)
-    end
-
+    k = where('room_type = ?', room_type)
     if price_from.to_i >= 0 and price_to.to_i >= 0
       k = k.where('price >= ? and price <= ?', price_from.to_i, price_to.to_i)
     end
     return k
-  end
+end
 
   def self.set_to_zero_if_empty(price)
       if price.empty? 

@@ -7,8 +7,6 @@ class Api::V1::HouseController < ApplicationController
                                       per_page: 20).order(created_at: :desc)
     respond_to do |format|
       format.json
-      format.html
-      format.js
     end
   end
 
@@ -38,29 +36,53 @@ class Api::V1::HouseController < ApplicationController
     @status = false
     @my_house = nil
     address = params[:address]
+    addre = address.split(',')
+    city = addre[2].strip
+    location = addre[1].strip
+    country = addre[4].strip
     @house = House.new(
         address: address,
-        location: params[:location],
-        city: params[:city],
         wifi: params[:wifi],
+        city: city,
+        location: location,
         nsfas: params[:nsfas],
         common: params[:common],
         prepaid_elec: params[:prepaid_elec],
-        country: 'South Africa'
+        country: country
     )
 
     @house.user = User.find(params[:user_id])
-
-    v = @house.save!
-    if v
-      @status = true
-      @my_house = House.where('address = ?', address).limit(1)[0]
+    
+    if params[:images]
+      puts 'there are images########################################'
+      if @house.save!
+        params[:images].each { |image|
+          puts '######################################'
+          puts image
+          puts '######################################'
+          @house.pictures.create(image: image)
+        }
+        @status = true
+        near_tos_array = Array.new
+         params[:near_to].strip.split(',').each { |near|
+         near = near.strip
+         n = NearTo.new(location: near)
+         unless (n.save)  #this happens when the  location already exists
+           n = NearTo.find_by_location(near)
+         end 
+         near_tos_array.push(n)
+          # @house.near_tos.create(n)
+         }
+        @house.near_tos = near_tos_array
+        @my_house = House.where('address = ?', address).limit(1)[0]
+      end
+      # redirect_to @ac  todo: should look into this man
+    else
+      @status = false
     end
     puts address + ": thats the address man"
     respond_to do |format|
       format.json
-      format.html
-      format.js
     end
   end
 

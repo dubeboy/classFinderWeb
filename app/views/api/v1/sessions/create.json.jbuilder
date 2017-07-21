@@ -7,6 +7,7 @@ json.results do
          json.passord "private stuff"
          json.token @user.token
          json.host @user.host
+         json.jwt_token @jwt_token
          status = true
     else
         json.email  "nothing"

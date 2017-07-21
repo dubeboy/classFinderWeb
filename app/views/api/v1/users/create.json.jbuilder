@@ -6,5 +6,6 @@ if @status
     json.runner @u.runner
     json.token @u.token
     json.host @u.host
+    json.jwt_token @jwt_token
   end
 end

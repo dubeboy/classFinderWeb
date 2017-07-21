@@ -47,6 +47,7 @@ gem 'paperclip', '4.2.0'
 gem 'aws-sdk', '< 2'
 gem 'puma'
 gem 'omniauth-google-oauth2', '~> 0.2.1'
+gem 'jwt'
 gem 'jquery-ui-rails'
 gem 'font-awesome-rails'
 #Sending SMS

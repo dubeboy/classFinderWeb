@@ -1,5 +1,4 @@
-json.results do
-     json.array! @acs do |i|
+  i = @ac   
      json.id i.id
      json.host_id i.user.id
      json.room_type i.room_type
@@ -18,11 +17,7 @@ json.results do
        json.common house.common
        json.country house.country
        json.location house.location
-       b = Array.new
-       house.near_tos.each  {  |t|
-        b.push(t)
-       }
-       json.near_tos b
+       json.near_tos house.near_tos.map {|n| n.location}
        json.prepaid_elec house.prepaid_elec
        json.wifi house.wifi
        json.nsfas house.nsfas
@@ -33,9 +28,4 @@ json.results do
          json.image_size p.image_file_size
          json.image_url p.image.url(:thumb)
        end
-     end
-   end
-end
-
-
-
+  end

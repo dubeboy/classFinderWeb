@@ -7,11 +7,13 @@ class Api::V1::SessionsController < ApplicationController
 
   def create
     if params[:email] and params[:password]
-      
       @status = false #true if the user is successfull else not
       @user = User.authenticate(params[:email], params[:password])
       if @user
+        @jwt_token = create_custom_token(params[:email])
         session[:user_id] = @user.id
+        @user.fcm_token = params[:fcm_token]
+        @user.save
         @status = true
       else
           #todo: redundant keep safe for now

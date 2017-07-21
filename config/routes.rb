@@ -1,14 +1,6 @@
 Rails.application.routes.draw do
 
 
-
-
-  namespace :api do
-    namespace :v1 do
-      get 'refs/index'
-    end
-  end
-
   namespace :api do
     namespace :v1 do
       get 'house/index'
@@ -82,7 +74,7 @@ Rails.application.routes.draw do
   resources :accommodations do
     member do
       post 'secure_room', :action => :secure_room
-      post  'pay', action: :pay
+      post 'pay', action: :pay
       post 'student_pay', action: :student_pay #todo protect all of them they are not protected
 
       delete 'cancel', action: :cancel #todo
@@ -102,60 +94,59 @@ Rails.application.routes.draw do
 
 
   # our api routes should be extracted to its own app yoh  , Reformat man!!!
-    namespace :api do
-      namespace :v1 do
-        get 'venue_finder/index'
-        resources :sessions
-        resources :networks do
-          post 'subscribe', action: :subscribe
+  namespace :api do
+    namespace :v1 do
+      get 'venue_finder/index'
+      resources :sessions
+      resources :networks do
+        post 'subscribe', action: :subscribe
+        post 'search', action: :search
+        resources :network_posts do
+          post 'like', action: :like
           post 'search', action: :search
-          resources :network_posts do
-            post 'like', action: :like
-            post 'search', action: :search
-            resources :comments
-          end
+          resources :comments
         end
-        resources :books do
-          collection do
-           get 'search', :action => :search # yeah its a get
-          end
+      end
+      resources :books do
+        collection do
+          get 'search', :action => :search # yeah its a get
         end
-       resources :users do
-         member do
+      end
+      resources :users do
+        member do
           get 'panel', action: :panel
-         end
-         collection do
+        end
+        collection do
           get 'user_exits', action: :check_if_user_exits
           get 'save_fcm_token', action: :save_fcm_token
           get 'send_sms', action: :send_sms
           get 'get_user', action: :get_user
           get 'notify_host', action: :notify_host
           get 'get_host_info', action: :get_host_info
-         end
-         resources :house
-       end
-        resources :house do
+        end
+      end
+      resources :house do
           member do
             get 'get_accoms', action: :get_accoms
           end
+      end
+      resources :accommodations do
+        member do
+          post 'secure_room', :action => :secure_room
+          post 'pay', action: :pay
+          post 'deposit', action: :deposit
+          post 'student_pay', action: :student_pay #todo protect all of them they are not protected
+
+          delete 'cancel', action: :cancel #todo
+          post 'go_ahead', action: :go_ahead
         end
-          resources :accommodations do
-            member do
-              post 'secure_room', :action => :secure_room
-              post  'pay', action: :pay
-              post 'deposit', action: :deposit
-              post 'student_pay', action: :student_pay #todo protect all of them they are not protected
-              
-              delete 'cancel', action: :cancel #todo
-              post 'go_ahead', action: :go_ahead
-            end
-            collection do
-              get  'refs', action: :share_ref
-              get 'search', :action => :search
-            end
-          end
-       end
+        collection do
+          get 'refs', action: :share_ref
+          get 'search', :action => :search
+        end
+      end
     end
+  end
 
 
   # SIDEKIQ

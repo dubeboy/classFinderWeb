@@ -11,8 +11,6 @@ class Api::V1::AccommodationsController < ApplicationController
                                     per_page: 20).order(created_at: :desc)
     respond_to do |format|
       format.json
-      format.html
-      format.js
     end
   end
 
@@ -81,7 +79,6 @@ class Api::V1::AccommodationsController < ApplicationController
     # byebug #end the bugs : yeyyy TODO: show stoper #bye bug
   end
 
-
   def edit
     @ac = Accommodation.find(params[:id])
   end
@@ -97,6 +94,9 @@ class Api::V1::AccommodationsController < ApplicationController
     views = @ac.views
     views += 1 if @ac.user != current_user
     @ac.update_attribute(:views, views) if @ac.user != current_user
+    respond_to do |format|
+      format.json
+    end
   end
 
   def destroy
@@ -107,31 +107,38 @@ class Api::V1::AccommodationsController < ApplicationController
   end
 
   # ==========under the hood dont look if you can`t handle=========
-
   def search
     @inst = ['UJ ', 'Wits', 'Other']
-    nsfas = params[:nsfas]
-    location = params[:name]
+    nsfas = params[:nsfas] 
+    location = params[:location] #brixton , auckland park, johannesburg #can be null yoh null? no nearby place
+    near_to = params[:near_to]
 
-     if params[:price_to] == '0'  # should have used to_i
+    if params[:price_to] == '0'  # should have used to_i
       x = ""
     else
         x = params[:price_to]
     end
-    #fixme term is out for now man
-    # need to search the houses first
-    @house = House.where('nsfas = ? and location = ?', nsfas, location).paginate(:per_page => 6, :page => params[:page])
+    if location
+       q = 'location = ? or city = ?'
+       @house = House.where(q, location, location).paginate(:per_page => 24, :page => params[:page])
+    end 
+    if near_to
+       b = @house.near_tos.map {|n| n.house if(n.location.strip == near_to)}
+       @house = b.select {|m| m}
+    end 
+    @house = @house.where('nsfas = ?', nsfas)
+
     @acs = Array.new
     @house.each do |h|
       h.accommodations.each do |a|
         b = a.search(params[:room_type],
                      price_from: params[:price_from],
-                     price_to: x)
+                     price_to: x).paginate(:per_page => 6, :page => params[:page])
         @acs.append(b)
         NotifyWorker.perform_async(b.user.fcm_token, 'someone is searching for an accommodation like yours, click to see them', 'Classfinder Search Rader')
       end
     end
-    @acs = @acs.paginate(:per_page => 6, :page => params[:page])
+    @acs
     respond_to do |format|
       format.json
     end

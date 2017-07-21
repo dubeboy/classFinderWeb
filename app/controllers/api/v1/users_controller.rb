@@ -13,7 +13,8 @@ class Api::V1::UsersController < ApplicationController
 
   def create
     @status = false
-    if params[:token]
+     @jwt_token = create_custom_token(params[:email])
+    if params[:token]   #Google Token
       if User.find_by_email(params[:email]).nil? #if there is no user
         user = User.new(name: params[:name],
                         email: params[:email],
@@ -31,13 +32,14 @@ class Api::V1::UsersController < ApplicationController
       else
         @status = true
         @u = User.find_by_email(params[:email])
-      end
-    else
+      end   # end google signin
+    else  #normal signup yoh!!!!!!!
       if User.find_by_email(params[:email]).nil? #if there is no user
         user = User.new(
             name: params[:name],
             password: params[:password],
             email: params[:email],
+            fcm_token: params[:fcm_token],
             password_confirmation: params[:password],
             contacts: params[:phone])
 
@@ -64,7 +66,8 @@ class Api::V1::UsersController < ApplicationController
                               'A Classfinder possible tenent would like to ask you about a particular accommodation', 
                               'Cf possible tenent', 
                               data = {room_id: room_id, 
-                                      room_location: "", 
+                                      room_location: "",
+                                      sender_email: sender.email,
                                       sender_id: sender.id, 
                                       is_open_by_host: is_open_by_host, 
                                       host_id: host.id})
