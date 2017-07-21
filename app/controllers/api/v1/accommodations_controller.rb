@@ -8,7 +8,7 @@ class Api::V1::AccommodationsController < ApplicationController
 
   def index #fixme
     @acs = Accommodation.all.paginate(page: params[:page],
-                                    per_page: 20).order(created_at: :desc)
+                                      per_page: 20).order(created_at: :desc)
     respond_to do |format|
       format.json
     end
@@ -40,7 +40,7 @@ class Api::V1::AccommodationsController < ApplicationController
         @status = true
       end
       # NotifyWorker.perform_async(user_share.fcm_token, 'someone is searching for an accommodation like yours, click to see them', 'Classfinder Search Rader')
-    else  #this is for when invinting an accommodation owner todo: this should in its own controller
+    else #this is for when invinting an accommodation owner todo: this should in its own controller
       @status = true
       @msg = 'redirect to sign in'
     end
@@ -55,16 +55,16 @@ class Api::V1::AccommodationsController < ApplicationController
   def create
     @status = false
     ac = Accommodation.new(
-                            price: params[:price],
-                            deposit: params[:deposit],
-                            room_type: params[:room_type],
-                            description: params[:description]
+        price: params[:price],
+        deposit: params[:deposit],
+        room_type: params[:room_type],
+        description: params[:description]
     )
     ac.house = House.find(params[:house_id])
     ac.user = User.find(params[:user_id])
     if params[:images]
       if ac.save!
-         params[:images].each { |image|
+        params[:images].each { |image|
           puts '######################################'
           puts image
           puts '######################################'
@@ -74,7 +74,7 @@ class Api::V1::AccommodationsController < ApplicationController
       end
       # redirect_to @ac  todo: should look into this man
     else
-       @status = false
+      @status = false
     end
     # byebug #end the bugs : yeyyy TODO: show stoper #bye bug
   end
@@ -87,94 +87,104 @@ class Api::V1::AccommodationsController < ApplicationController
     @ac = Accommodation.find(params[:id])
     @ac.update(acc_params)
     redirect_to accommodation_path(@ac)
-  end
+    endsss
 
-  def show
-    @ac = Accommodation.find(params[:id])
-    views = @ac.views
-    views += 1 if @ac.user != current_user
-    @ac.update_attribute(:views, views) if @ac.user != current_user
-    respond_to do |format|
-      format.json
+    def show
+      @ac = Accommodation.find(params[:id])
+      views = @ac.views
+      views += 1 if @ac.user != current_user
+      @ac.update_attribute(:views, views) if @ac.user != current_user
+      respond_to do |format|
+        format.json
+      end
     end
-  end
 
-  def destroy
-    @acs = Accommodation.find(params[:id])
-    t = Transaction.where('host_id = ? and accomodation_id = ?', current_user.id, @acs.id).destroy_all
-    @acs.destroy
-    redirect_to accommodations_path, notice: 'Accommodation deleted.'
-  end
+    def destroy
+      @acs = Accommodation.find(params[:id])
+      t = Transaction.where('host_id = ? and accomodation_id = ?', current_user.id, @acs.id).destroy_all
+      @acs.destroy
+      redirect_to accommodations_path, notice: 'Accommodation deleted.'
+    end
 
-  # ==========under the hood dont look if you can`t handle=========
-  def search
-    @inst = ['UJ ', 'Wits', 'Other']
-    nsfas = params[:nsfas] 
-    location = params[:location] #brixton , auckland park, johannesburg #can be null yoh null? no nearby place
-    near_to = params[:near_to]
-    searcher_fcm_token = params[:fcm_token]
-    #todo: for the search we should have anonymous chat
+    # ==========under the hood dont look if you can`t handle=========
+    def search
+      @inst = ['UJ ', 'Wits', 'Other']
+      nsfas = params[:nsfas]
+      location = params[:location] #brixton , auckland park, johannesburg #can be null yoh null? no nearby place
+      near_to = params[:near_to]
+      searcher_id = params[:searcher_id]
+      sender = nil
+      unless searcher_id.to_i > 0
+        sender = User.find(params[:searcher_id])
+      end
+      #todo: for the search we should have anonymous chat
 
-    if params[:price_to] == '0'  # should have used to_i
-      x = ""
-    else
+      if params[:price_to] == '0' #if a user did not add ending price then the price will be 0
+        x = ""
+      else
         x = params[:price_to]
-    end
-    if location
-       q = 'location = ? or city = ?'
-       @house = House.where(q, location, location).paginate(:per_page => 24, :page => params[:page])
-    end 
-    if near_to
-       b = @house.near_tos.map {|n| n.house if(n.location.strip == near_to)}
-       @house = b.select {|m| m}
-    end 
-    @house = @house.where('nsfas = ?', nsfas)
+      end
+      if location
+        q = 'location = ? or city = ?'
+        @house = House.where(q, location, location).paginate(:per_page => 24, :page => params[:page])
+      end
+      unless near_to.nil?
+        @house = @house.each { |k| k.near_tos.select { |n| k if (n.location == near_to) } } unless near_to.empty?
+      end
+      @house = @house.select { |h| h if (h.nsfas) }
 
-    @acs = Array.new
-    @house.each do |h|
-      h.accommodations.each do |a|
-        b = a.search(params[:room_type],
-                     price_from: params[:price_from],
-                     price_to: x).paginate(:per_page => 6, :page => params[:page])
-        @acs.append(b)
-        NotifyWorker.perform_async(b.user.fcm_token,
-                                   'someone is searching for an accommodation like yours, click to chat to them',
-                                   'Classfinder Search Rader', data={ search: 'yes', searcher_fcm_token: searcher_fcm_token })
-        #todo: abilty for them to initiate conversations
+      @acs = Array.new
+      @house.each do |h|
+        h.accommodations.each do |a|
+          b = a.search(params[:room_type],
+                       price_from: params[:price_from],
+                       price_to: x).paginate(:per_page => 24, :page => params[:page]) # if so happens that this house 24 rooms
+          @acs.append(b)
+          unless sender.nil?
+            NotifyWorker.perform_async(b.user.fcm_token,
+                                       'someone is searching for an accommodation like yours, click to chat to them',
+                                       'Classfinder Search Rader',
+                                       data = {
+                                           sender_email: sender.email,
+                                           sender_id: sender.id,
+                                           is_open_by_host: "true",
+                                           host_id: b.user.id})
+          end
+          #todo: abilty for them to initiate conversations
+        end
+      end
+      @acs
+      respond_to do |format|
+        format.json
       end
     end
-    @acs
-    respond_to do |format|
-      format.json
-    end
-  end
 
-  def secure_room
-    #todo check if the user is actually not a host
-    host_id = params['host_id']
-    student_id = params['std_id']
-    booking_type = params['booking_type']
-    advert_id = params['id']
-    ad = Accommodation.find(advert_id)
-    time = params[:time]
-    month = params[:month]
-    #pron to Sql injection
-    #booking type information 1 is secure and 0 is view
-    #todo make sure that a person can not secure a room twice extract common stuff
-    @k = false
-    if booking_type == '1'
-      #todo check this man put in model
-      if Transaction.where("user_id='#{student_id}' and accomodation_id='#{advert_id}'").where("booking_type = 't' ").count == 0
-        t = Transaction.new(user_id: student_id, accomodation_id: advert_id,
-                            host_id: host_id, booking_type: 1, paid: 0)
-        ad.is_secured = true
-        ad.save! #todo put this in the models some how #before_action?
-        @k = t.save
-      end
+    def secure_room
+      #todo check if the user is actually not a host
+      host_id = params['host_id']
+      student_id = params['std_id']
+      booking_type = params['booking_type']
+      advert_id = params['id']
+      ad = Accommodation.find(advert_id)
+      time = params[:time]
+      month = params[:month]
+      #pron to Sql injection
+      #booking type information 1 is secure and 0 is view
+      #todo make sure that a person can not secure a room twice extract common stuff
+      @k = false
+      if booking_type == '1'
+        #todo check this man put in model
+        if Transaction.where("user_id='#{student_id}' and accomodation_id='#{advert_id}'").where("booking_type = 't' ").count == 0
+          t = Transaction.new(user_id: student_id, accomodation_id: advert_id,
+                              host_id: host_id, booking_type: 1, paid: 0)
+          ad.is_secured = true
+          ad.save! #todo put this in the models some how #before_action?
+          @k = t.save
+        end
 
-    elsif booking_type == "0" #booking type = 0 = view accomodation
-      #find runner and set runner
-      if Transaction.where("user_id='#{student_id}' and accomodation_id='#{advert_id}'").where("booking_type = 'f' ").count == 0
+      elsif booking_type == "0" #booking type = 0 = view accomodation
+        #find runner and set runner
+        if Transaction.where("user_id='#{student_id}' and accomodation_id='#{advert_id}'").where("booking_type = 'f' ").count == 0
           t = Transaction.new(user_id: student_id,
                               accomodation_id: advert_id,
                               booking_type: 0, #false uhm..... why dude!
@@ -189,43 +199,44 @@ class Api::V1::AccommodationsController < ApplicationController
           host = User.find(host_id)
 
           if @k
-            NotifyWorker.perform_async(host.fcm_token, 
-              "#{student.name} would like to come a view one of your rooms at #{time} on #{month},click to view more details'", 
-               'Classfinder++', data={for_host: 'yes'})
-            NotifyWorker.perform_async(student.fcm_token, 
-              "you have successfully booked to view the room, you will here from the accommodation owner soon'", 
-              'Classfinder Booking Radar', data={for_host: 'no'})
+            NotifyWorker.perform_async(host.fcm_token,
+                                       "#{student.name} would like to come a view one of your rooms at #{time} on #{month},click to view more details'",
+                                       'Classfinder++', data={for_host: 'yes'})
+            NotifyWorker.perform_async(student.fcm_token,
+                                       "you have successfully booked to view the room, you will here from the accommodation owner soon'",
+                                       'Classfinder Booking Radar', data={for_host: 'no'})
           end
+        end
+      end
+
+      respond_to do |format|
+        format.json
       end
     end
 
-    respond_to do |format|
-      format.json
-    end
-  end
-
-  #please clean up these methods man
-  def pay
-    @ac = nil
-    ac_id = params[:id]
-    student_id = params[:student_id]
-    the_trans = Transaction.find(params[:trans_id])
-    unless the_trans.nil?
-      if the_trans.paid?
-        the_trans.paid = false
-      else
-        the_trans.paid = true
+    #please clean up these methods man
+    def pay
+      @ac = nil
+      ac_id = params[:id]
+      student_id = params[:student_id]
+      the_trans = Transaction.find(params[:trans_id])
+      unless the_trans.nil?
+        if the_trans.paid?
+          the_trans.paid = false
+        else
+          the_trans.paid = true
+        end
+        the_trans.save
+        format.json
       end
-      the_trans.save
-      format.json
+      respond_to do |format|
+        format.js
+      end
     end
-    respond_to do |format|
-      format.js
-    end
-  end
 
 
-  def deposit
+    def deposit
+
       # accom = Accommodation.find(params[:id])
       # am = accom.deposit * 100 # the deposit because stripe works in cents 
       depo = params[:deposit].to_i * 100
@@ -240,26 +251,26 @@ class Api::V1::AccommodationsController < ApplicationController
       # todo: should check if the transactin exists before we create another one
 
       customer = Stripe::Customer.create(
-        :email => student.email,
-        :source  => params[:stripeToken]
+          :email => student.email,
+          :source => params[:stripeToken]
       )
 
       host_customer = Stripe::Customer.create(
           :email => host.email,
-          :source  => params[:hostStripeToken]
+          :source => params[:hostStripeToken]
       )
 
       #the we take 2 percent of what ever the deposit is and the rest goes to the owner
       charge = Stripe::Charge.create(
-        :customer    => customer.id,
-        :amount      => @amount,
-        :description => "#{@amount} deposit for accommodation id: #{accommodation.id}
+          :customer => customer.id,
+          :amount => @amount,
+          :description => "#{@amount} deposit for accommodation id: #{accommodation.id}
                         and user id #{student.id}: (#{student.name}) ",
-        :currency    => 'zar',
-        :destination => {
-            :amount => (@amount - (@amount * 0.2)).to_i,
-            :account => host_customer.id,
-        }
+          :currency => 'zar',
+          :destination => {
+              :amount => (@amount - (@amount * 0.2)).to_i,
+              :account => host_customer.id,
+          }
 
       )
       @status = true
@@ -286,106 +297,107 @@ class Api::V1::AccommodationsController < ApplicationController
         format.json
       end
 
-  rescue Stripe::CardError => e
+    rescue Stripe::CardError => e
       @msg = e.message
       @status = false
 
-  end 
-
-
-#student transaction
-  def student_pay
-    @ac = nil
-    the_trans = Transaction.find(params[:trans_id])
-    unless the_trans.nil?
-      @ac = the_trans
-      the_trans.std_confirm = true
-      the_trans.save
     end
-    respond_to do |format|
-      format.js
+
+
+    #student transaction
+    def student_pay
+      @ac = nil
+      the_trans = Transaction.find(params[:trans_id])
+      unless the_trans.nil?
+        @ac = the_trans
+        the_trans.std_confirm = true
+        the_trans.save
+      end
+      respond_to do |format|
+        format.js
+      end
+      redirect_to :back, notice: 'Notified accommodation host keep up the good work!'
     end
-    redirect_to :back, notice: 'Notified accommodation host keep up the good work!'
-  end
 
 
-  def go_ahead
-    @ac = nil
-    ac_id = params[:id]
-    student_id = params[:student_id]
-    the_trans = Transaction.find(params[:trans_id])
-    unless the_trans.nil?
-      the_trans.go_ahead = true
-      student = User.find(student_id)
-      host = User.find(ac_id)
-      acc = Accommodation.find(the_trans.accomodation_id)
+    def go_ahead
+      @ac = nil
+      ac_id = params[:id]
+      student_id = params[:student_id]
+      the_trans = Transaction.find(params[:trans_id])
+      unless the_trans.nil?
+        the_trans.go_ahead = true
+        student = User.find(student_id)
+        host = User.find(ac_id)
+        acc = Accommodation.find(the_trans.accomodation_id)
 
-      the_trans.message = "Dear #{student.name.capitalize} we at #{host.name.capitalize} have
+        the_trans.message = "Dear #{student.name.capitalize} we at #{host.name.capitalize} have
                            confirmed that we have received your request to secure the
                            room. You can go
                            ahead and deposit #{acc.price} using banking details
                            attached below \n #{host.bank_details} \n your reference number: #{student.token}"
-      the_trans.save
-    end
-    redirect_to :back, notice: "Given Go a head to student"
-  end
-
-  #formula
-  # this should enable a user to set the paid on or off but this a way of removing a an Item
-  # def toggle_paid
-  #   @ac = nil
-  #   ac_id = params[:id]
-  #   student_id = params[:student_id]
-  #   the_trans = Transaction.find(params[:trans_id])
-  #   unless the_trans.nil?
-  #
-  #     if the_trans.paid?
-  #       the_trans.paid = false
-  #     else
-  #       the_trans.paid = true
-  #     end
-  #     the_trans.save
-  #   end
-  #   redirect :back
-  # end
-
-  def toggle_room_view
-    the_trans = Transaction.find(params[:trans_id])
-    unless the_trans.nil?
-      if the_trans.std_confirm?
-        the_trans.std_confirm = false
-      else
-        the_trans.std_confirm = true
+        the_trans.save
       end
-      the_trans.save
+      redirect_to :back, notice: "Given Go a head to student"
     end
-    redirect :back
-  end
 
+    #formula
+    # this should enable a user to set the paid on or off but this a way of removing a an Item
+    # def toggle_paid
+    #   @ac = nil
+    #   ac_id = params[:id]
+    #   student_id = params[:student_id]
+    #   the_trans = Transaction.find(params[:trans_id])
+    #   unless the_trans.nil?
+    #
+    #     if the_trans.paid?
+    #       the_trans.paid = false
+    #     else
+    #       the_trans.paid = true
+    #     end
+    #     the_trans.save
+    #   end
+    #   redirect :back
+    # end
 
-  private
-  def acc_params
-    #params.require(:item).permit(:price, :name, :description, {avatars: []})
-    params.require(:accommodation).permit!
-  end
-
-  # def make_two_digits(digit)
-  #   digit.length < 2 ? "0#{digit}" : digit
-  # end
-  #todo does this does what it is supposed to do
-  def available(r, time) #call the time slot table to this runner
-    runner_times = r.time_slots.all.collect { |rt| rt.time }
-    puts '===========================9'
-    puts runner_times
-    puts time
-    puts '===========================9'
-    runner_times.each { |rt|
-      puts 'rt'
-      puts rt == time
-      if rt == time
-        return r
+    def toggle_room_view
+      the_trans = Transaction.find(params[:trans_id])
+      unless the_trans.nil?
+        if the_trans.std_confirm?
+          the_trans.std_confirm = false
+        else
+          the_trans.std_confirm = true
+        end
+        the_trans.save
       end
-    }
-    return nil
+      redirect :back
+    end
+
+
+    private
+    def acc_params
+      #params.require(:item).permit(:price, :name, :description, {avatars: []})
+      params.require(:accommodation).permit!
+    end
+
+    # def make_two_digits(digit)
+    #   digit.length < 2 ? "0#{digit}" : digit
+    # end
+    #todo does this does what it is supposed to do
+    def available(r, time) #call the time slot table to this runner
+      runner_times = r.time_slots.all.collect { |rt| rt.time }
+      puts '===========================9'
+      puts runner_times
+      puts time
+      puts '===========================9'
+      runner_times.each { |rt|
+        puts 'rt'
+        puts rt == time
+        if rt == time
+          return r
+        end
+      }
+      return nil
+    end
   end
 end
