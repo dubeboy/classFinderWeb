@@ -1,3 +1,6 @@
+
+json.ssss @accommodations
+
 json.results do
   json.array! @acs do |i|
     json.id i.id

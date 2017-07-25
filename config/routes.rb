@@ -6,31 +6,6 @@ Rails.application.routes.draw do
       get 'house/index'
     end
   end
-
-  namespace :api do
-    namespace :v1 do
-      get 'networks_cat_events/create'
-    end
-  end
-
-  namespace :api do
-    namespace :v1 do
-      get 'networks_cat_events/subscribe'
-    end
-  end
-
-  namespace :api do
-    namespace :v1 do
-      get 'comments/index'
-    end
-  end
-
-  namespace :api do
-    namespace :v1 do
-      get 'comments/com'
-    end
-  end
-
   get 'select_user_type/index'
 
   get 'welcome/index'
@@ -102,7 +77,7 @@ Rails.application.routes.draw do
         post 'subscribe', action: :subscribe
         post 'search', action: :search
         resources :network_posts do
-          post 'like', action: :like
+          post 'like', action: :like  #todo should be  a get
           post 'search', action: :search
           resources :comments
         end
@@ -136,13 +111,13 @@ Rails.application.routes.draw do
           post 'pay', action: :pay
           post 'deposit', action: :deposit
           post 'student_pay', action: :student_pay #todo protect all of them they are not protected
-
           delete 'cancel', action: :cancel #todo
           post 'go_ahead', action: :go_ahead
         end
         collection do
+          get 'search', action: :search
           get 'refs', action: :share_ref
-          get 'search', :action => :search
+          get 'search_it', action: :search_it
         end
       end
     end
