@@ -13,8 +13,8 @@ class Api::V1::UsersController < ApplicationController
 
   def create
     @status = false
-     @jwt_token = create_custom_token(params[:email])
-    if params[:token]   #Google Token
+    @jwt_token = create_custom_token(params[:email])
+    if params[:token] #Google Token
       if User.find_by_email(params[:email]).nil? #if there is no user
         user = User.new(name: params[:name],
                         email: params[:email],
@@ -32,8 +32,8 @@ class Api::V1::UsersController < ApplicationController
       else
         @status = true
         @u = User.find_by_email(params[:email])
-      end   # end google signin
-    else  #normal signup yoh!!!!!!!
+      end # end google signin
+    else #normal signup yoh!!!!!!!
       if User.find_by_email(params[:email]).nil? #if there is no user
         user = User.new(
             name: params[:name],
@@ -43,7 +43,8 @@ class Api::V1::UsersController < ApplicationController
             password_confirmation: params[:password],
             contacts: params[:phone])
 
-        user.runner = params[:is_runner]
+        user.runner = params[:is_host]
+        user.host =
         @status = user.save
         @u = User.find_by_email(params[:email])
       else
@@ -62,15 +63,15 @@ class Api::V1::UsersController < ApplicationController
     room_id = params[:room_id]
     is_open_by_host = params[:is_open_by_host]
 
-    NotifyWorker.perform_async(host.fcm_token, 
-                              'A Classfinder possible tenent would like to ask you about a particular accommodation', 
-                              'Cf possible tenent', 
-                              data = {room_id: room_id, 
-                                      room_location: "",
-                                      sender_email: sender.email,
-                                      sender_id: sender.id, 
-                                      is_open_by_host: is_open_by_host, 
-                                      host_id: host.id})
+    NotifyWorker.perform_async(host.fcm_token,
+                               'A Classfinder possible tenent would like to ask you about a particular accommodation',
+                               'Cf possible tenent',
+                               data = {room_id: room_id,
+                                       room_location: "",
+                                       sender_email: sender.email,
+                                       sender_id: sender.id,
+                                       is_open_by_host: is_open_by_host,
+                                       host_id: host.id})
   end
 
 
@@ -133,22 +134,22 @@ class Api::V1::UsersController < ApplicationController
         if params['cat'] == '0'
           @acs = @user.accommodations
         elsif params['cat'] == '1' #for available accommodations
-          @trans = trans_by_this_user.collect {|t| t unless t.paid?}
+          @trans = trans_by_this_user.collect { |t| t unless t.paid? }
         elsif params['cat'] == '3' #where the student has confirmed, paid by students
-          @trans = trans_by_this_user.collect {|t| t if t.std_confirm?}
+          @trans = trans_by_this_user.collect { |t| t if t.std_confirm? }
         elsif params['cat'] == '4' #upcoming waiting confirmation
-          @trans = trans_by_this_user.collect {|t| t if t.paid}
+          @trans = trans_by_this_user.collect { |t| t if t.paid }
         end
         @acs = @user.accommodations if @user
       end
     elsif @user.runner? and params['run'] #runner actions
       trans_by_this_user = Transaction.where("runner_id = ?", @user.id).reverse_order
       if params['run'] == '1' #for all students who are intrested
-        @trans = trans_by_this_user.select {|t| t unless t.std_confirm?} # this should be selected based on time
+        @trans = trans_by_this_user.select { |t| t unless t.std_confirm? } # this should be selected based on time
       elsif params['run'] == '2' #for all students who are say they have paid for the res
-        @trans = trans_by_this_user.select {|t| t if t.std_confirm?} #this is all paid but user id is this one
+        @trans = trans_by_this_user.select { |t| t if t.std_confirm? } #this is all paid but user id is this one
       elsif params['run'] == '3' #where the student has confirmed, paid by students
-        @trans = trans_by_this_user.select {|t| t if t.paid?} #this is all the upcoming one
+        @trans = trans_by_this_user.select { |t| t if t.paid? } #this is all the upcoming one
       end
     end
     @trans
@@ -159,12 +160,12 @@ class Api::V1::UsersController < ApplicationController
 
 
   def get_host_info
-      # student name
-      # time to view
-      # location as well
-      host_id = params[:host_user_id]
-      @t = Transaction.where("host_id= ?", host_id).paginate(page: params[:page],
-                                    per_page: 20).order(created_at: :desc)
+    # student name
+    # time to view
+    # location as well
+    host_id = params[:host_user_id]
+    @t = Transaction.where("host_id= ?", host_id).paginate(page: params[:page],
+                                                           per_page: 20).order(created_at: :desc)
   end
 
 

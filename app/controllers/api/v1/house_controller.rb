@@ -3,7 +3,9 @@ class Api::V1::HouseController < ApplicationController
 
 
   def index
-    @houses = House.all.paginate(page: params[:page],
+    user_id = params[:user_id]
+    user = User.find(user_id)
+    @houses = user.houses.all.paginate(page: params[:page],
                                       per_page: 20).order(created_at: :desc)
     respond_to do |format|
       format.json

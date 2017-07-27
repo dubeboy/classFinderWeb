@@ -34,11 +34,11 @@ class Api::V1::AccommodationsController < ApplicationController
       # byebug
       if user_share.nil? && !@accom.nil?
         @status = UserAccommodationShare.new(accom_id: @accom.id, user_token: token).save
-        NotifyWorker.perform_async(u.fcm_token, '+1 on your link click', 'Classfinder shares', data={}) #todo: notify user when link is clicked
+        NotifyWorker.perform_async(@accom.user.fcm_token, '+1 on your link click', 'Classfinder shares', data={}) #todo: notify user when link is clicked
       else
         user_share.count = user_share.count + 1
         user_share.save! unless @accom.nil?
-        NotifyWorker.perform_async(user_share.fcm_token, "#{ user_share.count -1 } +1 on your link click", 'Classfinder shares', data={}) #todo: notify user when link is clicked
+        NotifyWorker.perform_async(@accom.user.fcm_token, "#{ user_share.count -1 } +1 on your link click", 'Classfinder shares', data={}) #todo: notify user when link is clicked
         @status = true
       end
       # NotifyWorker.perform_async(user_share.fcm_token, 'someone is searching for an accommodation like yours, click to see them', 'Classfinder Search Rader')
