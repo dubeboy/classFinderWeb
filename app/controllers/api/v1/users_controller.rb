@@ -14,7 +14,7 @@ class Api::V1::UsersController < ApplicationController
   def create
     @status = false
     @jwt_token = create_custom_token(params[:email])
-    if params[:token] #Google Token
+    if params[:token] #Google Token                                       #Google User
       if User.find_by_email(params[:email]).nil? #if there is no user
         user = User.new(name: params[:name],
                         email: params[:email],
@@ -33,7 +33,7 @@ class Api::V1::UsersController < ApplicationController
         @status = true
         @u = User.find_by_email(params[:email])
       end # end google signin
-    else #normal signup yoh!!!!!!!
+    else #normal signup yoh!!!!!!!                                      #NOrmal USer
       if User.find_by_email(params[:email]).nil? #if there is no user
         user = User.new(
             name: params[:name],
@@ -41,6 +41,7 @@ class Api::V1::UsersController < ApplicationController
             email: params[:email],
             fcm_token: params[:fcm_token],
             password_confirmation: params[:password],
+            host: params[:is_host],
             contacts: params[:phone])
 
         user.runner = params[:is_host]
@@ -62,10 +63,11 @@ class Api::V1::UsersController < ApplicationController
     sender = User.find(params[:sender_id])
     room_id = params[:room_id]
     is_open_by_host = params[:is_open_by_host]
+    chat_msg = params[:chat_msg]
 
     NotifyWorker.perform_async(host.fcm_token,
-                               'A Classfinder possible tenent would like to ask you about a particular accommodation',
-                               'Cf possible tenent',
+                               chat_msg,
+                               'Clickinn possible tenent chat',
                                data = {room_id: room_id,
                                        room_location: "",
                                        sender_email: sender.email,
@@ -171,7 +173,8 @@ class Api::V1::UsersController < ApplicationController
 
   def panel
     user = User.find(params[:id])
-    @trans_by_this_user = Transaction.where("user_id = '#{user.id}'") #array of this hosts trasctns
+    @trans_by_this_user =
+        Transaction.where('user_id = ?', user.id) #array of this hosts trasctns
     # @acs = Accommodation.find(trans_by_this_user.collect { |t| t.accomodation_id }) #just getting the users accomodations
     respond_to do |f|
       f.json

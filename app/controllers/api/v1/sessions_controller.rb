@@ -19,8 +19,8 @@ class Api::V1::SessionsController < ApplicationController
           #todo: redundant keep safe for now
         @status = false
       end
-    else #end normal sign in if
-      @user = User.from_omniauth(env["omniauth.auth"])
+    else #end normal sign in if     #Google dwag
+      @user = User.from_omniauth(env["omniauth.auth"])    #Google USER HELLOOOOO
       session[:user_id] = @user.id
       begin
         redirect_to :back

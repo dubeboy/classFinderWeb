@@ -4,12 +4,6 @@ class Api::V1::AccommodationsController < ApplicationController
   # before_action :require_api_key!, except: [:index, :show, :search] //Todo NB in the future man
   #use that before_action to set the @user when finding first
 
-
-  def init
-    Rails.logger("Hello there")
-  end
-
-
   def index #fixme
     @acs = Accommodation.all.paginate(page: params[:page],
                                       per_page: 20).order(created_at: :desc)
@@ -145,7 +139,7 @@ class Api::V1::AccommodationsController < ApplicationController
     unless near_to.nil?
       @house = @house.each { |k| k.near_tos.select { |n| k if (n.location == near_to) } } unless near_to.empty?
     end
-    @house = @house.select { |h| h if (h.nsfas) } unless (nsfas.nil? || nsfas.empty?)
+    @house = @house.select { |h| h if (h.nsfas) } unless (nsfas.nil? || nsfas.empty?) # todo: problemmo
     puts 'sELECTED HOUSE WITH nsfas  To pRICE MAN ############################w#####'
 
     puts "the number of houses is #{@house.count}"
