@@ -50,7 +50,8 @@ class Api::V1::HouseController < ApplicationController
         nsfas: params[:nsfas],
         common: params[:common],
         prepaid_elec: params[:prepaid_elec],
-        country: country
+        country: country,
+        laundry: params[:laundry]
     )
 
     @house.user = User.find(params[:user_id])
