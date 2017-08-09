@@ -1,4 +1,4 @@
 class AttendEvent < ApplicationRecord
   belongs_to :user
-  belong_to :post
+  belongs_to :post
 end
