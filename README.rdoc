@@ -1,5 +1,8 @@
 == README
 
+The Classfinder app takes the Global UJ calnder and helps you find any available to study.
+The Classfinder connects accommodations owners and accoummodation seeker arround campus.
+
 Possible problems
 
 USE RAILS 5 For models
