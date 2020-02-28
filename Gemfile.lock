@@ -151,7 +151,7 @@ GEM
       mime-types
     pg (0.21.0)
     public_suffix (2.0.5)
-    puma (3.8.2)
+    puma (3.12.3)
     puma-heroku (1.0.0)
       puma (~> 3.0)
     rack (2.0.1)
